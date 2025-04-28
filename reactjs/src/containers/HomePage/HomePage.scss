@@ -1,0 +1,204 @@
+.section-share {
+    &.section-specialty,
+    &.section-medical-facility,
+    &.section-outstanding-doctor {
+        // /background: #f5f5f5;
+    }
+
+    &.section-about {
+        height: auto;
+        padding: 40px 100px;
+
+        .section-about-header {
+            padding: 30px 0;
+            font-size: 30px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 30px;
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, rgb(175, 255, 246) 0%, #e0f7fa 100%);
+            color: #888888;
+            border-radius: 5px;
+            &:hover {
+                background: linear-gradient(135deg, rgb(159, 255, 244) 0%, #d7f4f8 100%);
+                color: #626161; 
+                transform: scale(1.02); 
+            }
+        
+            &::after {
+                content: "";
+                position: absolute;
+                bottom: -5px;
+                left: 0;
+                right: 0;
+                height: 4px;
+                border-radius: 0 0 5px 5px;
+            }
+        }
+        
+        
+    
+        .section-about-content {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            
+            .content-left {
+                width: 60%;
+                border-radius: 15px;
+                overflow: hidden;
+                box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1); /* Thêm bóng đổ mạnh mẽ cho video */
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+                iframe {
+                    width: 100%;
+                    height: 400px;
+                    border: none;
+                    border-radius: 15px;
+                    transition: transform 0.3s ease;
+                    &:hover {
+                        
+                        transform: scale(1.05); 
+                        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+                    }
+                }
+            }
+
+            .content-right {
+                width: 35%;
+                background-color: #ffffff;
+                padding: 20px;
+                color: #777474;
+                border-radius: 10px;
+                font-size: 18px;
+                text-align: justify;
+                font-style: italic;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+                transition: transform 0.3s ease;
+                padding-top: 20px;
+                line-height: 1.7;
+                margin-bottom: 15px;
+
+                &:hover {
+                    color: #faa6a6;
+                    transform: translateY(-15px); 
+                    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+                }
+            }
+        }
+    }
+
+    .section-container {
+        margin: 0px 50px;
+        display: flex;
+        flex-direction: column;
+    
+        .section-header {
+            height: 60px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: flex-end; 
+            justify-content: space-between;
+        }
+
+        .title-section {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .btn-section {
+            padding: 8px 15px;
+            border: none;
+            outline: none;
+            background: #ebebeb;
+            border: 2px solid #d1cfcf;
+            cursor: pointer;
+            margin-bottom: 10px;
+            margin-right: 15px;
+
+            &:hover {
+                background: rgb(248, 178, 47);
+                color: white;
+                border: 2px solid rgb(251, 171, 21);
+            }
+        }
+    }
+
+    .section-body {
+        .section-customize {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+
+            .bg-image {
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-color: #eee;
+                height: 180px;
+                width: 95%;
+
+                &.section-outstanding-doctor {
+                    width: 120px !important;
+                    height: 120px !important;
+                    border-radius: 50%;
+                }
+
+                &.section-HandBook {
+                    background-image: url('../../assets/specialty/xuongkhop.jpeg');
+                }
+            }
+        }
+    }
+
+    .slick-prev,
+.slick-next {
+    position: absolute !important;
+    bottom: 10px !important; 
+    z-index: 10 !important; // Giữ mức thấp để không đè lên header
+    height: 50px !important;
+    width: 50px !important;
+    background: #ffffff !important;
+    border: 2px solid #d7d7d7 !important;
+    border-radius: 50% !important;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1) !important;
+    transition: all 0.3s ease-in-out !important;
+
+    &:hover {
+        background: #f1c40f !important;
+        border-color: #f39c12 !important;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15) !important;
+    }
+}
+
+
+
+    .slick-prev:before,
+    .slick-next:before {
+        font-family: FontAwesome !important;
+        color: #d7d7d7 !important;
+    }
+
+    .slick-disabled {
+        display: none !important;
+    }
+
+    .section-outstanding-doctor {
+        .outer-bg {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        .section-customize {
+            padding: 5px;
+            cursor: pointer;
+
+            .custumize-border {
+                padding: 20px;
+                border: 2px solid #d7d7d7 !important;
+            }
+        }
+    }
+}

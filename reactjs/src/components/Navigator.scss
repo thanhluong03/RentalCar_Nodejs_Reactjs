@@ -1,0 +1,121 @@
+@import "../styles/common.scss";
+
+.navigator-menu {
+    display: flex;
+    align-items: center;
+    margin-top: 12px;
+    border-radius: 12px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease-in-out;
+
+    .menu-group {
+        position: relative;
+        padding: 14px 22px;
+        color: #ffffff;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+        border-radius: 8px;
+        font-size: 17px;
+    
+        &:hover {
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0px 3px 8px rgba(255, 255, 255, 0.2);
+            color: #ffec1e;
+        }
+    
+        .menu-list {
+            position: absolute;
+            top: 100%; // Để menu-list bắt đầu ngay dưới menu-group
+            left: 0;
+            background: #2197ff;
+            min-width: 260px;
+            border-radius: 10px;
+            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            transform-origin: top center;
+            z-index: 1001;
+            opacity: 0;
+            max-height: 0;
+            transition: max-height 0.4s ease-in-out, opacity 0.3s ease-in-out;
+    
+            .menu {
+                padding: 14px;
+                color: #ffffff;
+                font-weight: 600;
+                font-size: 17px;
+                transition: all 0.3s ease-in-out;
+    
+                &.active a {
+                    color: #ffec1e;
+                    font-weight: 700;
+                }
+    
+                &:hover {
+                    background: rgba(255, 255, 255, 0.2);
+                    transform: scale(1.02);
+                    color: #ffec1e;
+                }
+    
+                .menu-link {
+                    text-decoration: none;
+                    color: inherit;
+                    display: block;
+                    font-weight: 500;
+                }
+    
+                .sub-menu-list {
+                    display: none;
+                    position: absolute;
+                    top: 0;
+                    left: 100%;
+                    background: linear-gradient(135deg, #4a4e69, #22223b);
+                    min-width: 240px;
+                    border-radius: 10px;
+                    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3);
+                    animation: fadeIn 0.3s ease-in-out;
+    
+                    .sub-menu {
+                        padding: 12px;
+                        color: #ffffff;
+                        transition: all 0.3s ease-in-out;
+    
+                        &:hover {
+                            background: rgba(255, 255, 255, 0.15);
+                            transform: scale(1.05);
+                        }
+    
+                        &.active a {
+                            font-weight: 700;
+                            color: #feca57;
+                        }
+    
+                        .sub-menu-link {
+                            text-decoration: none;
+                            color: inherit;
+                            display: block;
+                        }
+                    }
+                }
+            }
+        }
+    
+        &:hover {
+            .menu-list {
+                opacity: 1;
+                max-height: 500px; // Độ cao tối đa khi mở rộng
+            }
+        }
+    }}
+
+// Hiệu ứng xuất hiện mượt
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}

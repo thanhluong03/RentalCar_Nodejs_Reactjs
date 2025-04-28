@@ -1,0 +1,193 @@
+input, textarea, select {
+    margin-bottom: 15px; // Thêm khoảng cách dưới các input, textarea và select
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    font-size: 16px;
+    width: 100%;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+
+    &:hover {
+        border-color: #3498db;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    &:focus {
+        outline: none;
+        border-color: #3498db;
+        box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.3);
+    }
+
+    
+}
+label {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 8px;
+}
+.input-text {
+    .form-control{
+        border: 1px solid rgb(109, 109, 109);
+    }
+}
+.btn {
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    font-size: 16px;
+    margin-bottom: 1cqh;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &.btn-primary {
+        background: linear-gradient(135deg, #00daae, #81ffc8);
+        color: rgb(98, 98, 98);
+        
+        &:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(135deg, #00b894, #39fca7);
+        }
+    }
+
+    &.btn-warning {
+        background: linear-gradient(135deg, #f39c12, #f1c40f);
+        color: white;
+        &:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(135deg, #ba7300, #fedf61);
+        }
+    }
+
+    // Hover effect
+    
+
+    // Active state
+    &:active {
+        transform: scale(1);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    // Focus state
+    &:focus {
+        outline: none;
+        box-shadow: 0 0 0 4px rgba(76, 139, 245, 0.4);
+    }
+}
+
+
+.preview-img-container {
+    padding: 16px;
+    border-radius: 12px;
+    background: #d1d1d1;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+
+    // Hover effect to raise the container
+    &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+    }
+
+    // Label for file upload
+    .label-upload {
+        padding: 12px 18px;
+        border-radius: 8px;
+        background: linear-gradient(135deg, #e0e0e0, #f0f0f0);
+        cursor: pointer;
+        font-weight: 600;
+        color: #333;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        transition: all 0.3s ease;
+        display: inline-block;
+        border: none;
+        font-size: 14px;
+
+        // Hover effect for the upload label
+        &:hover {
+            background: linear-gradient(135deg, #d0d0d0, #e5e5e5);
+            transform: scale(1.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        // Active state of upload label
+        &:active {
+            background: linear-gradient(135deg, #c0c0c0, #e0e0e0);
+        }
+    }
+
+    // Preview image styles
+    .preview-image {
+        height: 80px;
+        width: 100%;
+        border: 1px solid #ddd;
+        background: center center no-repeat;
+        background-size: contain;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: block;
+
+        // Hover effect for the preview image
+        &:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transform: scale(1.05);
+        }
+
+        // Active state of preview image
+        &:active {
+            transform: scale(1.02);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    }
+}
+
+
+
+.progress-container {
+    width: 100%;
+    height: 5px;
+    background-color: #f3f3f3;
+    border-radius: 3px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+    &::before {
+        content: "";
+        position: fixed;
+        top: 5px;
+        left: 0;
+        width: 100%;
+        margin-top: 70px;
+        height: 100%; 
+        background-color: rgba(255, 255, 255, 0.7); 
+        z-index: 998;
+      }
+}
+
+.progress-bar {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, #35ff1f, #54ff91);
+    position: absolute;
+    left: -100%;
+    animation: smooth-loading 1.5s infinite linear;
+}
+
+@keyframes smooth-loading {
+    0% {
+        left: -100%;
+    }
+    100% {
+        left: 100%;
+    }
+}
