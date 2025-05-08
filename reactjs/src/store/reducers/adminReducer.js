@@ -18,6 +18,11 @@ const initialState = {
      allDoctors: [],
      allScheduleTime: [],
      allRequiredDoctorInfor: [],
+
+     // car
+     types: [],
+     status: [],
+     cars: [],
 }
 
 const adminReducer = (state = initialState, action) => {
@@ -127,6 +132,41 @@ const adminReducer = (state = initialState, action) => {
             return {
                  ...state
             }
+
+            /// cars
+            case actionTypes.FETCH_TYPE_SUCCESS:
+                state.types = action.data;
+                return {
+                     ...state
+                }
+            case actionTypes.FETCH_TYPE_FAILDED:
+                state.types = [];
+                return {
+                     ...state
+                }
+
+            case actionTypes.FETCH_STATUS_SUCCESS:
+                state.status = action.data;
+                return {
+                    ...state
+                }
+            case actionTypes.FETCH_STATUS_FAILDED:
+                state.types = [];
+                return {
+                    ...state
+                }
+
+            case actionTypes.FETCH_ALL_CAR_SUCCESS:
+                state.cars = action.cars;
+                return {
+                    ...state
+                }
+            case actionTypes.FETCH_ALL_CAR_FAILED:
+                state.cars = [];
+                return {
+                    ...state
+                }
+                
         default:
             return state;
     }

@@ -1,15 +1,21 @@
 export const adminMenu = [
     { //quan ly nguoi dung
-        name: 'menu.admin.manage-total-doctor', 
+        name: 'menu.admin.manage-customer',
         menus: [
-            // {
-            //     name: 'menu.admin.crud', link: '/system/user-manage'
-            // },
             {
-                name: 'menu.admin.manage-user', link: '/system/user-redux'
+                name: 'menu.admin.customer', link: '/system/user-redux'
             },
         ]
     },
+    { //quan ly phong kham
+        name: 'menu.admin.manage-car',
+        menus: [
+            {
+                name: 'menu.admin.car', link: '/system/car-form'
+            },
+        ]
+    },
+    
 ];
 
 

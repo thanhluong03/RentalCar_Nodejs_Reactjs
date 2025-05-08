@@ -8,12 +8,12 @@ import MarkdownIt from 'markdown-it';
 import MdEditor from 'react-markdown-editor-lite';
 import 'react-markdown-editor-lite/lib/index.css';
 
-const mdParser = new MarkdownIt(/* Markdown-it options */);
+// const mdParser = new MarkdownIt(/* Markdown-it options */);
 
-// Finish!
-function handleEditorChange({ html, text }) {
-  console.log('handleEditorChange', html, text);
-}
+// // Finish!
+// function handleEditorChange({ html, text }) {
+//   console.log('handleEditorChange', html, text);
+// }
 
 
 class TableManagerUser extends Component {

@@ -1,0 +1,97 @@
+.car-redux-container {
+    padding: 0px 40px;
+    .car-redux-body{
+        //border: 1px solid red;
+        background: #EAE8E8;
+        border-radius: 20px;
+        padding: 20px 30px;
+        .input-text{
+            input, select {
+                height: 45px;
+                &:hover {
+                    border-color: rgb(74, 246, 246);
+                    box-shadow: 0 10px 15px rgba(10, 224, 244, 0.1);
+                }
+                &:focus {
+                    outline: none;
+                    border-color: rgb(74, 246, 246);
+                    box-shadow: 0 10px 15px rgba(10, 224, 244, 0.1);
+                }
+            }
+            label {
+                font-size: 16px;
+                margin: 10px 0;
+            }
+
+            .img-container {
+                background: #FFFFFF;
+                border: 1px solid #6b6b6b;
+                padding: 16px;
+                border-radius: 5px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                &:hover {
+                    border-color: rgb(74, 246, 246);
+                    box-shadow: 0 10px 15px rgba(10, 224, 244, 0.1);
+                }
+                &:focus {
+                    outline: none;
+                    border-color: rgb(74, 246, 246);
+                    box-shadow: 0 10px 15px rgba(10, 224, 244, 0.1);
+                }
+                .preview-image {
+                    background: #EFEFEF;
+                    border: 1px solid rgb(180, 180, 180);
+                    height: 80px;
+                    width: 100%;
+                    background: center center no-repeat;
+                    background-size: contain;
+                    border-radius: 10px;
+                    cursor: pointer;
+                    display: block;
+                    &:hover {
+                        border-color: rgb(74, 246, 246);
+                        box-shadow: 0 10px 15px rgba(10, 224, 244, 0.1);
+                    }
+                    // &:focus {
+                    //     outline: none;
+                    //     border-color: rgb(74, 246, 246);
+                    //     box-shadow: 0 10px 15px rgba(10, 224, 244, 0.1);
+                    // }
+
+                    &:active {
+                        transform: scale(1.02);
+                        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                    }
+                }
+            }
+
+            .btn {
+                margin-top: 20px;
+                padding: 10px 25px;
+                border-radius: 15px;
+            
+                font-size: 16px;
+                font-weight: bold;
+                cursor: pointer;
+                &.btn-save {
+                    background: #B9B9B9;
+                    color: #000000;
+                    &:hover {
+                        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+                        background: #B9B9B9;
+                    }
+                }
+                &.btn-edit {
+                    background: #9B9595;
+                    color: #000000;
+                    &:hover {
+                        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+                        background: #9B9595;
+                    }
+                }
+            }
+        }
+    }
+}

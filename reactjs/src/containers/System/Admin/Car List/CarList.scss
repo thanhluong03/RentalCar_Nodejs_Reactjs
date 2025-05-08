@@ -1,0 +1,80 @@
+#CarList {
+    font-family: 'Inter', sans-serif;
+    background-color: #F5F5F5;
+    border-radius: 20px;
+    width: 100%;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 20px;
+}
+
+#CarList th, #CarList td {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+#CarList th {
+    background: #B1AEAE;
+    color: rgb(0, 0, 0);
+    font-weight: 600;
+    font-size: 18px;
+    letter-spacing: 0.5px;
+}
+#CarList tr:hover {
+    background-color: #dcdcdc;
+    transition: background-color 0.3s ease;
+}
+
+#CarList td {
+    color: rgb(0, 0, 0);
+    font-size: 15px;
+    letter-spacing: 0.5px;
+}
+
+.btn-edit {
+    background: linear-gradient(135deg, #17a2b8, #21c7e0);
+    color: white;
+}
+
+.btn-edit:hover {
+    background: linear-gradient(135deg, #138496, #0f6674);
+    transform: scale(1.05);
+    color: #f1f5f9;
+    //box-shadow: 0px 4px 8px rgba(23, 162, 184, 0.3);
+}
+
+.btn-delete {
+    background: linear-gradient(135deg, #dc3545, #fb1128);
+    color: white;
+    margin-left: 8px;
+}
+
+.btn-delete:hover {
+    background: linear-gradient(135deg, #c82333, #89111b);
+    transform: scale(1.05);
+    box-shadow: 0px 4px 8px rgba(220, 53, 69, 0.3);
+}
+
+
+#CarList .img {
+    width: 60px;
+    height: 70px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 10px;
+    margin: 0 auto;
+    justify-content: center;
+  }
+
+#CarList .no-image {
+    display: flex;
+    align-items: center;
+    color: rgb(237, 148, 148);
+}
+  
+
+
+  
