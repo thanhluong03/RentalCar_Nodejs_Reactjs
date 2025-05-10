@@ -5,6 +5,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import UserRedux from '../containers/System/Admin/UserRedux';
 import Header from '../containers/Header/Header';
 import CarForm from '../containers/System/Admin/Car List/CarForm';
+import LocationForm from '../containers/System/Admin/Location List/LocationForm';
 class System extends Component {
     render() {
         const { systemMenuPath, isLoggedIn } = this.props;
@@ -16,6 +17,7 @@ class System extends Component {
                         <Switch>
                             <Route path="/system/user-redux" component={UserRedux} />
                             <Route path="/system/car-form" component={CarForm}/>
+                            <Route path="/system/location-form" component={LocationForm}/>
                             <Route component={() => { return (<Redirect to={systemMenuPath} />) }} />
                         </Switch>
                     </div>

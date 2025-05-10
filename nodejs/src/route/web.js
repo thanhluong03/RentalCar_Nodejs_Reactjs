@@ -2,6 +2,7 @@ import express from "express";
 
 import userController from "../controllers/userController";
 import carControler from "../controllers/carController";
+import locationController from "../controllers/locationController";
 let router = express.Router();
 let initWebRoutes = (app) => {
 
@@ -19,6 +20,12 @@ let initWebRoutes = (app) => {
     router.get("/api/get-all-cars", carControler.handleGetAllCars);
     router.put('/api/edit-car', carControler.handleEditCar);
     router.delete('/api/delete-car', carControler.handleDeleteCar);
+
+
+    router.post('/api/create-new-location', locationController.handleCreateNewLocation);
+    router.get('/api/get-all-locations', locationController.handleGetAllLocations);
+    router.put('/api/edit-location', locationController.handleEditLocation);
+    router.delete('/api/delete-location', locationController.handleDeleteLocation);
 
     return app.use("/", router);
 }
