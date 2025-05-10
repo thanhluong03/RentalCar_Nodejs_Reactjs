@@ -1,5 +1,5 @@
 export const adminMenu = [
-    { //quan ly nguoi dung
+    {
         name: 'menu.admin.manage-customer',
         menus: [
             {
@@ -7,12 +7,15 @@ export const adminMenu = [
             },
         ]
     },
-    { //quan ly phong kham
+    {
         name: 'menu.admin.manage-car',
         menus: [
             {
                 name: 'menu.admin.car', link: '/system/car-form'
             },
+            {
+                name: 'menu.admin.location', link: '/system/location-form'
+            }
         ]
     },
     
