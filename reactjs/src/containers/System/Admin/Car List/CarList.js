@@ -9,13 +9,16 @@ class CarList extends Component {
         this.state = {
             carsRedux: [],
             statusArr: [],
-            statusId: ''
+            statusId: '',
+            priceArr: [],
+            selectedPrice: '',
         }
     }
 
     async componentDidMount() {
          this.props.fetchCarRedux();
          this.props.getStatusStart();
+         this.props.fetchAllPriceStart();
     }
 
     async componentDidUpdate(prevProps, prevState, snapshot) {
@@ -31,9 +34,23 @@ class CarList extends Component {
                 statusId: arrStatus && arrStatus.length > 0 ? arrStatus[0].keyMap : ''
             });
         }
+
+        if (prevProps.pricesRedux !== this.props.pricesRedux) {
+            this.setState({
+                priceArr: this.props.pricesRedux
+            });
+        }
     }
 
-    
+    handlePriceChange = (e) => {
+        const selectedPrice = e.target.value;
+        this.setState({selectedPrice});
+        if(selectedPrice) {
+            this.props.fetchAllCarByPriceStart(selectedPrice);
+        } else {
+            this.props.fetchCarRedux();
+        }
+    }
     handleEditCar = (car) => {
         this.props.handleButtonEditCar(car)
     }
@@ -42,9 +59,27 @@ class CarList extends Component {
         this.props.deleteCar(car.id)
     }
     render() {
-        let arrCars = this.state.carsRedux;
+        const { carsRedux, priceArr, selectedPrice, statusArr } = this.state;
+        console.log('check price: ', this.state);
         return (
             <React.Fragment>
+                <div className="filter-container">
+                    <label htmlFor="price-select">Chọn giá thuê:</label>
+                    <select
+                        className="form-control"
+                        onChange={this.handlePriceChange}
+                        value={selectedPrice}
+                    >
+                        <option value="">-- Tất cả --</option>
+                        {priceArr && priceArr.length > 0 &&
+                            priceArr.map((item, index) => (
+                                <option key={index} value={item.price_of_day}>
+                                    {item.price_of_day} VND
+                                </option>
+                            ))
+                        }
+                    </select>
+                </div>
             <table id = "CarList">
                 <tbody>
                 <tr>
@@ -58,7 +93,7 @@ class CarList extends Component {
                     <th>Xử lý</th>
                 </tr>
                 {
-                    arrCars && arrCars.length > 0 && arrCars.map((item, index) => {
+                    carsRedux && carsRedux.length > 0 && carsRedux.map((item, index) => {
                         let imageBase64 = '';
                             if (item.image) {
                                 imageBase64 = new Buffer(item.image, 'base64').toString('binary');
@@ -77,7 +112,7 @@ class CarList extends Component {
                                 <td>{item.license_plate}</td>
                                 <td>{item.brand}</td>
                                 <td>
-                                {this.state.statusArr.find(status => status.keyMap === item.status_id)?.valueVi || 'Không xác định'}
+                                {statusArr.find(status => status.keyMap === item.status_id)?.valueVi || 'Không xác định'}
                                 </td>
 
                                 <td>{item.price_of_day}</td>
@@ -101,6 +136,7 @@ const mapStateToProps = state => {
     return {
         listCars: state.admin.cars,
         statusRedux: state.admin.status,
+        pricesRedux: state.admin.prices,
     };
 };
 
@@ -108,8 +144,9 @@ const mapDispatchToProps = dispatch => {
     return {
        fetchCarRedux: () => dispatch(caractions.fetchAllCarsStart()),
        deleteCar: (id) => dispatch(caractions.deleteCar(id)),
-
        getStatusStart: () => dispatch(caractions.fetchStatusStart()),
+       fetchAllPriceStart: () => dispatch(caractions.fetchAllPriceStart()),
+       fetchAllCarByPriceStart: (price) => dispatch(caractions.fetchAllCarByPriceStart(price)),
     };
 };
 

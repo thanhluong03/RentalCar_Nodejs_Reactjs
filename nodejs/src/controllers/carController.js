@@ -60,9 +60,54 @@ let handleDeleteCar = async (req, res) => {
     }
         
 }
+
+let handleGetAllPrices = async (req, res) => {
+    try {
+        let prices = await carService.getAllPrices();
+        return res.status(200).json({
+            errCode: 0,
+            errMessage: 'OK',
+            prices
+    });
+    } catch (e){
+        console.log(e);
+        return res.status(500).json({
+            errCode: -1,
+            errMessage: 'Error from the server'
+        })
+    }
+}
+
+let handleGetAllCarByPrices = async (req, res) => {
+    try {
+        const price = req.query.price; 
+        if (!price) {
+            return res.status(400).json({
+            errCode: 1,
+            errMessage: "Missing price parameter",
+        });
+    }
+    let carbyprices = await carService.getCarsByPrice(price);
+        return res.status(200).json({
+        errCode: 0,
+        errMessage: 'OK',
+        carbyprices
+        });
+    } catch (e) {
+        console.log(e);
+        return res.status(500).json({
+        errCode: -1,
+        errMessage: 'Error from the server'
+    })
+  }
+}
+
+
 module.exports = {
     handleCreateNewCar: handleCreateNewCar,
     handleGetAllCars: handleGetAllCars,
     handleEditCar: handleEditCar,
-    handleDeleteCar: handleDeleteCar
+    handleDeleteCar: handleDeleteCar,
+    handleGetAllPrices,
+    handleGetAllCarByPrices
 }

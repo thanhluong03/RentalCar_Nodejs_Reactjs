@@ -20,6 +20,14 @@ let initWebRoutes = (app) => {
     router.put('/api/edit-car', carControler.handleEditCar);
     router.delete('/api/delete-car', carControler.handleDeleteCar);
 
+    router.post('/api/create-new-location', locationController.handleCreateNewLocation);
+    router.get('/api/get-all-locations', locationController.handleGetAllLocations);
+    router.put('/api/edit-location', locationController.handleEditLocation);
+    router.delete('/api/delete-location', locationController.handleDeleteLocation);
+
+    router.get('/api/get-all-prices', carControler.handleGetAllPrices);
+    router.get("/api/get-all-car-by-prices", carControler.handleGetAllCarByPrices);
+
     return app.use("/", router);
 }
 

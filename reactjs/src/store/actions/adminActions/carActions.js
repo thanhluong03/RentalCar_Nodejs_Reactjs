@@ -1,5 +1,6 @@
 import actionTypes from '../actionTypes';
-import { getAllCodeService, createNewCarService, getAllCars, editCarService, deleteCarService} from '../../../services/adminService';
+import { getAllCodeService, createNewCarService, getAllCars, editCarService, deleteCarService,
+    getAllCarByPrices, getAllPrices} from '../../../services/adminService';
 import {toast} from "react-toastify"
 export const fetchTypeStart = () => {
     return async (dispatch, getState) => {
@@ -177,3 +178,61 @@ export const deleteCarSuccess = () => ({
 export const deleteCarFailed = () => ({
     type: actionTypes.DELETE_CAR_FAILED
 })
+
+export const fetchAllPriceStart = () => {
+    return async (dispatch, getState) => {
+        try{
+            let res = await getAllPrices();
+            if(res && res.errCode === 0) {
+                dispatch(fetchAllPriceSucess(res.prices.reverse()))
+            } else {
+                toast.error("Fetch price failed")
+                dispatch(fetchAllPriceFailed())
+            }
+        } catch (e) {
+            toast.error("Fetch price failed");
+            dispatch(fetchAllPriceFailed())
+            console.log('fetchAllPriceFailed error', e)
+        }
+    }
+}
+
+export const fetchAllPriceSucess = (data) => ({
+    type: actionTypes.FETCH_ALL_PRICE_SUCCESS,
+    prices: data
+})
+
+
+
+export const fetchAllPriceFailed = () => ({
+    type: actionTypes.FETCH_ALL_PRICE_FAILED
+})
+
+
+export const fetchAllCarByPriceStart = (price) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await getAllCarByPrices(price);
+            if (res && res.errCode === 0) {
+                toast.success("Fetch car by price successfully");
+                dispatch(fetchCarByPriceSuccess(res.carbyprices.reverse()));
+            } else {
+                toast.error("Fetch car by price failed");
+                dispatch(fetchCarByPriceFailed());
+            }
+        } catch (e) {
+            toast.error("Fetch cars by price failed");
+            dispatch(fetchCarByPriceFailed());
+            console.error('fetchCarsByPrice error', e);
+        }
+    };
+};
+
+export const fetchCarByPriceSuccess = (data) => ({
+    type: actionTypes.FETCH_ALL_CAR_BY_PRICE_SUCCESS,
+    carbyprices: data,
+});
+
+export const fetchCarByPriceFailed = () => ({
+    type: actionTypes.FETCH_ALL_CAR_BY_PRICE_FAILED,
+});
