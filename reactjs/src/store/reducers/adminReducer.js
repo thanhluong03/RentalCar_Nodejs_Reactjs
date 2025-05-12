@@ -22,6 +22,7 @@ const initialState = {
      errorMessage: '',
      prices: [],
      carbyprices: [],
+     errorMessage: '',
 
      //location
      locations: [],
@@ -141,12 +142,20 @@ const adminReducer = (state = initialState, action) => {
                      ...state
                 }
 
+            case actionTypes.FETCH_STATUS_START:
+                let copyStatestatus = {...state};
+                copyStatestatus.isLoadingStatus = true;
+                return {
+                ...copyStatestatus
+                }
             case actionTypes.FETCH_STATUS_SUCCESS:
                 state.status = action.data;
+                state.isLoadingStatus = false;
                 return {
                     ...state
                 }
             case actionTypes.FETCH_STATUS_FAILDED:
+                state.isLoadingStatus = false;
                 state.types = [];
                 return {
                     ...state

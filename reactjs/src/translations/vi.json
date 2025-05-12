@@ -30,8 +30,10 @@
         "admin": {
             "manage-customer": "Quản lý khách hàng",
             "manage-car": "Quản lý ô tô",
+            "manage-location": "Quản lý địa điểm",
             "car": "Thông tin ô tô",
             "customer": "Thông tin khách hàng",
+            "location": "Thông tin địa điểm",
             "manage-doctor": "Quản lý bác sĩ",
             "manage-admin": "Quản lý admin",
             "manage-user-doctor": "Quản lý",

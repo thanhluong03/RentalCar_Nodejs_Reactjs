@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { getAllCodeService } from '../../../services/userService';
-import * as actions from '../../../store/actions';
+import * as actions from '../../../store/actions/adminActions/userActions';
 import {CommonUtils, CRUD_ACTIONS} from "../../../utils";
 import './UserRedux.scss'
 import 'react-image-lightbox/style.css'
@@ -41,17 +41,6 @@ class ProductManage extends Component {
        this.props.getGenderStart();
        this.props.getPositionStart();
        this.props.getRoleStart();
-//         try {
-//            let res= await getAllCodeService('gender');
-//            if (res && res.errCode === 0){
-//             this.setState ({
-//                 genderArr: res.data
-//             })
-//            }
-//            console.log('check: ', res);
-// ;        } catch (e){
-//             console.log(e);
-//         }
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -205,7 +194,7 @@ class ProductManage extends Component {
         let genders = this.state.genderArr;
         let roles = this.state.roleArr;
         let positions = this.state.positionArr;
-        let isGetGender = this.props.isLoadingGender;
+        //let isGetGender = this.props.isLoadingGender;
 
         let {email, 
              password, 
@@ -391,5 +380,3 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductManage);
-
-
