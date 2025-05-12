@@ -186,14 +186,46 @@ let deleteCar = (carId) => {
     }
 
     resolve ({
-       errCode: 0,
-       errMessage: 'The car is delete'
+      errCode: 0,
+      errMessage: 'The car is delete'
     })
   })
 }
+
+let getAllPrices = () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let prices = await db.Car.findAll({
+        attributes: ['price_of_day'],
+        group: ['price_of_day'],
+        order: [['price_of_day', 'DESC']]
+      });
+      resolve(prices);
+      console.log(prices)
+    } catch (e) {
+      reject(e);
+    }
+  })
+}
+
+let getCarsByPrice = (price) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let cars = await db.Car.findAll({
+        where: { price_of_day: price }
+      });
+      resolve(cars);
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
 module.exports = {
     createNewCar: createNewCar,
     getAllCars: getAllCars,
     updateCar: updateCar,
     deleteCar: deleteCar,
+    getAllPrices,
+    getCarsByPrice
 }
