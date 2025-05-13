@@ -29,7 +29,6 @@ let initWebRoutes = (app) => {
 
     router.get('/api/get-all-prices', carControler.handleGetAllPrices);
     router.get("/api/get-all-car-by-prices", carControler.handleGetAllCarByPrices);
-  
     return app.use("/", router);
 }
 
