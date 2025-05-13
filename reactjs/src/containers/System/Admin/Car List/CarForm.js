@@ -2,10 +2,12 @@
 import React, { Component} from "react";
 import { connect } from "react-redux";
 import { FormattedMessage } from "react-intl";
-import * as actions from '../../../../store/actions';
+import * as actions from '../../../../store/actions/adminActions/carActions';
+import * as locationsactions from '../../../../store/actions/adminActions/locationActions';
 import { CommonUtils, CRUD_ACTIONS } from "../../../../utils";
 import './CarForm.scss'
 import CarList from "./CarList";
+import { toast } from "react-toastify";
 class CarForm extends Component {
 
     constructor(props) {
@@ -13,6 +15,7 @@ class CarForm extends Component {
         this.state = {
             typeArr: [],
             statusArr: [],
+            locationArr: [],
             previewImgUrl: '',
 
             nameCar: '',
@@ -23,18 +26,24 @@ class CarForm extends Component {
             modelYear: '',
             priceOfDay: '',
             statusId: '',
+            locationId: '',
 
             action: '',
             carIdEdit: '',
+            isOpen: true,
+           // isLoading: true
         }
     }
 
     async componentDidMount() {
+        this.setState({ isLoading: true });
         this.props.getTypeStart();
         this.props.getStatusStart();
+        this.props.fetchLocationRedux();
+
     }
 
-     componentDidUpdate(prevProps, prevState, snapshot) {
+   async componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps.typeRedux !== this.props.typeRedux) {
             let arrTypes = this.props.typeRedux;
             this.setState({
@@ -49,14 +58,25 @@ class CarForm extends Component {
                 statusId: arrStatus && arrStatus.length > 0 ? arrStatus[0].keyMap : ''
             });
         }
+        
+        if (prevProps.listLocations !== this.props.listLocations && this.props.listLocations.length > 0) {
+            const firstId = this.props.listLocations[0].id;
+            this.setState({
+                locationArr: this.props.listLocations,
+                locationId: firstId,
+            });
+        }
+        
         if (prevProps.listCars !== this.props.listCars) {
             let arrTypes = this.props.typeRedux;
             let arrStatus = this.props.statusRedux;
+            let arrLocation = this.props.listLocations
             this.setState({
                 nameCar: '',
                 avatar: '',
                 licensePlate: '',
                 typeId: arrTypes && arrTypes.length > 0 ? arrTypes[0].keyMap : '',
+                locationId: arrLocation && arrLocation > 0 ? arrLocation[0].id : '',
                 brand: '',
                 modelYear: '',
                 priceOfDay: '',
@@ -65,6 +85,25 @@ class CarForm extends Component {
                 previewImgUrl: '',
             })
         }
+
+        if (prevProps.errorMessage !== this.props.errorMessage) {
+            if (this.props.errorMessage) {
+                toast.error(this.props.errorMessage);  // Hiển thị thông báo lỗi
+            }
+        }
+
+        
+        // if (
+        //     this.props.typeRedux !== prevProps.typeRedux ||
+        //     this.props.statusRedux !== prevProps.statusRedux ||
+        //     this.props.listLocations !== prevProps.listLocations
+        // ) {
+        //     const { typeRedux, statusRedux, listLocations } = this.props;
+        //     if (typeRedux.length > 0 && statusRedux.length > 0 && listLocations.length > 0) {
+        //         this.setState({ isLoading: false });
+        //     }
+        // }
+
     }
 
     handleOnchangeImage = async (event) => {
@@ -89,9 +128,8 @@ class CarForm extends Component {
 
     checkValidateInput = () => {
         let isValid = true;
-        let arrCheck = ['nameCar', 'licensePlate', 'typeId', 'brand', 'modelYear', 'priceOfDay', 'statusId'];
+        let arrCheck = ['nameCar', 'licensePlate', 'typeId', 'brand', 'modelYear', 'locationId', 'priceOfDay', 'statusId'];
     
-        // Chỉ kiểm tra avatar nếu là CREATE
         if (this.state.action === CRUD_ACTIONS.CREATE) {
             arrCheck.push('avatar');
         }
@@ -126,6 +164,7 @@ class CarForm extends Component {
                 type_id: this.state.typeId,
                 brand: this.state.brand,
                 model_year: this.state.modelYear,
+                location_id: this.state.locationId,
                 price_of_day: this.state.priceOfDay,
                 status_id: this.state.statusId,
             })
@@ -140,6 +179,7 @@ class CarForm extends Component {
                 type_id: this.state.typeId,
                 brand: this.state.brand,
                 model_year: this.state.modelYear,
+                location_id: this.state.locationId,
                 price_of_day: this.state.priceOfDay,
                 status_id: this.state.statusId,
                 avatar: this.state.avatar
@@ -160,6 +200,7 @@ class CarForm extends Component {
             typeId: car.type_id,
             brand: car.brand,
             modelYear: car.model_year,
+            locationId: car.location_id,
             priceOfDay: car.price_of_day,
             statusId: car.status_id,
             action: CRUD_ACTIONS.EDIT,
@@ -171,8 +212,12 @@ class CarForm extends Component {
     }
 
     render() {
+        // const { typeArr, statusArr, locationArr } = this.state;
+        // const isDataLoaded = typeArr.length > 0 && statusArr.length > 0 && locationArr.length > 0;
+        
         let types = this.state.typeArr;
         let status = this.state.statusArr;
+        //let location = this.state.locationArr;
         let {
                 nameCar,
                 avatar,
@@ -181,11 +226,19 @@ class CarForm extends Component {
                 brand,
                 modelYear,
                 priceOfDay,
-                statusId,
+                statusId, 
+                locationId
         } = this.state;
+        
         console.log('thanh luong check prop : ', this.state)
         return (
+
             <div className="car-redux-container">
+                {/* {!isDataLoaded && (
+                    <div className="progress-container">
+                        <div className="progress-bar"></div>
+                    </div>
+                )} */}
                 <div className="title">
                     Quản lý ô tô 
                 </div>
@@ -232,7 +285,20 @@ class CarForm extends Component {
                         </div>
                         <div className="col-6">
                             <label>Địa chỉ</label>
-                            <input type="text" className="form-control"/>
+                            <select
+                                className="form-control"
+                                onChange={(event) => this.onChangeInput(event, 'locationId')}
+                                value={locationId}
+                            >
+                                {this.state.locationArr && this.state.locationArr.length > 0 &&
+                                    this.state.locationArr.map((item, index) => (
+                                        <option key={index} value={item.id}>
+                                            {item.name_location}
+                                        </option>
+                                    ))
+                                }
+                            </select>
+
                         </div>
                         <div className="col-6">
                             <label>Giá thuê theo ngày</label>
@@ -269,7 +335,11 @@ class CarForm extends Component {
                                     </div>
                                 </div>
                         </div>
-                        
+                                {this.props.errorMessage && (
+                            <div style={{ color: 'red', marginTop: '10px' }}>
+                                {this.props.errorMessage} {/* Lỗi từ backend */}
+                            </div>
+                        )}
 
                         <div className="col-12">
                             <button className= {this.state.action === CRUD_ACTIONS.EDIT ? "btn btn-edit":"btn btn-save"}
@@ -290,7 +360,7 @@ class CarForm extends Component {
                             />
                         </div>
                     </div>
-                </div>
+                </div> 
             </div>
         );
     }
@@ -302,6 +372,7 @@ const mapStateToProps = state => {
         typeRedux: state.admin.types,
         statusRedux: state.admin.status,
         listCars: state.admin.cars,
+        listLocations: state.admin.locations
     };
 };
 
@@ -312,6 +383,8 @@ const mapDispatchToProps = dispatch => {
        createNewCar: (data) => dispatch(actions.createNewCar(data)),
        fetchCarRedux: () => dispatch(actions.fetchAllCarsStart()),
        editCar: (data) => dispatch(actions.editCar(data)),
+
+       fetchLocationRedux: () => dispatch(locationsactions.fetchAllLocationsStart()),
     };
 };
 
