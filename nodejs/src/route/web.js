@@ -2,6 +2,7 @@ import express from "express";
 
 import userController from "../controllers/userController";
 import carControler from "../controllers/carController";
+import locationController from "../controllers/locationController";
 let router = express.Router();
 let initWebRoutes = (app) => {
 
@@ -28,7 +29,6 @@ let initWebRoutes = (app) => {
 
     router.get('/api/get-all-prices', carControler.handleGetAllPrices);
     router.get("/api/get-all-car-by-prices", carControler.handleGetAllCarByPrices);
-
     return app.use("/", router);
 }
 

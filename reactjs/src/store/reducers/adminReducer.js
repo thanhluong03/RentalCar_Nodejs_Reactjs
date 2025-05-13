@@ -12,17 +12,20 @@ const initialState = {
      isLoadingGender: false,
      genders: [],
      roles: [],
-     positions: [],
      users: [],
-     topDoctors: [],
-     allDoctors: [],
-     allScheduleTime: [],
-     allRequiredDoctorInfor: [],
 
      // car
      types: [],
      status: [],
      cars: [],
+
+     errorMessage: '',
+     prices: [],
+     carbyprices: [],
+     errorMessage: '',
+
+     //location
+     locations: [],
 }
 
 const adminReducer = (state = initialState, action) => {
@@ -48,9 +51,6 @@ const adminReducer = (state = initialState, action) => {
                 ...state
             }
 
-
-
-
         case actionTypes.FETCH_POSITION_SUCCESS:
             state.positions = action.data;
             return {
@@ -61,9 +61,6 @@ const adminReducer = (state = initialState, action) => {
             return {
                  ...state
             }
-
-
-
 
         case actionTypes.FETCH_ROLE_SUCCESS:
             state.roles = action.data;
@@ -145,12 +142,20 @@ const adminReducer = (state = initialState, action) => {
                      ...state
                 }
 
+            case actionTypes.FETCH_STATUS_START:
+                let copyStatestatus = {...state};
+                copyStatestatus.isLoadingStatus = true;
+                return {
+                ...copyStatestatus
+                }
             case actionTypes.FETCH_STATUS_SUCCESS:
                 state.status = action.data;
+                state.isLoadingStatus = false;
                 return {
                     ...state
                 }
             case actionTypes.FETCH_STATUS_FAILDED:
+                state.isLoadingStatus = false;
                 state.types = [];
                 return {
                     ...state
@@ -166,7 +171,39 @@ const adminReducer = (state = initialState, action) => {
                 return {
                     ...state
                 }
+            //location
+            case actionTypes.FETCH_ALL_LOCATION_SUCCESS:
+                state.locations = action.locations;
+                return {
+                    ...state
+                }
+            case actionTypes.FETCH_ALL_LOCATION_FAILED:
+                state.locations = [];
+                return {
+                    ...state
+                }
+            
+            case actionTypes.FETCH_ALL_PRICE_SUCCESS:
+                state.prices = action.prices;
+                return {
+                    ...state
+                };
+            case actionTypes.FETCH_ALL_PRICE_FAILED:
+                state.prices = [];
+                return {
+                    ...state
+                };
                 
+            case actionTypes.FETCH_ALL_CAR_BY_PRICE_SUCCESS:
+                state.cars = action.carbyprices;
+                return {
+                    ...state
+                };
+            case actionTypes.FETCH_ALL_CAR_BY_PRICE_FAILED:
+                state.cars = [];
+                return {
+                    ...state
+                };
         default:
             return state;
     }
