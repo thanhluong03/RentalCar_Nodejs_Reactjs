@@ -1,86 +1,55 @@
 .table-wrapper-car {
     max-height: 700px;
     overflow-y: auto;
-    border-radius: 8px;
-    overflow: hidden;
-    padding: 0px 30px;
-    margin-top: 20px;
+    position: relative;
     background-color: #F5F5F5;
+    border-radius: 8px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 #CarList {
     width: 100%;
     border-collapse: collapse;
+    table-layout: fixed;
     font-family: 'Inter', sans-serif;
 }
 
 #CarList thead th {
     position: sticky;
     top: 0;
-    z-index: 10;
-    padding: 12px;
-    font-size: 18px;
-    color: #000;
-    text-align: center;
-    background-color: #10d2d5;
-    border-bottom: 1px solid #ccc;
-    margin: 0;
-}
-
-#CarList tbody td {
-    padding: 10px;
-    text-align: center;
-    font-size: 15px;
-    color: #000;
-    border-bottom: 1px solid #e0e0e0;
-    background-color: white;
-}
-
-#CarList th {
-    background: #3bf8ff;
-    color: rgb(0, 0, 0);
+    background: #10d2d5;
+    color: black;
     font-weight: 600;
     font-size: 18px;
     letter-spacing: 0.5px;
+    padding: 10px;
+    z-index: 10;
+    border-bottom: 1px solid #e0e0e0;
+    text-align: center;
 }
 
-#CarList tr:hover {
-    background-color: #eaeaea;
+#CarList td {
+    padding: 10px;
+    text-align: center;
+    font-size: 15px;
+    letter-spacing: 0.5px;
+    background-color: white;
+    border-bottom: 1px solid #e0e0e0;
+    color: #000;
+}
+
+#CarList tr:hover td {
+    background-color: #dcdcdc;
     transition: background-color 0.3s ease;
-}
-
-#CarList .img {
-    width: 60px;
-    height: 70px;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    border-radius: 10px;
-    margin: 0 auto;
-}
-
-#CarList .no-image {
-    color: rgb(237, 148, 148);
-    font-size: 14px;
-    height: 70px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.btn-edit,
-.btn-delete {
-    border: none;
-    padding: 8px 12px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: all 0.3s ease;
 }
 
 .btn-edit {
     background: linear-gradient(135deg, #17a2b8, #21c7e0);
     color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
 }
 
 .btn-edit:hover {
@@ -92,6 +61,10 @@
 .btn-delete {
     background: linear-gradient(135deg, #dc3545, #fb1128);
     color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
     margin-left: 8px;
 }
 
@@ -109,83 +82,47 @@
     background-repeat: no-repeat;
     border-radius: 10px;
     margin: 0 auto;
-    justify-content: center;
-  }
+}
 
 #CarList .no-image {
     display: flex;
     align-items: center;
+    justify-content: center;
     color: rgb(237, 148, 148);
-}
-  
-.filter-container {
-    margin-left: 20px;
-    display: flex;
-    .price-select {
-        width: 8%;
-        text-align: center;
-        margin-top: 10px;
-        font-size: 1rem;
-        font-weight: 600;
-        color: #333;
-        margin-bottom: 8px;
-    }
-    .form {
-        margin-bottom: 15px;
-        padding: 10px;
-        border-radius: 8px;
-        border: 1px solid #ddd;
-        font-size: 16px;
-        width: 100%;
-        box-sizing: border-box;
-        transition: all 0.3s ease;
-
-    &:hover {
-        border-color: #3498db;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    &:focus {
-        outline: none;
-        border-color: #3498db;
-        box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.3);
-    }
-
-    }
+    height: 70px;
 }
 
 .filter-container {
     margin-left: 20px;
     display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+
     .price-select {
-        width: 8%;
-        text-align: center;
         margin-top: 10px;
         font-size: 1rem;
         font-weight: 600;
         color: #333;
-        margin-bottom: 8px;
+        margin-right: 12px;
     }
+
     .form {
-        margin-bottom: 15px;
         padding: 10px;
         border-radius: 8px;
         border: 1px solid #ddd;
         font-size: 16px;
-        width: 30%;
-        box-sizing: border-box;
+        width: 250px;
         transition: all 0.3s ease;
 
-    &:hover {
-        border-color: #3498db;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
+        &:hover {
+            border-color: #3498db;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
 
-    &:focus {
-        outline: none;
-        border-color: #3498db;
-        box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.3);
-    }
-
+        &:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.3);
+        }
     }
 }
