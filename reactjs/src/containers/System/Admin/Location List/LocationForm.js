@@ -18,6 +18,7 @@ class CarForm extends Component {
             avatar: '',
             action: CRUD_ACTIONS.CREATE,
             locationIdEdit: '',
+            showForm: false,
         }
     }
 
@@ -31,6 +32,7 @@ class CarForm extends Component {
                 avatar: '',
                 action: CRUD_ACTIONS.CREATE,
                 previewImgUrl: '',
+                showForm: false,
             })
         }
 
@@ -105,6 +107,7 @@ class CarForm extends Component {
                 avatar: this.state.avatar
             })
         }
+        this.setState({showForm: false});
     }
 
     handleButtonEditLocation = (location) => {
@@ -119,10 +122,20 @@ class CarForm extends Component {
             previewImgUrl: imageBase64,
             locationIdEdit: location.id,
             avatar: '',
+            showForm: true
             
         })
     }
-
+handleCancel = () => {
+        this.setState({
+            nameLocation: '',
+            avatar: '',
+            previewImgUrl: '',
+            locationIdEdit: '',
+            action: CRUD_ACTIONS.CREATE,
+            showForm: false
+        });
+    }
     render() {
         let {
                 nameLocation,
@@ -134,55 +147,80 @@ class CarForm extends Component {
                 <div className="title">
                     Quản lý địa điểm
                 </div>
-                <div className="location-redux-body">
-                    <div className="row input-text">
-                        <div className="col-6">
-                            <label>Tên ô tô</label>
-                            <input type="text" className="form-control"
-                            value={nameLocation}
-                            onChange={(event) => {this.onChangeInput(event, 'nameLocation')}}/>
-                        </div>
-                        <div className="col-6">
-                            <label>Ảnh</label>
-                            <div className="img-container">
-                                    <input id ="previewImg" type="file" hidden
-                                    onChange={(event) => this.handleOnchangeImage(event)}/>
-                                    <label className="label-upload" htmlFor="previewImg">Tải ảnh <i className="fas fa-upload"></i></label>
-                                    <div className="preview-image"
-                                     style= {{backgroundImage: `url(${this.state.previewImgUrl})`}}
-                                     onClick={() => this.openPreviewImage()}
-                                    >
-                                       
+                <div className="mb-2">
+                    <button
+                        className="btn-add"
+                        onClick={() => this.setState({
+                            action: CRUD_ACTIONS.CREATE,
+                            showForm: true,
+                            nameLocation: '',
+                            avatar: '',
+                            previewImgUrl: '',
+                            locationIdEdit: '',
+                        })}
+                    >
+                    Thêm địa chỉ mới
+                    </button>
+                </div>
+                {this.state.showForm && (
+                    <>
+                        <div className="modal-backdrop" onClick={this.handleCancel}></div>
+                        <div className="location-modal">
+                            <div className="location-modal-content">
+                                <div className="row input-text">
+                                    <div className="title-car"><span className="titlecar">Thông tin địa chỉ</span></div>
+                                    <div className="button">
+                                    <span className="btn-secondary"
+                                    onClick={this.handleCancel}><i className="fas fa-times"></i></span>
+                                    </div>
+                                    <div className="col-6">
+                                        <label>Tên địa điểm</label>
+                                        <input type="text" className="form-control"
+                                            value={nameLocation}
+                                            onChange={(event) => this.onChangeInput(event, 'nameLocation')} />
+                                    </div>
+                                    <div className="col-6">
+                                        <label>Ảnh</label>
+                                        <div className="img-container">
+                                            <input id="previewImg" type="file" hidden
+                                                onChange={(event) => this.handleOnchangeImage(event)} />
+                                            <label className="label-upload" htmlFor="previewImg">
+                                                Tải ảnh <i className="fas fa-upload"></i>
+                                            </label>
+                                            <div className="preview-image"
+                                                style={{ backgroundImage: `url(${this.state.previewImgUrl})` }}
+                                                onClick={() => this.openPreviewImage()}
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div className="col-12">
+                                        <div className="button">
+                                            <button className={this.state.action === CRUD_ACTIONS.EDIT ? "btn-edit" : "btn-save"}
+                                                onClick={this.handleSaveLocation}>
+                                                {
+                                                    this.state.action === CRUD_ACTIONS.EDIT ?
+                                                        <FormattedMessage id="manage-user.edit" />
+                                                        :
+                                                        <FormattedMessage id="manage-user.save" />
+                                                }
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
-                        </div>
-                                {this.props.errorMessage && (
-                            <div style={{ color: 'red', marginTop: '10px' }}>
-                                {this.props.errorMessage} {/* Lỗi từ backend */}
                             </div>
-                        )}
-
-                        <div className="col-12">
-                            <button className= {this.state.action === CRUD_ACTIONS.EDIT ? "btn btn-edit":"btn btn-save"}
-                            onClick={() => this.handleSaveLocation()}>
-                                {
-                                    this.state.action === CRUD_ACTIONS.EDIT ?
-                                    <FormattedMessage id= "manage-user.edit"/>
-                                    :
-                                    <FormattedMessage id= "manage-user.save"/>
-                                }
-                            </button>
                         </div>
+                    </>
+                )}
 
-                         <div className="col-12 mb-5">
-                            <LocationList
-                            handleButtonEditLocation={this.handleButtonEditLocation}
-                            action={this.state.action}
-                            />
-                        </div>
-                    </div>
+                <div className="location-list-scroll-area">
+                    <LocationList
+                    handleButtonEditLocation={this.handleButtonEditLocation}
+                    action={this.state.action}
+                    />
                 </div>
             </div>
+                        
         );
     }
 
