@@ -112,7 +112,7 @@ class CarList extends Component {
                                         <td>{index + 1}</td>
                                         <td style={{ textAlign: "center", verticalAlign: "middle" }}>
                                             {imageBase64 ? (
-                                                <div className="img" style={{ backgroundImage: url(${imageBase64}) }}></div>
+                                                <div className="img" style={{ backgroundImage: `url(${imageBase64})` }}></div>
                                             ) : (
                                                 <div className="img no-image">No Image</div>
                                             )}
