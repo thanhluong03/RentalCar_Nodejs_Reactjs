@@ -1,5 +1,4 @@
-
-import React, { Component} from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import { FormattedMessage } from "react-intl";
 import * as actions from '../../../../store/actions/adminActions/carActions';
@@ -8,8 +7,8 @@ import { CommonUtils, CRUD_ACTIONS } from "../../../../utils";
 import './CarForm.scss'
 import CarList from "./CarList";
 import { toast } from "react-toastify";
-class CarForm extends Component {
 
+class CarForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -30,20 +29,17 @@ class CarForm extends Component {
 
             action: '',
             carIdEdit: '',
-            isOpen: true,
-           // isLoading: true
-        }
+            showForm: false, // 👈 new flag
+        };
     }
 
     async componentDidMount() {
-        this.setState({ isLoading: true });
         this.props.getTypeStart();
         this.props.getStatusStart();
         this.props.fetchLocationRedux();
-
     }
 
-   async componentDidUpdate(prevProps, prevState, snapshot) {
+    async componentDidUpdate(prevProps) {
         if (prevProps.typeRedux !== this.props.typeRedux) {
             let arrTypes = this.props.typeRedux;
             this.setState({
@@ -51,14 +47,15 @@ class CarForm extends Component {
                 typeId: arrTypes && arrTypes.length > 0 ? arrTypes[0].keyMap : ''
             });
         }
-        if(prevProps.statusRedux !== this.props.statusRedux){
+
+        if (prevProps.statusRedux !== this.props.statusRedux) {
             let arrStatus = this.props.statusRedux;
             this.setState({
                 statusArr: arrStatus,
                 statusId: arrStatus && arrStatus.length > 0 ? arrStatus[0].keyMap : ''
             });
         }
-        
+
         if (prevProps.listLocations !== this.props.listLocations && this.props.listLocations.length > 0) {
             const firstId = this.props.listLocations[0].id;
             this.setState({
@@ -66,44 +63,32 @@ class CarForm extends Component {
                 locationId: firstId,
             });
         }
-        
+
         if (prevProps.listCars !== this.props.listCars) {
             let arrTypes = this.props.typeRedux;
             let arrStatus = this.props.statusRedux;
-            let arrLocation = this.props.listLocations
+            let arrLocation = this.props.listLocations;
             this.setState({
                 nameCar: '',
                 avatar: '',
                 licensePlate: '',
                 typeId: arrTypes && arrTypes.length > 0 ? arrTypes[0].keyMap : '',
-                locationId: arrLocation && arrLocation > 0 ? arrLocation[0].id : '',
+                locationId: arrLocation && arrLocation.length > 0 ? arrLocation[0].id : '',
                 brand: '',
                 modelYear: '',
                 priceOfDay: '',
                 statusId: arrStatus && arrStatus.length > 0 ? arrStatus[0].keyMap : '',
                 action: CRUD_ACTIONS.CREATE,
                 previewImgUrl: '',
-            })
+                showForm: false,
+            });
         }
 
         if (prevProps.errorMessage !== this.props.errorMessage) {
             if (this.props.errorMessage) {
-                toast.error(this.props.errorMessage);  // Hiển thị thông báo lỗi
+                toast.error(this.props.errorMessage);
             }
         }
-
-        
-        // if (
-        //     this.props.typeRedux !== prevProps.typeRedux ||
-        //     this.props.statusRedux !== prevProps.statusRedux ||
-        //     this.props.listLocations !== prevProps.listLocations
-        // ) {
-        //     const { typeRedux, statusRedux, listLocations } = this.props;
-        //     if (typeRedux.length > 0 && statusRedux.length > 0 && listLocations.length > 0) {
-        //         this.setState({ isLoading: false });
-        //     }
-        // }
-
     }
 
     handleOnchangeImage = async (event) => {
@@ -143,7 +128,7 @@ class CarForm extends Component {
         }
         return isValid;
     }
-    
+
     onChangeInput = (event, id) => {
         let copyState = {...this.state}
         copyState[id] = event.target.value;
@@ -151,51 +136,55 @@ class CarForm extends Component {
             ...copyState
         })
     }
+
     handleSaveCar = () => {
         let isValid = this.checkValidateInput();
-        if(isValid === false) return;
-        let {action} = this.state;
+        if (!isValid) return;
 
-        if(action === CRUD_ACTIONS.CREATE) {
+        const {
+            nameCar, avatar, licensePlate, typeId, brand, modelYear,
+            locationId, priceOfDay, statusId, carIdEdit, action
+        } = this.state;
+
+        if (action === CRUD_ACTIONS.CREATE) {
             this.props.createNewCar({
-                name_car: this.state.nameCar,
-                image: this.state.avatar,
-                license_plate: this.state.licensePlate,
-                type_id: this.state.typeId,
-                brand: this.state.brand,
-                model_year: this.state.modelYear,
-                location_id: this.state.locationId,
-                price_of_day: this.state.priceOfDay,
-                status_id: this.state.statusId,
-            })
+                name_car: nameCar,
+                image: avatar,
+                license_plate: licensePlate,
+                type_id: typeId,
+                brand,
+                model_year: modelYear,
+                location_id: locationId,
+                price_of_day: priceOfDay,
+                status_id: statusId,
+            });
         }
 
-        if(action === CRUD_ACTIONS.EDIT) {
+        if (action === CRUD_ACTIONS.EDIT) {
             this.props.editCar({
-                id: this.state.carIdEdit,
-                name_car: this.state.nameCar,
-              //  image: this.state.avatar,
-                license_plate: this.state.licensePlate,
-                type_id: this.state.typeId,
-                brand: this.state.brand,
-                model_year: this.state.modelYear,
-                location_id: this.state.locationId,
-                price_of_day: this.state.priceOfDay,
-                status_id: this.state.statusId,
-                avatar: this.state.avatar
-            })
+                id: carIdEdit,
+                name_car: nameCar,
+                license_plate: licensePlate,
+                type_id: typeId,
+                brand,
+                model_year: modelYear,
+                location_id: locationId,
+                price_of_day: priceOfDay,
+                status_id: statusId,
+                avatar
+            });
         }
-    }
+
+        this.setState({ showForm: false });
+    };
 
     handleButtonEditCar = (car) => {
         let imageBase64 = '';
         if(car.image){
             imageBase64 = new Buffer(car.image, 'base64').toString('binary');
         }
-
-        this.setState ({
+        this.setState({
             nameCar: car.name_car,
-           // image: '',
             licensePlate: car.license_plate,
             typeId: car.type_id,
             brand: car.brand,
@@ -207,17 +196,35 @@ class CarForm extends Component {
             previewImgUrl: imageBase64,
             carIdEdit: car.id,
             avatar: '',
-            
-        })
+            showForm: true
+        });
+    };
+    handleCancel = () => {
+        let arrTypes = this.props.typeRedux;
+        let arrStatus = this.props.statusRedux;
+        let arrLocation = this.props.listLocations;
+        this.setState({
+            nameCar: '',
+            avatar: '',
+            licensePlate: '',
+            typeId: arrTypes && arrTypes.length > 0 ? arrTypes[0].keyMap : '',
+            brand: '',
+            modelYear: '',
+            priceOfDay: '',
+            statusId: arrStatus && arrStatus.length > 0 ? arrStatus[0].keyMap : '',
+            locationId: arrLocation && arrLocation.length > 0 ? arrLocation[0].id : '',
+            previewImgUrl: '',
+            carIdEdit: '',
+            action: CRUD_ACTIONS.CREATE,
+            showForm: false
+        });
     }
-
     render() {
-        // const { typeArr, statusArr, locationArr } = this.state;
-        // const isDataLoaded = typeArr.length > 0 && statusArr.length > 0 && locationArr.length > 0;
-        
-        let types = this.state.typeArr;
-        let status = this.state.statusArr;
-        //let location = this.state.locationArr;
+
+        let types = this.props.typeRedux;
+        let status = this.props.statusRedux;
+        let location = this.props.listLocations;
+
         let {
                 nameCar,
                 avatar,
@@ -232,160 +239,182 @@ class CarForm extends Component {
         
         console.log('thanh luong check prop : ', this.state)
         return (
-
+            
             <div className="car-redux-container">
-                {/* {!isDataLoaded && (
-                    <div className="progress-container">
-                        <div className="progress-bar"></div>
-                    </div>
-                )} */}
-                <div className="title">
-                    Quản lý ô tô 
-                </div>
-                <div className="car-redux-body">
-                    <div className="row input-text">
-                        <div className="col-6">
-                            <label>Tên ô tô</label>
-                            <input type="text" className="form-control"
-                            value={nameCar}
-                            onChange={(event) => {this.onChangeInput(event, 'nameCar')}}/>
-                        </div>
-                        <div className="col-6">
-                            <label>Biển số xe</label>
-                            <input type="text" className="form-control"
-                            value={licensePlate}
-                            onChange={(event) => {this.onChangeInput(event, 'licensePlate')}}/>
-                        </div>
-                        <div className="col-6">
-                            <label>Loại xe</label>
-                            <select className="form-control" 
-                                onChange={(event) => {this.onChangeInput(event, 'typeId')}}
-                                value={typeId}>
-                                    {types && types.length > 0 && 
-                                        types.map((item, index) => {
-                                        return (
-                                            <option key={index} value={item.keyMap}>{item.valueVi}</option>
-                                        )
-                                      })
-                                    }
-                                    
-                            </select>
-                        </div>
-                        <div className="col-6">
-                            <label>Thương hiệu</label>
-                            <input type="text" className="form-control"
-                            value={brand}
-                            onChange={(event) => {this.onChangeInput(event, 'brand')}}/>
-                        </div>
-                        <div className="col-6">
-                            <label>Năm sản xuất</label>
-                            <input type="text" className="form-control"
-                            value={modelYear}
-                            onChange={(event) => {this.onChangeInput(event, 'modelYear')}}/>
-                        </div>
-                        <div className="col-6">
-                            <label>Địa chỉ</label>
-                            <select
-                                className="form-control"
-                                onChange={(event) => this.onChangeInput(event, 'locationId')}
-                                value={locationId}
-                            >
-                                {this.state.locationArr && this.state.locationArr.length > 0 &&
-                                    this.state.locationArr.map((item, index) => (
-                                        <option key={index} value={item.id}>
-                                            {item.name_location}
-                                        </option>
-                                    ))
-                                }
-                            </select>
+                <div className="title">Quản lý ô tô</div>
 
-                        </div>
-                        <div className="col-6">
-                            <label>Giá thuê theo ngày</label>
-                            <input type="text" className="form-control"
-                            value={priceOfDay}
-                            onChange={(event) => {this.onChangeInput(event, 'priceOfDay')}}/>
-                        </div>
-                        <div className="col-6">
-                            <label>Trạng thái</label>
-                            <select className="form-control" 
-                                onChange={(event) => {this.onChangeInput(event, 'statusId')}}
-                                value={statusId}>
-                                    {status && types.length > 0 && 
-                                        status.map((item, index) => {
-                                        return (
-                                            <option key={index} value={item.keyMap}>{item.valueVi}</option>
-                                        )
-                                      })
+                <div className="mb-2">
+                    <button
+                        className="btn-add"
+                        onClick={() => this.setState({
+                            action: CRUD_ACTIONS.CREATE,
+                            showForm: true,
+                            nameCar: '',
+                            licensePlate: '',
+                            typeId: types && types.length > 0 ? types[0].keyMap : '',
+                            brand: '',
+                            modelYear: '',
+                            priceOfDay: '',
+                            statusId: status && status.length > 0 ? status[0].keyMap : '',
+                            locationId: location && location.length > 0 ? location[0].id : '',
+                            avatar: '',
+                            previewImgUrl: '',
+                            carIdEdit: '',
+                        })}
+                    >
+                    Thêm xe mới
+                    </button>
+                </div>
+
+                {this.state.showForm && (
+                    <div className="car-form-overlay">
+                        <div className="car-form-content">
+                            <div className="row input-text">
+                                <div className="title-car"><span className="titlecar">Thông tin xe</span></div>
+                                <div className="button">
+                                    <span className="btn-secondary"
+                                    onClick={this.handleCancel}><i className="fas fa-times"></i></span>
+                                </div>
+                                <div className="col-6">
+                                <label>Tên ô tô</label>
+                                <input type="text" className="form-control"
+                                value={nameCar}
+                                onChange={(event) => {this.onChangeInput(event, 'nameCar')}}/>
+                            </div>
+                            <div className="col-6">
+                                <label>Biển số xe</label>
+                                <input type="text" className="form-control"
+                                value={licensePlate}
+                                onChange={(event) => {this.onChangeInput(event, 'licensePlate')}}/>
+                            </div>
+                            <div className="col-6">
+                                <label>Loại xe</label>
+                                <select className="form-control" 
+                                    onChange={(event) => {this.onChangeInput(event, 'typeId')}}
+                                    value={typeId}>
+                                        {types && types.length > 0 && 
+                                            types.map((item, index) => {
+                                            return (
+                                                <option key={index} value={item.keyMap}>{item.valueVi}</option>
+                                            )
+                                        })
+                                        }
+                                        
+                                </select>
+                            </div>
+                            <div className="col-6">
+                                <label>Thương hiệu</label>
+                                <input type="text" className="form-control"
+                                value={brand}
+                                onChange={(event) => {this.onChangeInput(event, 'brand')}}/>
+                            </div>
+                            <div className="col-6">
+                                <label>Năm sản xuất</label>
+                                <input type="text" className="form-control"
+                                value={modelYear}
+                                onChange={(event) => {this.onChangeInput(event, 'modelYear')}}/>
+                            </div>
+                            <div className="col-6">
+                                <label>Địa chỉ</label>
+                                <select
+                                    className="form-control"
+                                    onChange={(event) => this.onChangeInput(event, 'locationId')}
+                                    value={locationId}
+                                >
+                                    {this.state.locationArr && this.state.locationArr.length > 0 &&
+                                        this.state.locationArr.map((item, index) => (
+                                            <option key={index} value={item.id}>
+                                                {item.name_location}
+                                            </option>
+                                        ))
                                     }
-                                    
-                            </select>
-                        </div>
-                        <div className="col-6">
-                            <label>Ảnh</label>
-                            <div className="img-container">
-                                    <input id ="previewImg" type="file" hidden
-                                    onChange={(event) => this.handleOnchangeImage(event)}/>
-                                    <label className="label-upload" htmlFor="previewImg">Tải ảnh <i className="fas fa-upload"></i></label>
-                                    <div className="preview-image"
-                                     style= {{backgroundImage: `url(${this.state.previewImgUrl})`}}
-                                     onClick={() => this.openPreviewImage()}
-                                    >
-                                       
+                                </select>
+
+                            </div>
+                            <div className="col-6">
+                                <label>Giá thuê theo ngày</label>
+                                <input type="text" className="form-control"
+                                value={priceOfDay}
+                                onChange={(event) => {this.onChangeInput(event, 'priceOfDay')}}/>
+                            </div>
+                            <div className="col-6">
+                                <label>Trạng thái</label>
+                                <select className="form-control" 
+                                    onChange={(event) => {this.onChangeInput(event, 'statusId')}}
+                                    value={statusId}>
+                                        {status && types.length > 0 && 
+                                            status.map((item, index) => {
+                                            return (
+                                                <option key={index} value={item.keyMap}>{item.valueVi}</option>
+                                            )
+                                        })
+                                        }
+                                        
+                                </select>
+                            </div>
+                            <div className="col-6">
+                                <label>Ảnh</label>
+                                <div className="img-container">
+                                        <input id ="previewImg" type="file" hidden
+                                        onChange={(event) => this.handleOnchangeImage(event)}/>
+                                        <label className="label-upload" htmlFor="previewImg">Tải ảnh <i className="fas fa-upload"></i></label>
+                                        <div className="preview-image"
+                                        style= {{backgroundImage: `url(${this.state.previewImgUrl})`}}
+                                        onClick={() => this.openPreviewImage()}
+                                        >
+                                    </div>
+                                    </div>
+                            </div>
+                                    {this.props.errorMessage && (
+                                <div style={{ color: 'red', marginTop: '10px' }}>
+                                    {this.props.errorMessage} {/* Lỗi từ backend */}
+                                </div>
+                            )}
+
+                                <div className="col-12 mt-3">
+                                    <div className="button">
+                                        <button
+                                            className={this.state.action === CRUD_ACTIONS.EDIT ? " btn-edit" : " btn-save"}
+                                            onClick={this.handleSaveCar}
+                                        >
+                                            {
+                                                this.state.action === CRUD_ACTIONS.EDIT ?
+                                                    <FormattedMessage id="manage-user.edit" /> :
+                                                    <FormattedMessage id="manage-user.save" />
+                                            }
+                                        </button>
                                     </div>
                                 </div>
-                        </div>
-                                {this.props.errorMessage && (
-                            <div style={{ color: 'red', marginTop: '10px' }}>
-                                {this.props.errorMessage} {/* Lỗi từ backend */}
                             </div>
-                        )}
-
-                        <div className="col-12">
-                            <button className= {this.state.action === CRUD_ACTIONS.EDIT ? "btn btn-edit":"btn btn-save"}
-                            onClick={() => this.handleSaveCar()}>
-                                {
-                                    this.state.action === CRUD_ACTIONS.EDIT ?
-                                    <FormattedMessage id= "manage-user.edit"/>
-                                    :
-                                    <FormattedMessage id= "manage-user.save"/>
-                                }
-                            </button>
-                        </div>
-
-                         <div className="col-12 mb-5">
-                            <CarList
-                            handleButtonEditCar={this.handleButtonEditCar}
-                            action={this.state.action}
-                            />
                         </div>
                     </div>
-                </div> 
+                )}
+
+                <div className="car-list-scroll-area">
+                    <CarList
+                        handleButtonEditCar={this.handleButtonEditCar}
+                        action={this.state.action}
+                    />
+                </div>
             </div>
         );
     }
-
 }
 
-const mapStateToProps = state => {
-    return {
-        typeRedux: state.admin.types,
-        statusRedux: state.admin.status,
-        listCars: state.admin.cars,
-        listLocations: state.admin.locations
-    };
-};
+const mapStateToProps = state => ({
+    typeRedux: state.admin.types,
+    statusRedux: state.admin.status,
+    listCars: state.admin.cars,
+    listLocations: state.admin.locations
+});
 
-const mapDispatchToProps = dispatch => {
-    return {
-       getTypeStart: () => dispatch(actions.fetchTypeStart()),
-       getStatusStart: () => dispatch(actions.fetchStatusStart()),
-       createNewCar: (data) => dispatch(actions.createNewCar(data)),
-       fetchCarRedux: () => dispatch(actions.fetchAllCarsStart()),
-       editCar: (data) => dispatch(actions.editCar(data)),
-
-       fetchLocationRedux: () => dispatch(locationsactions.fetchAllLocationsStart()),
-    };
-};
+const mapDispatchToProps = dispatch => ({
+    getTypeStart: () => dispatch(actions.fetchTypeStart()),
+    getStatusStart: () => dispatch(actions.fetchStatusStart()),
+    createNewCar: (data) => dispatch(actions.createNewCar(data)),
+    fetchCarRedux: () => dispatch(actions.fetchAllCarsStart()),
+    editCar: (data) => dispatch(actions.editCar(data)),
+    fetchLocationRedux: () => dispatch(locationsactions.fetchAllLocationsStart()),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(CarForm);
