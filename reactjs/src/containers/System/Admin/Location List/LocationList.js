@@ -30,7 +30,10 @@ class LocationList extends Component {
     }
 
     handleDeleteLocation = (location) => {
-        this.props.deleteLocation(location.id)
+        let confirmDelete =window.confirm(`Bạn chắc chắn muốn xóa địa chỉ "${location.name_location}" này không ?`)
+        if(confirmDelete){
+            this.props.deleteLocation(location.id)
+        }
     }
     render() {
         let arrLocations = this.state.locationsRedux;
