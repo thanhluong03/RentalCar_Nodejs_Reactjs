@@ -30,31 +30,6 @@ export const fetchGenderFaided = () => ({
     type: actionTypes.FETCH_GENDER_FAIDED
 })
 
-export const fetchPositionStart = () => {
-    return async (dispatch, getState) =>{
-        try {
-            let res = await getAllCodeService("POSITION");
-            if (res && res.errCode === 0)
-            {
-                dispatch(fetchPositionSuccess(res.data))
-            } else{
-                dispatch(fetchPositionFaided())
-            }
-        } catch (e) {
-            dispatch(fetchPositionFaided())
-            console.log('fetchPositionFailed error', e)
-        }
-    }
-    
-}
-export const fetchPositionSuccess = (positionData) => ({
-    type: actionTypes.FETCH_POSITION_SUCCESS,
-    data: positionData
-})
-export const fetchPositionFaided = () => ({
-    type: actionTypes.FETCH_POSITION_FAILDED
-})
-
 export const fetchRoleStart = () => {
     return async (dispatch, getState) =>{
         try {
