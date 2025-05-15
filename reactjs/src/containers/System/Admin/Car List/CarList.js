@@ -56,7 +56,10 @@ class CarList extends Component {
     }
 
     handleDeleteCar = (car) => {
-        this.props.deleteCar(car.id)
+        const confirmDelete = window.confirm(`Bạn có chắc muốn xóa xe "${car.name_car}" không?`);
+        if(confirmDelete){
+            this.props.deleteCar(car.id);
+        }
     }
     render() {
         const { carsRedux, priceArr, selectedPrice, statusArr } = this.state;
@@ -64,9 +67,9 @@ class CarList extends Component {
         return (
             <React.Fragment>
                 <div className="filter-container">
-                    <label htmlFor="price-select">Chọn giá thuê:</label>
+                    <label className="price-select">Chọn giá thuê:</label>
                     <select
-                        className="form-control"
+                        className="form"
                         onChange={this.handlePriceChange}
                         value={selectedPrice}
                     >
