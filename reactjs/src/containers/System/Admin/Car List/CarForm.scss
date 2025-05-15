@@ -117,13 +117,10 @@
         overflow-y: auto;
         padding-left: 10px;
     }
-
-    .input-text {
         .button {
         display: flex;
         justify-content: flex-start;
-        margin-top: 20px;
-        position: relative;
+        margin-bottom: 20px;
 
         .btn-save,
         .btn-edit {
@@ -187,5 +184,4 @@
             font-size: 20px;
         }
         }
-    }
     }
