@@ -8,10 +8,12 @@ import { userIsAuthenticated, userIsNotAuthenticated } from '../hoc/authenticati
 import { path } from '../utils'
 import Home from '../routes/Home';
 import Login from './Auth/Login';
+import Register from './Auth/Register';
 import System from '../routes/System';
 import Staff from '../routes/Staff.js';
 import { CustomToastCloseButton } from '../components/CustomToast';
 import HomePage from './HomePage/HomePage.js';
+import CarForm from './System/Admin/Car List/CarForm';
 
 import CustomScrollbars  from '../components/CustomScrollbars';
 // import Doctor from '../routes/Doctor';
@@ -51,10 +53,10 @@ class App extends Component {
                             <Switch>
                             <Route path={path.HOME} exact component={(Home)} />
                                 <Route path={path.LOGIN} component={userIsNotAuthenticated(Login)}/>
+                                <Route path={path.REGISTER} component={(Register)}/>
                                 <Route path={path.SYSTEM} component={userIsAuthenticated(System)} />
                                 <Route path={'/staff'} component={userIsAuthenticated(Staff)}/>
-                                <Route path={path.HOMEPAGE} component={HomePage} />
-
+                                <Route path={path.HOMEPAGE} component={HomePage}/>
                             </Switch>
                             </CustomScrollbars>
                         </div>
