@@ -104,6 +104,9 @@ let getAllUsers = (userId) => {
                         exclude: ['password']
                     }
                 })
+                if(users && users.driver_licence){
+                    users.driver_licence = new Buffer(users.driver_licence, 'base64').toString('binary');
+                }
             }
 
             if(userId && userId !=='ALL'){
@@ -113,6 +116,9 @@ let getAllUsers = (userId) => {
                         exclude: ['password']
                     }
                 })
+                if(users && users.driver_licence){
+                    users.driver_licence = new Buffer(users.driver_licence, 'base64').toString('binary');
+                }
             }
             resolve (users)
         } catch (e) {
@@ -149,10 +155,32 @@ let getAllCodeService = (typeInput) => {
         }
     });
 };
-
+let deleteUser = (userId) => {
+    return new Promise( async(resolve, reject) => {
+        let foundUser = await db.User.findOne({
+            where: {id: userId}
+        })
+        if(!foundUser) {
+            resolve({
+            errCode: 2,
+            errMessage: `The user isn't exist`
+        })
+        }
+        else {
+            await db.User.destroy({
+            where: {id: userId}
+        })
+        }
+        resolve({
+            errCode: 0,
+            errMessage: `The user is delete`
+        })
+    })
+}
 module.exports = {
     handleUserLogin,
     createNewUser,
     getAllUsers,
-    getAllCodeService
+    getAllCodeService,
+    deleteUser
 }
