@@ -14,6 +14,7 @@ class HomeHeader extends Component {
     }
 
 
+
     componentDidMount() {
         this.updateActiveItem(this.props.location.pathname);
     }
@@ -46,6 +47,12 @@ class HomeHeader extends Component {
             this.props.history.push(`/login`)
         }
     }
+
+    handleViewRegister = () => {
+        if(this.props.history) {
+            this.props.history.push(`/register`)
+        }
+    }
     render() {
         const { activeItem } = this.state;
         return (
@@ -61,7 +68,11 @@ class HomeHeader extends Component {
                     <div className="right-content">
                         <div className="right-body">
                             <button className="register-btn"
+<<<<<<< Updated upstream
                             onClick={() => this.handleViewLogin()}>Đăng ký</button>
+=======
+                            onClick={() => this.handleViewRegister()}>Đăng ký</button>
+>>>>>>> Stashed changes
                             <button className="login-btn"
                             onClick={() => this.handleViewLogin()}>Đăng nhập</button>
                         </div>
