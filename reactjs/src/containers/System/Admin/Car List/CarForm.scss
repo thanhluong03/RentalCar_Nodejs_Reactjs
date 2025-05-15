@@ -1,7 +1,16 @@
 .car-redux-container {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
+    padding: 0px 40px;
+    .car-redux-body{
+        //border: 1px solid red;
+        background: #EAE8E8;
+        border-radius: 20px;
+        padding: 20px 30px;
+        .input-text{
+            input, select {
+                height: 45px;
+                display: flex;
+                flex-direction: column;
+                height: 100vh;
 
     .title {
         position: sticky;
@@ -56,6 +65,7 @@
         flex: 1;
         overflow-y: auto;
         padding: 10px;
+        padding-left: 10px;
     }
 
     label {
@@ -73,6 +83,47 @@
                 border-color: rgb(74, 246, 246);
                 box-shadow: 0 10px 15px rgba(10, 224, 244, 0.1);
                 outline: none;
+            }
+        }
+
+        label {
+            font-size: 16px;
+        }
+
+        .img-container {
+            background: #fff;
+            border: 1px solid #6b6b6b;
+            padding: 16px;
+            border-radius: 5px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            &:hover {
+                border-color: rgb(74, 246, 246);
+                box-shadow: 0 10px 15px rgba(10, 224, 244, 0.1);
+            }
+
+            .preview-image {
+                background: #efefef;
+                border: 1px solid #b4b4b4;
+                height: 80px;
+                width: 100%;
+                background-size: contain;
+                background-repeat: no-repeat;
+                background-position: center;
+                border-radius: 10px;
+                cursor: pointer;
+
+                &:hover {
+                    border-color: rgb(74, 246, 246);
+                    box-shadow: 0 10px 15px rgba(10, 224, 244, 0.1);
+                }
+                &:focus {
+                    outline: none;
+                    border-color: rgb(74, 246, 246);
+                    box-shadow: 0 10px 15px rgba(10, 224, 244, 0.1);
+                }
             }
         }
 
@@ -176,4 +227,7 @@
             }
         }
     }
+}
+}
+}
 }
