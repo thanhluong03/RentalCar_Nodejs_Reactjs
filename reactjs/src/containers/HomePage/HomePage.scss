@@ -159,6 +159,101 @@
     z-index: 10 !important; // Giữ mức thấp để không đè lên header
     height: 50px !important;
     width: 50px !important;
+
+.section-share {
+  &.section-location {
+    
+  }
+
+  .section-container {
+    display: flex;
+    flex-direction: column;
+
+    .section-header {
+      margin-bottom: 20px;
+      margin-top: 30px;
+      margin-left: 30px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+
+      .title-section {
+            color: rgb(0, 0, 0);
+            border-radius: 10px;
+            border: 1px solid #A0A0A0;
+            font-size: 40px;
+            font-weight: 600;
+
+                  padding: 0px 15px;
+
+            padding: 0px 15px;
+
+            background: #E2E2E2;
+            font-family: 'Times New Roman', Times, serif;
+      }
+
+      .btn-section {
+        padding: 8px 15px;
+        border: 2px solid #d1cfcf;
+        background: #ebebeb;
+        cursor: pointer;
+        margin-bottom: 10px;
+        margin-right: 15px;
+
+        &:hover {
+          background: rgb(248, 178, 47);
+          color: white;
+          border-color: rgb(251, 171, 21);
+        }
+      }
+    }
+  }
+
+  .section-body {
+    height: 400px;
+    margin: 0px 150px;
+    padding: 20px 20px ;
+    .slick-slider {
+      height: 100%;
+    }
+
+    .slick-list,
+    .slick-track {
+      height: 100%;
+    }
+
+    .section-customize {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+
+      .bg-image {
+        width: 100%;
+        height: 200px; 
+        background-size: cover;
+        background-position: center;
+        border-radius: 10px;
+        transition: transform 0.3s ease;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      &:hover .bg-image {
+        transform: scale(1.05);
+      }
+    }
+  }
+
+  .slick-prev,
+  .slick-next {
+    position: absolute !important;
+    bottom: 10px !important;
+    z-index: 10 !important;
+    height: 65px !important;
+    width: 65px !important;
     background: #ffffff !important;
     border: 2px solid #d7d7d7 !important;
     border-radius: 50% !important;
@@ -166,6 +261,7 @@
     transition: all 0.3s ease-in-out !important;
 
     &:hover {
+
         background: #f1c40f !important;
         border-color: #f39c12 !important;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15) !important;
@@ -201,4 +297,22 @@
             }
         }
     }
+
+
+      background: #f1c40f !important;
+      border-color: #f39c12 !important;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15) !important;
+    }
+
+    &:before {
+      font-family: FontAwesome !important;
+      color: #d7d7d7 !important;
+    }
+  }
+
+  .slick-disabled {
+    display: none !important;
+  }
+
 }
+

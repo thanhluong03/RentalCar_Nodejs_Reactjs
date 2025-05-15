@@ -1,4 +1,4 @@
-#CarList {
+#LocationList {
     font-family: 'Inter', sans-serif;
     background-color: #F5F5F5;
     border-radius: 20px;
@@ -6,28 +6,28 @@
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     overflow: hidden;
-    padding: 0px 30px;
+    margin-top: 20px;
 }
 
-#CarList th, #CarList td {
+#LocationList th, #LocationList td {
     padding: 10px;
     text-align: center;
     border-bottom: 1px solid #e0e0e0;
 }
 
-#CarList th {
+#LocationList th {
     background: #3bf8ff;
     color: rgb(0, 0, 0);
     font-weight: 600;
     font-size: 18px;
     letter-spacing: 0.5px;
 }
-#CarList tr:hover {
+#LocationList tr:hover {
     background-color: #dcdcdc;
     transition: background-color 0.3s ease;
 }
 
-#CarList td {
+#LocationList td {
     color: rgb(0, 0, 0);
     font-size: 15px;
     letter-spacing: 0.5px;
@@ -58,7 +58,7 @@
 }
 
 
-#CarList .img {
+#LocationList .img {
     width: 60px;
     height: 70px;
     background-size: cover;
@@ -69,46 +69,12 @@
     justify-content: center;
   }
 
-#CarList .no-image {
+#LocationList .no-image {
     display: flex;
     align-items: center;
     color: rgb(237, 148, 148);
 }
   
-.filter-container {
-    margin-left: 20px;
-    display: flex;
-    .price-select {
-        width: 8%;
-        text-align: center;
-        margin-top: 10px;
-        font-size: 1rem;
-        font-weight: 600;
-        color: #333;
-        margin-bottom: 8px;
-    }
-    .form {
-        margin-bottom: 15px; // Thêm khoảng cách dưới các input, textarea và select
-        padding: 10px;
-        border-radius: 8px;
-        border: 1px solid #ddd;
-        font-size: 16px;
-        width: 100%;
-        box-sizing: border-box;
-        transition: all 0.3s ease;
 
-    &:hover {
-        border-color: #3498db;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    &:focus {
-        outline: none;
-        border-color: #3498db;
-        box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.3);
-    }
-
-    }
-}
 
   

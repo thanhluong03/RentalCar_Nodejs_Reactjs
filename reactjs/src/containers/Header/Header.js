@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import * as actions from "../../store/actions";
 import Navigator from '../../components/Navigator';
 import { adminMenu, doctorMenu } from './menuApp';
+import logo from '../../assets/images/logo.png';
 import { USER_ROLE } from '../../utils';
 import _ from 'lodash';
 import './Header.scss';
@@ -53,12 +54,22 @@ class Header extends Component {
                 </div>
 
                 <div className="welcome">
+                    <div className='image'>
+                        <img className="logo" src= {logo} onClick={() => this.returnToHome()}/>
+                    </div>
                     <span className="welcome-span">
-                        Welcome, {userInfo && userInfo.firstName ? userInfo.firstName : ''}
+                        Welcome, {userInfo && userInfo.first_name ? userInfo.first_name : ''}
                     </span>
                 <div className="logout" onClick={this.handleLogout}>
                     <span className="name-logout">Đăng xuất</span>
                     <div className="btn btn-logout">
+                </div>
+                <div className="header-tabs-container">
+                    <Navigator menus={this.state.menuApp} />
+                </div>
+                <div className="logout">
+                    <span className="name-logout">Đăng xuất</span>
+                    <div className="btn btn-logout" onClick={this.handleLogout}>
                         <i className="fas fa-sign-out-alt"></i>
                     </div>
                 </div>
