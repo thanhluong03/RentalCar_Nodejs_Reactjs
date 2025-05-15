@@ -164,7 +164,6 @@ handleCancel = () => {
                 </div>
                 {this.state.showForm && (
                     <>
-                        <div className="modal-backdrop" onClick={this.handleCancel}></div>
                         <div className="location-modal">
                             <div className="location-modal-content">
                                 <div className="row input-text">
