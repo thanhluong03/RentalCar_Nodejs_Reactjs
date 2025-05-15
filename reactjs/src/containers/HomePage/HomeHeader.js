@@ -68,11 +68,7 @@ class HomeHeader extends Component {
                     <div className="right-content">
                         <div className="right-body">
                             <button className="register-btn"
-<<<<<<< Updated upstream
-                            onClick={() => this.handleViewLogin()}>Đăng ký</button>
-=======
                             onClick={() => this.handleViewRegister()}>Đăng ký</button>
->>>>>>> Stashed changes
                             <button className="login-btn"
                             onClick={() => this.handleViewLogin()}>Đăng nhập</button>
                         </div>
