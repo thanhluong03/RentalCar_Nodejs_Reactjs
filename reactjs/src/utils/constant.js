@@ -5,6 +5,7 @@ export const path = {
     REGISTER: '/register',
     LOG_OUT: '/logout',
     SYSTEM: '/system',
+    SEARCHCAR: '/search-car',
 };
 
 export const LANGUAGES = {

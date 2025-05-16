@@ -102,6 +102,34 @@ let handleGetAllCarByPrices = async (req, res) => {
   }
 }
 
+let handleSearchCar = async (req, res) => {
+    try {
+        const keyword = req.query.keyword;
+
+        if (!keyword) {
+            return res.status(400).json({
+                errCode: 1,
+                errMessage: "Missing parameter",
+            });
+        }
+
+        let cars = await carService.searchCars(keyword);
+
+        return res.status(200).json({
+            errCode: 0,
+            errMessage: 'OK',
+            cars
+        });
+
+    } catch (e) {
+        console.log(e);
+        return res.status(500).json({
+            errCode: -1,
+            errMessage: 'Error from the server'
+        });
+    }
+};
+
 
 module.exports = {
     handleCreateNewCar: handleCreateNewCar,
@@ -109,5 +137,6 @@ module.exports = {
     handleEditCar: handleEditCar,
     handleDeleteCar: handleDeleteCar,
     handleGetAllPrices,
-    handleGetAllCarByPrices
+    handleGetAllCarByPrices,
+    handleSearchCar
 }
