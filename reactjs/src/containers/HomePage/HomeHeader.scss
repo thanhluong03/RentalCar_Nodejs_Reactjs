@@ -1,6 +1,6 @@
 .home-header-container {
     height: 110px;
-    width: 100%;
+    // width: 100%;
     background-color: white;
     position: sticky;
     top: 0;
@@ -23,11 +23,69 @@
                 }
             }
         }
-        .right-content{
+        .right-body {
             display: flex;
-
             justify-content: center;
-            .right-body{
+            align-items: center;
+            gap: 10px;
+
+            .search-box {
+                display: flex;
+                align-items: center;
+                background: #e0e0e0;
+                border-radius: 30px;
+                overflow: hidden;
+                height: 45px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+                transition: box-shadow 0.3s ease;
+                width: 350px;
+                &:focus-within {
+                    border: 1px solid rgb(22, 235, 247);
+                }
+
+                input {
+                    flex: 1;
+                    height: 100%;
+                    border: none;
+                    outline: none;
+                    padding: 10px 15px;
+                    font-size: 16px;
+                    background: transparent;
+                    font-family: 'Segoe UI', sans-serif;
+                    color: #333;
+                    margin-bottom: 0 !important;
+                    border-radius: 0 !important;
+                }
+
+                .search-btn {
+                    border: none;
+                    background: #c1c0c0;
+                    color: white;
+                    padding: 0 15px;
+                    height: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    cursor: pointer;
+                    transition: background 0.3s ease;
+                    border-top-right-radius: 30px;
+                    border-bottom-right-radius: 30px;
+
+                    i {
+                        font-size: 16px;
+                    }
+
+                    &:hover {
+                        background: #acacac;
+                    }
+                }
+                &:hover {
+                    border: 1px solid rgb(22, 235, 247);
+                }
+            }
+
+
+
                 .login-btn {
                     background: linear-gradient(135deg, #9f9f9f, #d3d3d3);
                     color: #000000;
@@ -67,7 +125,7 @@
                 }
             }
         }
-    }
+    
 }
 
 .home-header-banner {

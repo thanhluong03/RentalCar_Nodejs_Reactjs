@@ -32,7 +32,7 @@ class LocationList extends Component {
             <div className="section-share section-location">
                 <div className="section-container">
                     <div className="section-header">
-                        <span className="title-section">Cơ sở nổi bật</span>
+                        <span className="title-location">Cơ sở nổi bật</span>
 
                     </div>
                     <div className="section-body">
