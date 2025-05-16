@@ -4,16 +4,16 @@ import './HomeHeader.scss';
 import logo from '../../assets/images/logo.png';
 import { FormattedMessage } from 'react-intl';
 import { withRouter } from 'react-router';
+
 class HomeHeader extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            activeItem: '', // Mục đang được chọn
+            activeItem: '',
+            searchQuery: ''
         };
     }
-
-
 
     componentDidMount() {
         this.updateActiveItem(this.props.location.pathname);
@@ -26,67 +26,83 @@ class HomeHeader extends Component {
     }
 
     updateActiveItem = (path) => {
-        // if (path.includes('/list-specialty')) this.setState({ activeItem: 'specialty' });
-        // else if (path.includes('/list-clinic')) this.setState({ activeItem: 'clinic' });
-        // else if (path.includes('/list-doctor')) this.setState({ activeItem: 'doctor' });
-        // else this.setState({ activeItem: '' });
+        // Tùy chỉnh logic nếu cần
     };
 
-    // handleMenuClick = (menu, route) => {
-    //     this.setState({ activeItem: menu }, () => {
-    //         this.props.history.push(route);
-    //     });
-    // };
     returnToHome = () => {
         if (this.props.history) {
-            this.props.history.push(`/home`)
+            this.props.history.push(`/home`);
         }
     }
+
     handleViewLogin = () => {
-        if(this.props.history) {
-            this.props.history.push(`/login`)
+        if (this.props.history) {
+            this.props.history.push(`/login`);
         }
     }
 
     handleViewRegister = () => {
-        if(this.props.history) {
-            this.props.history.push(`/register`)
+        if (this.props.history) {
+            this.props.history.push(`/register`);
         }
     }
+
+    handleSearchChange = (event) => {
+        this.setState({ searchQuery: event.target.value });
+    }
+
+    handleSearchSubmit = () => {
+        const { searchQuery } = this.state;
+        if (searchQuery.trim() && this.props.history) {
+            this.props.history.push(`/search?query=${encodeURIComponent(searchQuery)}`);
+        }
+    }
+
     render() {
-        const { activeItem } = this.state;
+        const { searchQuery } = this.state;
         return (
             <React.Fragment>
-            <div className="home-header-container">
-                <div className="home-header-content">
-                    <div className="left-content">
-                        <div className='blur-bg'>
-
+                <div className="home-header-container">
+                    <div className="home-header-content">
+                        <div className="left-content">
+                            <div className='blur-bg'></div>
+                            <img
+                                className="header-logo"
+                                src={logo}
+                                alt="Logo"
+                                onClick={this.returnToHome}
+                            />
                         </div>
-                        <img className="header-logo" src= {logo} onClick={() => this.returnToHome()}/>
-                    </div>
-                    <div className="right-content">
-                        <div className="right-body">
-                            <button className="register-btn"
-                            onClick={() => this.handleViewRegister()}>Đăng ký</button>
-                            <button className="login-btn"
-                            onClick={() => this.handleViewLogin()}>Đăng nhập</button>
+                        <div className="right-content">
+                            <div className="right-body">
+                                <div className="search-box">
+                                    <input type="text" placeholder="Tìm kiếm...."/>
+                                    <button className="search-btn" >
+                                        <i className="fas fa-search"></i>
+                                    </button>
+                                </div>
+                                {/* <input className="search-input" type="text" placeholder="Tìm kiếm..." /> */}
+                                <button className="register-btn" onClick={this.handleViewRegister}>
+                                    Đăng ký
+                                </button>
+                                <button className="login-btn" onClick={this.handleViewLogin}>
+                                    Đăng nhập
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            {this.props.isShowBanner === true &&
-                <div className="home-header-banner">
-                <div className="content-up">
-                    <div className="title1">< FormattedMessage id="banner.title1"/></div>
-                    <div className="title2">< FormattedMessage id="banner.title2"/></div>
-                </div>
-            </div>
-            }
+                {this.props.isShowBanner === true &&
+                    <div className="home-header-banner">
+                        <div className="content-up">
+                            <div className="title1"><FormattedMessage id="banner.title1" /></div>
+                            <div className="title2"><FormattedMessage id="banner.title2" /></div>
+                        </div>
+                    </div>
+                }
             </React.Fragment>
         );
     }
-
 }
 
 const mapStateToProps = state => {
@@ -97,8 +113,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-    return {
-    };
+    return {};
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(HomeHeader));
