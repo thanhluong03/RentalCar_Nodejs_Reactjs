@@ -51,13 +51,12 @@ class HomeHeader extends Component {
         this.setState({ searchQuery: event.target.value });
     }
 
-    handleSearchSubmit = () => {
-        const { searchQuery } = this.state;
-        if (searchQuery.trim() && this.props.history) {
-            this.props.history.push(`/search?query=${encodeURIComponent(searchQuery)}`);
-        }
+handleSearchSubmit = () => {
+    const { searchQuery } = this.state;
+    if (searchQuery.trim() && this.props.history) {
+        this.props.history.push(`/search-car?keyword=${encodeURIComponent(searchQuery.trim())}`);
     }
-
+};
     render() {
         const { searchQuery } = this.state;
         return (
@@ -76,8 +75,14 @@ class HomeHeader extends Component {
                         <div className="right-content">
                             <div className="right-body">
                                 <div className="search-box">
-                                    <input type="text" placeholder="Tìm kiếm...."/>
-                                    <button className="search-btn" >
+                                    <input type="text" placeholder="Tìm kiếm...."
+                                    value={searchQuery}
+                                    onChange={this.handleSearchChange}
+                                    onKeyDown={(e) => {
+                                        if (e.key === 'Enter') this.handleSearchSubmit();
+                                    }}
+                                    />
+                                    <button className="search-btn" onClick={this.handleSearchSubmit}>
                                         <i className="fas fa-search"></i>
                                     </button>
                                 </div>

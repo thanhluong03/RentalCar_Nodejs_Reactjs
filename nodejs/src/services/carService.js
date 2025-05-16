@@ -221,11 +221,28 @@ let getCarsByPrice = (price) => {
   });
 };
 
+let searchCars = (keyword) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let cars = await db.Car.findAll({
+        where: {
+          name_car: {
+            [Op.like]: `%${keyword}%`
+          }
+        }
+      });
+      resolve(cars);
+    } catch (e) {
+      reject(e);
+    }
+  })
+}
 module.exports = {
     createNewCar: createNewCar,
     getAllCars: getAllCars,
     updateCar: updateCar,
     deleteCar: deleteCar,
     getAllPrices,
-    getCarsByPrice
+    getCarsByPrice,
+    searchCars
 }
