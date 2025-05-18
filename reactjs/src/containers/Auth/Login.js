@@ -28,30 +28,31 @@ class Login extends Component {
     }
     handleLogin = async () => {
         this.setState({ errMessage: '' });
-        try {
-            let data = await handleLoginApi(this.state.username, this.state.password);
-            if (data && data.errCode !== 0) {
+            try {
+                let data = await handleLoginApi(this.state.username, this.state.password);
+                if (data && data.errCode !== 0) {
                 this.setState({ errMessage: data.message });
-            }
-            if (data && data.errCode === 0) {
+                }
+                if (data && data.errCode === 0) {
                 this.props.userLoginSuccess(data.user);
-                console.log('Login successful');
-    
-                // Lưu user vào localStorage
                 localStorage.setItem('userInfo', JSON.stringify(data.user));
-    
+                
+                console.log('User role:', data.user.roleId);
+
                 if (data.user.roleId === USER_ROLE.ADMIN) {
-                    this.props.navigate('/system/car-form');
-                } else if (data.user.roleId === USER_ROLE.Staff) {
-                    this.props.navigate('/staff/manage-staff');
+                    this.props.navigate('/system/list-user');
+                } else if (data.user.roleId === USER_ROLE.STAFF) {
+                    this.props.navigate('/home');
+                } else {
+                    this.props.navigate('/home');
+                }
+                }
+            } catch (e) {
+                if (e.response && e.response.data) {
+                this.setState({ errMessage: e.response.data.message });
                 }
             }
-        } catch (e) {
-            if (e.response && e.response.data) {
-                this.setState({ errMessage: e.response.data.message });
-            }
-        }
-    };
+            };
     
 
     handleKeyDown = (event) => {

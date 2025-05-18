@@ -3,28 +3,29 @@ import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 class Home extends Component {
-
     render() {
-        const { isLoggedIn } = this.props;
-        let linkToRedirect = isLoggedIn ? '/system/list-user' : '/home';
+        const { isLoggedIn, userInfo } = this.props;
+        console.log("User Info:", userInfo);
 
-        return (
-            <Redirect to={linkToRedirect} />
-            
-        );
+        if (!isLoggedIn) {
+            return <Redirect to="/home" />;
+        }
+        let linkToRedirect = '/home';
+        if (userInfo && userInfo.roleId === 'ADMIN') {
+            linkToRedirect = '/system/list-user';
+        } else if (userInfo && userInfo.roleId === 'Staff') {
+            linkToRedirect = '/home';
+        }
+
+        return <Redirect to={linkToRedirect} />;
     }
-
 }
 
 const mapStateToProps = state => {
     return {
-        isLoggedIn: state.user.isLoggedIn
+        isLoggedIn: state.user.isLoggedIn,
+        userInfo: state.user.userInfo,
     };
 };
 
-const mapDispatchToProps = dispatch => {
-    return {
-    };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(mapStateToProps)(Home);
