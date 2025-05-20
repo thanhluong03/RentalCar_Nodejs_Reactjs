@@ -140,12 +140,15 @@ class SearchCar extends Component {
             visibleRows: prevSate.visibleRows + 4,
         }))
     }
+<<<<<<< HEAD
 
     handleViewDetailCar = (car) => {
         if (this.props.history) {
             this.props.history.push(`/detail-car/${car.id}`);
         }
     };
+=======
+>>>>>>> 57037bb1d00bb7516391809a970b1aa5c226c12e
     render() {
         const { dataCar, selectedFilterValue, selectedBrands, isLoading, keyword, showFilterForm, brandArr, visibleRows } = this.state;
         const columnsPerRow = 4;
@@ -235,7 +238,11 @@ class SearchCar extends Component {
                                         }
 
                                         return (
+<<<<<<< HEAD
                                             <div className="car-item-search" key={index} onClick={() => this.handleViewDetailCar(item)}>
+=======
+                                            <div className="car-item-search" key={index}>
+>>>>>>> 57037bb1d00bb7516391809a970b1aa5c226c12e
                                                 <div
                                                     className="bg-image-search"
                                                     style={{ backgroundImage: `url(${imageBase64})` }}
