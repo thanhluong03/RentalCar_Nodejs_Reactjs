@@ -160,6 +160,24 @@
     }
   }
 
+  .load-more-container-search {
+        text-align: center;
+        margin-top: 20px;
+
+    .load-more-button-search {
+        background: #bde6e8;
+        border: none;
+        color: #018dce;
+        padding: 10px 60px;
+        font-size: 18px;
+
+                &:hover {
+                background: #3ed8e0;
+                color: rgb(7, 111, 158);
+                }
+            }
+        }
+
   .filter-popup-overlay {
     position: fixed;
     top: 0;
