@@ -6,6 +6,8 @@ module.exports = (sequelize, DataTypes) => {
     class Car extends Model {
         static associate(models) {
             Car.belongsTo(models.Location, {foreignKey: 'location_id'});
+            Car.belongsTo(models.Allcode, {foreignKey: 'type_id', targetKey: 'keyMap', as: 'typeData'})
+            Car.belongsTo(models.Allcode, {foreignKey: 'status_id', targetKey: 'keyMap', as: 'statusData'})
         }
     }
 

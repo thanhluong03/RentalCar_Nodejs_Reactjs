@@ -5,6 +5,14 @@ const handleLoginApi = (userEmail, userPassword) => {
    return axios.post('/api/login', {email: userEmail, password: userPassword});
 }
 
-export { handleLoginApi, 
+const searchCars = (inputKeyword) => {
+   return axios.get(`/api/get-search-car?keyword=${encodeURIComponent(inputKeyword)}`);
+};
 
+const getDetailCar = (inputId) => {
+   return axios.get(`/api/get-car-by-id?id=${inputId}`);
+}
+export { handleLoginApi,
+         searchCars,
+         getDetailCar
       }

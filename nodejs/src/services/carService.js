@@ -221,11 +221,78 @@ let getCarsByPrice = (price) => {
   });
 };
 
+let searchCars = (keyword) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let cars = await db.Car.findAll({
+        where: {
+          name_car: {
+            [Op.like]: `%${keyword}%`
+          }
+        }
+      });
+      resolve(cars);
+    } catch (e) {
+      reject(e);
+    }
+  })
+}
+
+let getCarById = async (inputId) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!inputId) {
+                resolve({
+                    errCode: 1,
+                    errMessage: 'Missing parameter',
+                });
+            } else {
+                let data = await db.Car.findOne({
+                    where: { id: inputId },
+                    include: [
+                        {
+                            model: db.Allcode,
+                            as: 'typeData',
+                            attributes: ['valueVi', 'valueEn'],
+                        },
+                        {
+                            model: db.Allcode,
+                            as: 'statusData',
+                            attributes: ['valueVi', 'valueEn'],
+                        },
+                        {
+                            model: db.Location,
+                            attributes: ['name_location'],
+                        },
+                    ],
+                    raw: false,
+                    nest: true,
+                });
+
+                if (data && data.image) {
+                    data.image = new Buffer(data.image, 'base64').toString('binary');
+                }
+
+                if (!data) data = {};
+
+                resolve({
+                    errCode: 0,
+                    data: data,
+                });
+            }
+        } catch (e) {
+            reject(e);
+        }
+    })
+}
+
 module.exports = {
     createNewCar: createNewCar,
     getAllCars: getAllCars,
     updateCar: updateCar,
     deleteCar: deleteCar,
     getAllPrices,
-    getCarsByPrice
+    getCarsByPrice,
+    searchCars,
+    getCarById
 }

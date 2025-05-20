@@ -4,7 +4,8 @@ export const path = {
     LOGIN: '/login',
     LOG_OUT: '/logout',
     SYSTEM: '/system',
-
+    SEARCHCAR: '/search-car',
+    DETAIL_CAR: '/detail-car/:id',
 };
 
 export const LANGUAGES = {
