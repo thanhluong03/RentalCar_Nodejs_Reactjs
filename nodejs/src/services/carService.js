@@ -295,5 +295,4 @@ module.exports = {
     getCarsByPrice,
     searchCars,
     getCarById
-
 }

@@ -2,11 +2,10 @@ import actionTypes from '../actions/actionTypes';
 
 const initialState = {
     isLoggedIn: false,
-    userInfo: null,
-    cars: [],
+    userInfo: null
 }
 
-const userReducer = (state = initialState, action) => {
+const appReducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.USER_LOGIN_SUCCESS:
             return {
@@ -26,19 +25,9 @@ const userReducer = (state = initialState, action) => {
                 isLoggedIn: false,
                 userInfo: null
             }
-        case actionTypes.FETCH_SEARCH_CAR_SUCCESS:
-            return {
-                ...state,
-                cars: action.payload
-            };
-        case actionTypes.FETCH_SEARCH_CAR_FAILED:
-            return {
-                ...state,
-                cars: []
-            };
         default:
             return state;
     }
 }
 
-export default userReducer;
+export default appReducer;

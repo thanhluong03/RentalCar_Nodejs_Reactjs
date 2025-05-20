@@ -28,31 +28,31 @@ class Login extends Component {
     }
     handleLogin = async () => {
         this.setState({ errMessage: '' });
-            try {
-                let data = await handleLoginApi(this.state.username, this.state.password);
-                if (data && data.errCode !== 0) {
+        try {
+            let data = await handleLoginApi(this.state.username, this.state.password);
+            if (data && data.errCode !== 0) {
                 this.setState({ errMessage: data.message });
-                }
-                if (data && data.errCode === 0) {
+            }
+            if (data && data.errCode === 0) {
                 this.props.userLoginSuccess(data.user);
+                console.log('Login successful');
+    
+                // Lưu user vào localStorage
                 localStorage.setItem('userInfo', JSON.stringify(data.user));
-                
-                console.log('User role:', data.user.roleId);
-
+    
+                // Điều hướng theo vai trò
                 if (data.user.roleId === USER_ROLE.ADMIN) {
-                    this.props.navigate('/system/list-user');
-                } else if (data.user.roleId === USER_ROLE.STAFF) {
-                    this.props.navigate('/home');
-                } else {
-                    this.props.navigate('/home');
-                }
-                }
-            } catch (e) {
-                if (e.response && e.response.data) {
-                this.setState({ errMessage: e.response.data.message });
+                    this.props.navigate('/system/user-redux');  // Đã đổi thành user-redux
+                } else if (data.user.roleId === USER_ROLE.Staff) {
+                    this.props.navigate('/staff/manage-staff');
                 }
             }
-            };
+        } catch (e) {
+            if (e.response && e.response.data) {
+                this.setState({ errMessage: e.response.data.message });
+            }
+        }
+    };
     
 
     handleKeyDown = (event) => {
@@ -60,20 +60,13 @@ class Login extends Component {
             this.handleLogin();
         }
     }
-
-    handleViewRegister = () => {
-        if(this.props.history) {
-            this.props.history.push(`/register`)
-        }
-    }
-
     render() {
 
         return (
             <div className="login-background">
                 <div className="login-container">
                     <div className="login-content row">
-                        <div className="col-12 text-login">Đăng nhập</div>
+                        <div className="col-12 text-login">Login</div>
                         <div className="col-12 form-group login-input">
                             <label>Username</label>
                             <input type="text" className="form-control" placeholder="Enter your name" value={this.state.username} onChange={(event) => this.handleOnChangeUserName(event)}/>
@@ -95,8 +88,6 @@ class Login extends Component {
                             <span className= "forgot-password">Forgot your password?</span>
                         </div>
                         <div className="col-12 text-center mt-3">
-                            <button className='btn-register'
-                            onClick={() => this.handleViewRegister()}>Đăng ký</button>
                             <div className="text-other-login"> Or Login with: </div>
                         </div>
                         <div className="col-12 social-login">
@@ -119,6 +110,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         navigate: (path) => dispatch(push(path)),
+        // userLoginFail: () => dispatch(actions.adminLoginFail()),
         userLoginSuccess: (userInfo) => dispatch(actions.userLoginSuccess(userInfo)),
     };
 };

@@ -36,13 +36,10 @@ class Header extends Component {
     };
 
     handleLogout = () => {
-        let confirmLogout = window.confirm("Bạn có chắc muốn đăng xuất không?")
-        if(confirmLogout){
-            this.props.processLogout(); // Xóa Redux
-            localStorage.removeItem('userInfo'); // Xóa khỏi localStorage
-            sessionStorage.removeItem('userInfo'); // Xóa khỏi sessionStorage
-            window.location.href = '/login'; // Điều hướng về trang đăng nhập
-        }
+        this.props.processLogout(); // Xóa Redux
+        localStorage.removeItem('userInfo'); // Xóa khỏi localStorage
+        sessionStorage.removeItem('userInfo'); // Xóa khỏi sessionStorage
+        window.location.href = '/login'; // Điều hướng về trang đăng nhập
     };
 
     render() {
@@ -56,13 +53,13 @@ class Header extends Component {
                     <span className="welcome-span">
                         Welcome, {userInfo && userInfo.first_name ? userInfo.first_name : ''}
                     </span>
-                    </div>
+                </div>
                 <div className="header-tabs-container">
                     <Navigator menus={this.state.menuApp} />
                 </div>
-                <div className="logout" onClick={this.handleLogout}>
+                <div className="logout">
                     <span className="name-logout">Đăng xuất</span>
-                    <div className="btn btn-logout" >
+                    <div className="btn btn-logout" onClick={this.handleLogout}>
                         <i className="fas fa-sign-out-alt"></i>
                     </div>
                 </div>
