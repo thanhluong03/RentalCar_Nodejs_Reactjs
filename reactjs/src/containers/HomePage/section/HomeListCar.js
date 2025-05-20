@@ -8,103 +8,40 @@ class HomeListCar extends Component {
         super(props);
         this.state = {
             dataCar: [],
-            priceArr: [],
-            filterStep: 'filter-type',
-            selectedFilterValue: '',
+            visibleRows: 4,
         };
     }
 
     async componentDidMount() {
         this.props.fetchCarRedux();
-        this.props.fetchAllPriceRedux();
     }
 
     async componentDidUpdate(prevProps) {
         if (prevProps.listcars !== this.props.listcars) {
             this.setState({ dataCar: this.props.listcars });
         }
-
-        if (prevProps.lisprices !== this.props.lisprices) {
-            this.setState({ priceArr: this.props.lisprices });
-        }
     }
-
-    handleSelectChange = (e) => {
-        const value = e.target.value;
-        const { filterStep } = this.state;
-
-        if (value === "filter") {
-            this.setState({
-                filterStep: "filter-type",
-                selectedFilterValue: "filter",
-            });
-            this.props.fetchCarRedux(); 
-            return;
-        }
-
-        if (filterStep === "filter-type") {
-            if (value === "price") {
-                this.setState({
-                    filterStep: value,
-                    selectedFilterValue: "filter",
-                });
-            }
-        } else {
-            this.setState({ selectedFilterValue: value });
-
-            if (filterStep === "price") {
-                this.props.fetchAllCarByPriceRedux(value);
-            }
-        }
-    };
-
+    loadMoreCars = () => {
+        this.setState(prevSate => ({
+            visibleRows: prevSate.visibleRows + 4,
+        }))
+    }
     render() {
-        const { dataCar, priceArr, filterStep, selectedFilterValue } = this.state;
+        const { dataCar, visibleRows } = this.state;
         const isLoading = dataCar.length === 0;
-
-        let options = [];
-        if (filterStep === "filter-type") {
-            options = [
-                { value: "filter", label: "-- CHỌN BỘ LỌC --" },
-                { value: "price", label: "Lọc theo giá thuê" },
-                { value: "brand", label: "Lọc theo thương hiệu" },
-            ];
-        } else if (filterStep === "price") {
-            options = [
-                { value: "filter", label: "-- CHỌN BỘ LỌC --" },
-                ...priceArr.map(item => ({
-                    value: item.price_of_day,
-                    label: `${item.price_of_day} VND`,
-                })),
-            ];
-        } 
-
+        const columnsPerRow = 4;
+        const carsPerPage = visibleRows * columnsPerRow;
+        const visibleCars  = dataCar.slice(0, carsPerPage);
         return (
             <div className="section-listcarhome">
-                <div className="section-all-selectfilter">
-                    <div className="title-car">Danh sách ô tô</div>
-                    <div className="section-selectfilter">
-                        <select
-                            className="selectfilter"
-                            onChange={this.handleSelectChange}
-                            value={selectedFilterValue}
-                        >
-                            {options.map((opt, idx) => (
-                                <option key={idx} value={opt.value}>
-                                    {opt.label}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
-                </div>
-
+                <div className="title-car">Danh sách ô tô</div>
                 <div className="section-container">
                     <div className="car-grid-container">
                         {isLoading ? (
                             <div className="loading-container">Đang tải...</div>
-                        ) : dataCar.length > 0 ? (
+                        ) : visibleCars.length > 0 ? (
                             <div className="car-grid">
-                                {dataCar.map((item, index) => {
+                                {visibleCars.map((item, index) => {
                                     let imageBase64 = '';
                                     if (item.image) {
                                         imageBase64 = new Buffer(item.image, 'base64').toString('binary');
@@ -117,7 +54,7 @@ class HomeListCar extends Component {
                                                 style={{ backgroundImage: `url(${imageBase64})` }}
                                             />
                                             <div className="infomation-car">
-                                                <div className="car-name">Tên xe: {item.name_car}</div>
+                                                <div className="car-name">{item.name_car}</div>
                                                 <div className="price">Giá thuê: {item.price_of_day} / ngày</div>
                                             </div>
                                             <div className="rental-car">
@@ -131,6 +68,13 @@ class HomeListCar extends Component {
                             <div>Không có dữ liệu</div>
                         )}
                     </div>
+                        {carsPerPage < dataCar.length && (
+                        <div className="load-more-container">
+                            <button className="load-more-button" onClick={this.loadMoreCars}>
+                                Xem thêm
+                            </button>
+                        </div>
+                    )}
                 </div>
             </div>
         );
@@ -139,16 +83,10 @@ class HomeListCar extends Component {
 
 const mapStateToProps = state => ({
     listcars: state.admin.cars,
-    lisprices: state.admin.prices,
-    //listbrands: state.admin.brands,
 });
 
 const mapDispatchToProps = dispatch => ({
     fetchCarRedux: () => dispatch(caractions.fetchAllCarsStart()),
-    fetchAllPriceRedux: () => dispatch(caractions.fetchAllPriceStart()),
-    //fetchAllBrandRedux: () => dispatch(caractions.fetchAllBrandStart()),
-    fetchAllCarByPriceRedux: (price) => dispatch(caractions.fetchAllCarByPriceStart(price)),
-    //fetchAllCarByBrandRedux: (brand) => dispatch(caractions.fetchAllCarByBrandStart(brand)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeListCar);

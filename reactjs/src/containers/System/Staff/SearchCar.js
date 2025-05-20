@@ -17,6 +17,7 @@ class SearchCar extends Component {
             selectedBrands: [],
             keyword: '',
             showFilterForm: false,
+            visibleRows: 4,
         };
     }
 
@@ -134,8 +135,16 @@ class SearchCar extends Component {
         this.setState({ dataCar: filteredCars, showFilterForm: false });
     };
 
+    loadMoreCars = () => {
+        this.setState(prevSate => ({
+            visibleRows: prevSate.visibleRows + 4,
+        }))
+    }
     render() {
-        const { dataCar, selectedFilterValue, selectedBrands, isLoading, keyword, showFilterForm, brandArr } = this.state;
+        const { dataCar, selectedFilterValue, selectedBrands, isLoading, keyword, showFilterForm, brandArr, visibleRows } = this.state;
+        const columnsPerRow = 4;
+        const carsPerPage = visibleRows * columnsPerRow;
+        const visibleCars  = dataCar.slice(0, carsPerPage);
         return (
             <>
                 <HomeHeader />
@@ -211,9 +220,9 @@ class SearchCar extends Component {
                         <div className="car-grid-container-search">
                             {isLoading ? (
                                 <div className="loading-container-search">Đang tải...</div>
-                            ) : dataCar.length > 0 ? (
+                            ) : visibleCars.length > 0 ? (
                                 <div className="car-grid-search">
-                                    {dataCar.map((item, index) => {
+                                    {visibleCars.map((item, index) => {
                                         let imageBase64 = '';
                                         if (item.image) {
                                             imageBase64 = Buffer.from(item.image, 'base64').toString('binary');
@@ -240,6 +249,13 @@ class SearchCar extends Component {
                                 <div className="no-result-search">Không tìm thấy ô tô phù hợp.</div>
                             )}
                         </div>
+                            {carsPerPage < dataCar.length && (
+                                <div className="load-more-container-search">
+                                    <button className="load-more-button-search" onClick={this.loadMoreCars}>
+                                        Xem thêm
+                                    </button>
+                                </div>
+                            )}
                     </div>
                 </div>
             </>
