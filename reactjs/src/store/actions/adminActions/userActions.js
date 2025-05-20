@@ -1,6 +1,5 @@
 import actionTypes from '../actionTypes';
-import { getAllCodeService, createNewUserService, getAllUsers, 
-    deleteUserService, editUserService} from '../../../services/adminService';
+import { getAllCodeService, createNewUserService, getAllUsers, editUserService, deleteUserService} from '../../../services/adminService';
 import {toast} from "react-toastify"
 export const fetchGenderStart = () => {
     return async (dispatch, getState) =>{
@@ -28,31 +27,6 @@ export const fetchGenderSuccess = (genderData) => ({
 })
 export const fetchGenderFaided = () => ({
     type: actionTypes.FETCH_GENDER_FAIDED
-})
-
-export const fetchPositionStart = () => {
-    return async (dispatch, getState) =>{
-        try {
-            let res = await getAllCodeService("POSITION");
-            if (res && res.errCode === 0)
-            {
-                dispatch(fetchPositionSuccess(res.data))
-            } else{
-                dispatch(fetchPositionFaided())
-            }
-        } catch (e) {
-            dispatch(fetchPositionFaided())
-            console.log('fetchPositionFailed error', e)
-        }
-    }
-    
-}
-export const fetchPositionSuccess = (positionData) => ({
-    type: actionTypes.FETCH_POSITION_SUCCESS,
-    data: positionData
-})
-export const fetchPositionFaided = () => ({
-    type: actionTypes.FETCH_POSITION_FAILDED
 })
 
 export const fetchRoleStart = () => {
