@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import * as caractions from '../../../store/actions/adminActions/carActions';
 import './HomeListCar.scss';
+import { withRouter } from 'react-router-dom';
 
 class HomeListCar extends Component {
     constructor(props) {
@@ -9,6 +10,7 @@ class HomeListCar extends Component {
         this.state = {
             dataCar: [],
             visibleRows: 4,
+            selectedCar: null,
         };
     }
 
@@ -26,6 +28,16 @@ class HomeListCar extends Component {
             visibleRows: prevSate.visibleRows + 4,
         }))
     }
+
+    handleCarClick = (car) => {
+        this.setState({ selectedCar: car });
+    };
+    handleViewDetailCar = (car) => {
+        if (this.props.history) {
+            this.props.history.push(`/detail-car/${car.id}`);
+        }
+    };
+
     render() {
         const { dataCar, visibleRows } = this.state;
         const isLoading = dataCar.length === 0;
@@ -48,7 +60,7 @@ class HomeListCar extends Component {
                                     }
 
                                     return (
-                                        <div className="car-item" key={index}>
+                                        <div className="car-item" key={index} onClick={() => this.handleViewDetailCar(item)}>
                                             <div
                                                 className="bg-image"
                                                 style={{ backgroundImage: `url(${imageBase64})` }}
@@ -89,4 +101,5 @@ const mapDispatchToProps = dispatch => ({
     fetchCarRedux: () => dispatch(caractions.fetchAllCarsStart()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomeListCar);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(HomeListCar));
+

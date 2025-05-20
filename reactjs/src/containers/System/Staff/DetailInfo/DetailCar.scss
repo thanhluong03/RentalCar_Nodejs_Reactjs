@@ -1,0 +1,90 @@
+.car-detail-container {
+    height: 595px;
+    margin: 0px 130px;
+    padding: 10px;
+    background: none;
+    border-radius: 15px;
+    color: #333;
+    font-family: 'Times New Roman', Times, serif;
+    .title-detail {
+        font-size: 35px;
+        font-weight: 600;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .intro-car {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 30px;
+        height: 500px;
+        .right-detail {
+            width: 50%;
+            border-radius: 15px;
+            &:hover {
+                    transform: scale(1.03);
+                }
+            .image-preview {
+                height: 100%;
+                width: 100%;
+                background-size: cover;
+                border-radius: 15px;
+                background-position: center;
+                background-repeat: no-repeat;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            }
+        }
+
+        .left-detail {
+            width: 50%;
+            padding: 10px 20px;
+            background: #ececec;
+            border-radius: 15px;
+            .info-preview {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                gap: 8px;
+
+                h2 {
+                    font-size: 30px;
+                    margin-bottom: 10px;
+                    color: #1e88e5;
+                }
+
+                p {
+                    font-size: 20px;
+                    line-height: 1.6;
+
+                    strong {
+                        color: #555;
+                        font-weight: 600;
+                        margin-right: 5px;
+                    }
+                }
+            }
+
+            .btn-detail {
+                margin-top: auto;
+                display: flex;
+                justify-content: flex-end;
+                .btn-rental-detail {
+                    font-family: 'Times New Roman', Times, serif;
+                    font-size: 20px;
+                    font-weight: bold;
+                    color: #0c6b0c;
+                    background-color: #e3ffe3;
+                    padding: 6px 25px;
+                    border-radius: 20px;
+                    border: 1px solid #168f16;
+                    cursor: pointer;
+                    transition: all 0.3s;
+
+                    &:hover {
+                        background-color: #c6f7c6;
+                        transform: translateY(-2px);
+                    }
+                }
+            }
+        }  
+    }
+}

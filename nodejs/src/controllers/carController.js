@@ -130,7 +130,18 @@ let handleSearchCar = async (req, res) => {
     }
 };
 
-
+let handlCarById = async(req, res) => {
+    try {
+        let carid = await carService.getCarById(req.query.id)
+        return res.status(200).json(carid)
+    } catch (e) {
+        console.log(e);
+        return res.status(500).json({
+            errCode: -1,
+            errMessage: 'Error from server...'
+        })
+    }
+}
 module.exports = {
     handleCreateNewCar: handleCreateNewCar,
     handleGetAllCars: handleGetAllCars,
@@ -138,5 +149,6 @@ module.exports = {
     handleDeleteCar: handleDeleteCar,
     handleGetAllPrices,
     handleGetAllCarByPrices,
-    handleSearchCar
+    handleSearchCar,
+    handlCarById
 }
