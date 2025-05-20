@@ -1,94 +1,93 @@
-import React, { Component} from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
-import './LocationList.scss'
+import './LocationList.scss';
 import * as locationsactions from '../../../../store/actions/adminActions/locationActions';
-class LocationList extends Component {
 
+class LocationList extends Component {
     constructor(props) {
         super(props);
         this.state = {
             locationsRedux: []
-        }
+        };
     }
 
-     componentDidMount() {
+    componentDidMount() {
         this.props.fetchLocationRedux();
     }
 
-     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.listLocations !== this.props.listLocations){
-            this.setState ({
+    componentDidUpdate(prevProps) {
+        if (prevProps.listLocations !== this.props.listLocations) {
+            this.setState({
                 locationsRedux: this.props.listLocations
-            })
-
+            });
         }
     }
 
-    
     handleEditLocation = (location) => {
-        this.props.handleButtonEditLocation(location)
+        this.props.handleButtonEditLocation(location);
     }
 
     handleDeleteLocation = (location) => {
-        this.props.deleteLocation(location.id)
+        const confirmDelete = window.confirm(`Bạn chắc chắn muốn xóa địa chỉ "${location.name_location}" này không?`);
+        if (confirmDelete) {
+            this.props.deleteLocation(location.id);
+        }
     }
+
     render() {
-        let arrLocations = this.state.locationsRedux;
-        console.log('fjgfkg', arrLocations)
+        const arrLocations = this.state.locationsRedux;
+
         return (
             <React.Fragment>
-            <table id = "LocationList">
-                <tbody>
-                <tr>
-                    <th>STT</th>
-                    <th>Ảnh</th>
-                    <th>Tên địa chỉ</th>
-                    <th>Xử lý</th>
-                </tr>
-                {
-                    arrLocations && arrLocations.length > 0 && arrLocations.map((item, index) => {
-                        let imageBase64 = '';
-                            if (item.image) {
-                                imageBase64 = new Buffer(item.image, 'base64').toString('binary');
-                            }
-                        return (
-                            <tr key= {index}>
-                                <td>{index + 1}</td>
-                                <td style={{ textAlign: "center", verticalAlign: "middle" }}>
-                                    {imageBase64 ? (
-                                        <div className="img" style={{ backgroundImage: `url(${imageBase64})` }}></div>
-                                    ) : (
-                                        <div className="img no-image">No Image</div>
-                                    )}
-                                </td>
-                                <td>{item.name_location}</td>
-                                <td>
-                                    <button className="btn-edit" onClick={() => this.handleEditLocation(item)}><i className="fas fa-solid fa-pencil-alt"></i></button>
-                                    <button className="btn-delete" onClick={() => this.handleDeleteLocation(item)}><i class="fas fa-trash"></i></button>
-                                </td>
+                <div className="table-wrapper-location">
+                    <table id="LocationList">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Ảnh</th>
+                                <th>Tên địa chỉ</th>
+                                <th>Xử lý</th>
                             </tr>
-                        )
-                    })
-                }
-            </tbody>
-            </table>
+                        </thead>
+                        <tbody>
+                            {arrLocations && arrLocations.length > 0 && arrLocations.map((item, index) => {
+                                let imageBase64 = '';
+                                if (item.image) {
+                                    imageBase64 = new Buffer(item.image, 'base64').toString('binary');
+                                }
+                                return (
+                                    <tr key={index}>
+                                        <td>{index + 1}</td>
+                                        <td style={{ textAlign: "center", verticalAlign: "middle" }}>
+                                            {imageBase64 ? (
+                                                <div className="img" style={{ backgroundImage: `url(${imageBase64})` }}></div>
+                                            ) : (
+                                                <div className="img no-image">No Image</div>
+                                            )}
+                                        </td>
+                                        <td>{item.name_location}</td>
+                                        <td>
+                                            <button className="btn-edit" onClick={() => this.handleEditLocation(item)}><i className="fas fa-solid fa-pencil-alt"></i></button>
+                                            <button className="btn-delete" onClick={() => this.handleDeleteLocation(item)}><i className="fas fa-trash"></i></button>
+                                        </td>
+                                    </tr>
+                                );
+                            })}
+                        </tbody>
+                    </table>
+                </div>
             </React.Fragment>
         );
     }
-
 }
 
-const mapStateToProps = state => {
-    return {
-        listLocations: state.admin.locations
-    };
-};
+const mapStateToProps = state => ({
+    listLocations: state.admin.locations
+});
 
-const mapDispatchToProps = dispatch => {
-    return {
-       fetchLocationRedux: () => dispatch(locationsactions.fetchAllLocationsStart()),
-       deleteLocation: (id) => dispatch(locationsactions.deleteLocation(id)),
-    };
-};
+const mapDispatchToProps = dispatch => ({
+    fetchLocationRedux: () => dispatch(locationsactions.fetchAllLocationsStart()),
+    deleteLocation: (id) => dispatch(locationsactions.deleteLocation(id)),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(LocationList);

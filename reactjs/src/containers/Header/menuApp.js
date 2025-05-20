@@ -3,7 +3,7 @@ export const adminMenu = [
         name: 'menu.admin.manage-customer',
         menus: [
             {
-                name: 'menu.admin.customer', link: '/system/user-redux'
+                name: 'menu.admin.customer', link: '/system/list-user'
             },
         ]
     },
