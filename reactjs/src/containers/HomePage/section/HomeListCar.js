@@ -37,6 +37,7 @@ class HomeListCar extends Component {
             this.props.history.push(`/detail-car/${car.id}`);
         }
     };
+
     render() {
         const { dataCar, visibleRows } = this.state;
         const isLoading = dataCar.length === 0;
@@ -101,3 +102,4 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(HomeListCar));
+

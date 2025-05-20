@@ -1,17 +1,31 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 class Home extends Component {
-    
-    componentDidMount() {
-        const { history } = this.props;
-        // Điều hướng ngay đến /system/user-redux khi component được render
-        history.push('/system/user-redux');
-    }
-
     render() {
-        return null; // Không cần render gì, chỉ cần điều hướng là đủ
+        const { isLoggedIn, userInfo } = this.props;
+        console.log("User Info:", userInfo);
+
+        if (!isLoggedIn) {
+            return <Redirect to="/home" />;
+        }
+        let linkToRedirect = '/home';
+        if (userInfo && userInfo.roleId === 'ADMIN') {
+            linkToRedirect = '/system/list-user';
+        } else if (userInfo && userInfo.roleId === 'Staff') {
+            linkToRedirect = '/home';
+        }
+
+        return <Redirect to={linkToRedirect} />;
     }
 }
 
-export default withRouter(Home);
+const mapStateToProps = state => {
+    return {
+        isLoggedIn: state.user.isLoggedIn,
+        userInfo: state.user.userInfo,
+    };
+};
+
+export default connect(mapStateToProps)(Home);
