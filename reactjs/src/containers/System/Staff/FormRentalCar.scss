@@ -1,0 +1,159 @@
+.rental-form-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    backdrop-filter: blur(4px);
+}
+
+.form-modal {
+    background: #fff;
+    padding: 30px 25px;
+    border-radius: 12px;
+    width: 700px;
+    max-width: 95%;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    position: relative;
+    animation: fadeInScale 0.25s ease forwards;
+}
+
+@keyframes fadeInScale {
+    0% {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.form-content h2 {
+    margin-bottom: 15px;
+    font-size: 16px;
+    color: #222;
+    font-size: 30px;
+    text-align: center;
+    text-transform: uppercase;
+    font-family: 'Times New Roman', Times, serif;
+}
+.form-content h2 strong{
+    text-transform: none;
+    color: #484848;
+}
+
+.form-content p {
+    margin-bottom: 12px;
+    font-size: 16px;
+    color: #ff0000;
+
+}
+
+.user-info p {
+    margin: 5px 0;
+    font-size: 20px;
+    color: #444;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.form-content label {
+    display: block;
+    font-weight: 600;
+    margin-top: 18px;
+    margin-bottom: 6px;
+    font-size: 18px;
+    color: #363636;
+    user-select: none;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.form-content input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1.8px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+    outline-offset: 2px;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 18px;
+}
+
+.form-content input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 6px rgba(0, 123, 255, 0.5);
+}
+
+.form-content input[readonly] {
+    background-color: #f9f9f9;
+    cursor: default;
+}
+
+.form-content p[style*="color: red"] {
+    font-size: 0.875rem;
+    margin-top: 4px;
+    margin-bottom: 0;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 25px;
+}
+
+.buttons button {
+    flex: 1;
+    padding: 12px 0;
+    margin: 0 5px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    color: #fff;
+    user-select: none;
+}
+
+.buttons button:first-child {
+    background-color: #007bff;
+}
+
+.buttons button:first-child:hover:not(:disabled) {
+    background-color: #0056b3;
+}
+
+.buttons button:first-child:disabled {
+    background-color: #a0c6ff;
+    cursor: not-allowed;
+}
+
+.buttons button:last-child {
+    background-color: #dc3545;
+}
+
+.buttons button:last-child:hover {
+    background-color: #a71d2a;
+}
+
+@media (max-width: 480px) {
+    .form-modal {
+        width: 90%;
+        padding: 20px 15px;
+    }
+    .form-content h2 {
+        font-size: 1.3rem;
+    }
+    .buttons button {
+        font-size: 1rem;
+        padding: 10px 0;
+    }
+}

@@ -5,7 +5,7 @@ import * as caractionscustomer from '../../../store/actions/customerActions/carA
 import './SearchCar.scss';
 import queryString from 'query-string';
 import HomeHeader from "../../HomePage/HomeHeader";
-
+import FormRentalCar from "../Staff/formRentalCar"
 class SearchCar extends Component {
     constructor(props) {
         super(props);
@@ -18,6 +18,7 @@ class SearchCar extends Component {
             keyword: '',
             showFilterForm: false,
             visibleRows: 4,
+            selectedCar: null,
         };
     }
 
@@ -146,8 +147,20 @@ class SearchCar extends Component {
             this.props.history.push(`/detail-car/${car.id}`);
         }
     };
+    handleRentalClick = (car, event) => {
+        event.stopPropagation();
+        const {userInfo, history} = this.props;
+
+        if(userInfo) {
+            this.setState({ selectedCar: car });
+        } else {
+            if(history) {
+                history.push('/login')
+            }
+        }
+    };
     render() {
-        const { dataCar, selectedFilterValue, selectedBrands, isLoading, keyword, showFilterForm, brandArr, visibleRows } = this.state;
+        const { dataCar, selectedFilterValue, selectedBrands, isLoading, keyword, showFilterForm, brandArr, visibleRows, selectedCar } = this.state;
         const columnsPerRow = 4;
         const carsPerPage = visibleRows * columnsPerRow;
         const visibleCars  = dataCar.slice(0, carsPerPage);
@@ -245,7 +258,7 @@ class SearchCar extends Component {
                                                     <div className="price-search">Giá thuê: {item.price_of_day} / ngày</div>
                                                 </div>
                                                 <div className="rental-car-search">
-                                                    <button className="rental-search">Thuê xe</button>
+                                                    <button className="rental-search" onClick={(e) => this.handleRentalClick(item, e)}>Thuê xe</button>
                                                 </div>
                                             </div>
                                         );
@@ -263,6 +276,15 @@ class SearchCar extends Component {
                                 </div>
                             )}
                     </div>
+
+                    {selectedCar && (
+                        <div className="rental-form-overlay">
+                            <FormRentalCar
+                                car={selectedCar}
+                                onClose={() => this.setState({ selectedCar: null })}
+                            />
+                        </div>
+                    )}
                 </div>
             </>
         );
@@ -272,6 +294,7 @@ class SearchCar extends Component {
 const mapStateToProps = state => ({
     listcars: state.admin.cars,
     searchResults: state.user.cars,
+    userInfo: state.user.userInfo,
 });
 
 const mapDispatchToProps = dispatch => ({
