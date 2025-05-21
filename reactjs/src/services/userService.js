@@ -59,4 +59,13 @@ export { handleLoginApi,
          getAllCars,
          editCarService,
          deleteCarService
+
+const getAllCarByLocations = (locationId) => {
+   return axios.get(`/cars-by-location?locationId=${locationId}`);
+};
+
+export { handleLoginApi,
+         searchCars,
+         getDetailCar,
+         getAllCarByLocations
       }

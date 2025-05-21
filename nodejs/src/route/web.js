@@ -27,6 +27,14 @@ let initWebRoutes = (app) => {
     router.put('/api/edit-location', locationController.handleEditLocation);
     router.delete('/api/delete-location', locationController.handleDeleteLocation);
 
+
+    router.get('/api/get-all-prices', carControler.handleGetAllPrices);
+    router.get("/api/get-all-car-by-prices", carControler.handleGetAllCarByPrices);
+    router.get("/api/get-search-car", carControler.handleSearchCar);
+
+    router.get("/api/get-car-by-id", carControler.handlCarById);
+    router.get('/cars-by-location', locationController.handleGetCarsByLocation);
+
     return app.use("/", router);
 }
 
