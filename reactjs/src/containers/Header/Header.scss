@@ -3,21 +3,21 @@
 .header-container {
     z-index: 1000;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    //background: linear-gradient(135deg, #0088ff, #5af7ff); // Gradient hiện đại
-    background: #B5B5B5;
+    flex-direction: column;
+    background: linear-gradient(135deg, #00b7c7, #42cad1); // Gradient hiện đại
     color: #ffffff;
-    height: 70px;
-    padding: 0 20px;
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
-    position: sticky;
+    width: 350px;
+    height: 100vh;
+    padding: 20px 10px;
+    box-shadow: 4px 0px 15px rgba(0, 0, 0, 0.15);
+    position: fixed;
     top: 0;
-    border-radius: 8px;
+    left: 0;
+    border-radius: 0 8px 8px 0;
     transition: background 0.3s ease-in-out;
 
     &:hover {
-        background: #8d8d8d;
+        background: linear-gradient(135deg, #029ba9, #28aeb5);
     }
 
     .header-tabs-container {

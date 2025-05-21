@@ -1,71 +1,141 @@
 .login-background {
-    background: linear-gradient(135deg, rgba(34, 193, 175, 1) 0%, rgba(253, 187, 45, 1) 100%);
+    background: linear-gradient(135deg, rgb(171, 162, 162) 0%, rgb(203, 203, 203) 100%);
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     .login-container {
-        border: 1px solid #00ffc4;
-        width: 400px;
-        height: 70%;
-        border-radius: 10px;
-        background-color: white;
+        background-color: #ffffff;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        width: 100%;
+        max-width: 420px;
+        padding: 30px 35px;
         .login-content {
-            padding: 10px;
+            display: flex;
+            flex-direction: column;
             .text-login {
-                font-weight: 600;
-                text-align: center;
-                padding-top: 10px;
                 font-size: 24px;
+                font-weight: bold;
+                text-transform: uppercase;
+                text-align: center;
+                color: #2d3436;
+                margin-bottom: 30px;
+                margin-bottom: 30px;
             }
             .login-input {
-                margin-bottom: 10px;
+                margin-bottom: 20px;
+            }
+            label {
+                font-size: 15px;
+                font-weight: 600;
+                color: #2d3436;
+                margin-bottom: 6px;
+                display: inline-block;
+            }
+            input {
+                padding: 12px 16px;
+                border-radius: 10px;
+                border: 1px solid #ccc;
+                font-size: 16px;
+                background-color: #fff;
+                transition: all 0.3s ease;
+                width: 100%;
+
+                &:hover {
+                    border-color: #00b894;
+                    box-shadow: 0 4px 12px rgba(0, 184, 148, 0.2);
+                }
+
+                &:focus {
+                    outline: none;
+                    border-color: #00b894;
+                    box-shadow: 0 0 0 4px rgba(0, 184, 148, 0.2);
+                }
             }
             .btn-login {
-                background: linear-gradient(135deg, rgba(34, 193, 175, 1) 0%, rgba(253, 187, 45, 1) 100%);
-                width: 50%;
-                margin: 10px 0;
-                height: 35px;
-                outline: none;
+                background: linear-gradient(135deg, rgb(171, 162, 162) 0%, rgb(203, 203, 203) 100%);
+                width: 100%;
+                padding: 14px;
                 border: none;
+                border-radius: 12px;
                 color: white;
+                font-size: 16px;
+                font-weight: bold;
+                text-transform: uppercase;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                margin: 15px 0;
+
+                    &:hover {
+                    background: linear-gradient(135deg, #00a381, #00bfb2);
+                    box-shadow: 0 8px 20px rgba(0, 184, 148, 0.3);
+                    }
+
+                    &:active {
+                    transform: scale(0.98);
+                    }
+
+                    &:focus {
+                    outline: none;
+                    box-shadow: 0 0 0 4px rgba(0, 184, 148, 0.2);
+                    }
+            }
+            .btn-register {
+                background: linear-gradient(135deg, rgb(171, 162, 162) 0%, rgb(203, 203, 203) 100%);
+                padding: 8px 15px;
+                border: none;
                 border-radius: 15px;
-                margin-left: 90px;    
+                color: white;
+                font-size: 15px;
+                font-weight: bold;
+                text-transform: uppercase;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                margin-bottom: 10px;
+                &:hover {
+                    background: linear-gradient(135deg, #00e2b1, #009f95);
+                    box-shadow: 0 8px 20px rgba(0, 184, 148, 0.3);
+                    }
             }
             .forgot-password {
-                font-size: 12px;
+                font-size: 13px;
                 font-style: italic;
+                color: #636e72;
+                text-align: right;
+                margin-top: -10px;
+                margin-bottom: 20px;
             }
             .social-login {
                 display: flex;
                 justify-content: center;
-                margin-top: 15px;
-                
-                .google {
-                    font-size: 30px;
-                    color: white;
-                    align-items: center;
-                    border-radius: 50%;
-                    height: 50px;
-                    width: 50px;
+                margin-top: 20px;
+                gap: 12px;
+                .google,
+                .facebook {
+                    font-size: 22px;
+                    color: #ffffff;
                     display: flex;
+                    align-items: center;
                     justify-content: center;
-                    background: #c32424;
-                    margin-right: 10px;
+                    width: 48px;
+                    height: 48px;
+                    border-radius: 50%;
+                    transition: all 0.3s ease;
+                    cursor: pointer;
+
+                    &:hover {
+                        transform: scale(1.05);
+                        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+                    }
+                }
+                .google {
+                    background-color: #ff6464;
                 }
                 .facebook {
-                    font-size: 30px;
-                    color: white;
-                    align-items: center;
-                    border-radius: 50%;
-                    height: 50px;
-                    width: 50px;
-                    display: flex;
-                    justify-content: center;
-                    background: #307aaf;
+                    background-color: #63baf9;
                 }
             }
         }
     }
-
 }

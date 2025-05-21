@@ -2,15 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 //import Header  from '.Header/Header';
 import HomeHeader from './HomeHeader';
-// import Specialty  from './Section/Specialty';   
-// import MedicalFacility from './Section/MedicalFacility';
 import './HomePage.scss';
-
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-// import OutstandingDoctor from './Section/OutstandingDoctor';
-// import HandBook from './Section/HandBook';
-// import About from './Section/About';
+import HomeListCar from './section/HomeListCar';
+import LocationList from './section/LocationList';
 import HomeFooter from './HomeFooter';
 class HomePage extends Component {
 
@@ -25,6 +21,8 @@ class HomePage extends Component {
         return (
             <div>
                 <HomeHeader isShowBanner= {true}/>
+                <LocationList settings = {settings}/>
+                <HomeListCar/>
                 <HomeFooter/>
             </div>
         );
