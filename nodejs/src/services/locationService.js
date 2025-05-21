@@ -5,29 +5,29 @@ import { where } from "sequelize";
 import { raw } from "body-parser";
 const { Op } = require('sequelize');
 let checkValidate = (data) => {
-  return new Promise(async (resolve, reject) => {
-    try {
-      let condition = {
-        name_location: data.name_location
-      }
-      if(data.id) {
-        condition.id = {[Op.ne] : data.id};
-      }
-      let location = await db.Location.findOne({
-        where: condition
-      });
-      if (location) {
-        if(location.name_location === data.name_location)
-        {
-            resolve({isValid: false, message: 'Location name is already in use!!'});
+    return new Promise(async (resolve, reject) => {
+        try {
+            let condition = {
+                name_location: data.name_location
+            }
+        if(data.id) {
+            condition.id = {[Op.ne] : data.id};
         }
-      } else {
-        resolve({isValid: true});
-      }
-    } catch (e) {
-      reject(e);
-    }
-  });
+            let location = await db.Location.findOne({
+                where: condition
+            });
+        if (location) {
+            if(location.name_location === data.name_location)
+            {
+                resolve({isValid: false, message: 'Location name is already in use!!'});
+            }
+        } else {
+            resolve({isValid: true});
+        }
+        } catch (e) {
+            reject(e);
+        }
+    });
 };
 let createNewLocation = (data) => {
     return new Promise(async(resolve, reject) => {
@@ -158,9 +158,56 @@ let deleteLocation = (locationId) => {
         })
     })
 }
+
+const getCarsByLocation = async (locationId) => {
+    return new Promise (async (resolve, reject) => {
+        try {
+            if (!locationId) {
+                return {
+                    errCode: 1,
+                    errMessage: 'Missing location ID',
+                };
+            }
+
+            let cars = await db.Car.findAll({
+                where: { location_id: locationId },
+                include: [
+                    {
+                        model: db.Location,
+                        attributes: ['id', 'name_location', 'image'],
+                    },
+                    {
+                        model: db.Allcode,
+                        as: 'typeData',
+                        attributes: ['valueVi', 'valueEn'],
+                    },
+                    {
+                        model: db.Allcode,
+                        as: 'statusData',
+                        attributes: ['valueVi', 'valueEn'],
+                    },
+                ],
+                raw: false,
+                nest: true,
+            });
+            if(cars && cars.image){
+            cars.image = new Buffer(cars.image, 'base64').toString('binary');
+        }
+            if(!cars) cars = {};
+            resolve ({
+                errCode: 0,
+                data: cars
+
+            })
+        } catch (e) {
+            reject(e);
+        }
+    })
+};
 module.exports = {
     createNewLocation,
-    getAllLocations, 
+    getAllLocations,
     updateLocation,
-    deleteLocation
+    deleteLocation,
+    getCarsByLocation
 }

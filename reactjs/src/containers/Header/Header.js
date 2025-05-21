@@ -7,6 +7,7 @@ import logo from '../../assets/images/logo.png';
 import { USER_ROLE } from '../../utils';
 import _ from 'lodash';
 import './Header.scss';
+import { withRouter } from 'react-router-dom';
 
 class Header extends Component {
     constructor(props) {
@@ -45,10 +46,24 @@ class Header extends Component {
         }
     };
 
+    returnToHome = () => {
+        this.props.history.push('/')
+    }
     render() {
         const { userInfo } = this.props;
         return (
             <div className="header-container">
+                <div className="welcome">
+                    <div className='image' onClick={() => this.returnToHome()}>
+                        <img className="logo" src= {logo}/>
+                    </div>
+                    <span className="welcome-span">
+                        Welcome, {userInfo && userInfo.first_name ? userInfo.first_name : ''}
+                    </span>
+                </div>
+                <div className="header-tabs-container">
+                    <Navigator menus={this.state.menuApp} />
+                </div>
                 <div className="welcome">
                     <div className='image'>
                         <img className="logo" src= {logo} onClick={() => this.returnToHome()}/>
@@ -84,4 +99,5 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Header));
+

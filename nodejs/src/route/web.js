@@ -31,6 +31,8 @@ let initWebRoutes = (app) => {
     router.get("/api/get-search-car", carControler.handleSearchCar);
 
     router.get("/api/get-car-by-id", carControler.handlCarById);
+    router.get('/cars-by-location', locationController.handleGetCarsByLocation);
+
     return app.use("/", router);
 }
 

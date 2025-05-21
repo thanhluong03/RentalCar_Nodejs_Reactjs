@@ -25,6 +25,12 @@ class LocationList extends Component {
             });
         }
     }
+
+    handleViewDetailLocation = (location) => {
+        if (this.props.history) {
+            this.props.history.push(`/detail-location/${location.id}`);
+        }
+    };
     render() {
         let {dataLocations} = this.state;
         console.log('check location: ', this.state)
@@ -45,6 +51,7 @@ class LocationList extends Component {
                                     }
                                 return (
                                     <div className="section-customize location-child"
+                                    key={index} onClick={() => this.handleViewDetailLocation(item)}
                                     key={index}
                                     >
                                         <div className="bg-image section-location"

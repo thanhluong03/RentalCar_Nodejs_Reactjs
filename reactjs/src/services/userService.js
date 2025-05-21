@@ -12,7 +12,13 @@ const searchCars = (inputKeyword) => {
 const getDetailCar = (inputId) => {
    return axios.get(`/api/get-car-by-id?id=${inputId}`);
 }
+
+const getAllCarByLocations = (locationId) => {
+   return axios.get(`/cars-by-location?locationId=${locationId}`);
+};
+
 export { handleLoginApi,
          searchCars,
-         getDetailCar
+         getDetailCar,
+         getAllCarByLocations
       }

@@ -5,8 +5,10 @@ export const path = {
     REGISTER: '/register',
     LOG_OUT: '/logout',
     SYSTEM: '/system',
+
     SEARCHCAR: '/search-car',
     DETAIL_CAR: '/detail-car/:id',
+    DETAIL_LOCATION: '/detail-location/:location_id',
 };
 
 export const LANGUAGES = {
