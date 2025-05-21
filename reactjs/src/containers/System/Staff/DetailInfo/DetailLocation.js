@@ -4,7 +4,7 @@ import { getAllCarByLocations } from '../../../../services/userService';
 import HomeHeader from "../../../HomePage/HomeHeader";
 import HomeFooter from "../../../HomePage/HomeFooter";
 import './DetailLocation.scss';
-
+import FormRentalCar from "../formRentalCar"
 class DetailLocation extends Component {
     constructor(props) {
         super(props);
@@ -19,6 +19,7 @@ class DetailLocation extends Component {
             selectedFilterValue: '',
             selectedBrands: [],
             brandArr: [],
+            selectedCar: null,
         };
     }
 
@@ -120,10 +121,22 @@ class DetailLocation extends Component {
         this.setState({ carList: filteredCars, showFilterForm: false });
     };
 
+    handleRentalClick = (car, event) => {
+        event.stopPropagation();
+        const {userInfo, history} = this.props;
+
+        if(userInfo) {
+            this.setState({ selectedCar: car });
+        } else {
+            if(history) {
+                history.push('/login')
+            }
+        }
+    };
     render() {
         const {
             carList, visibleRows, locationName, isLoading,
-            showFilterForm, selectedFilterValue, selectedBrands, brandArr
+            showFilterForm, selectedFilterValue, selectedBrands, brandArr, selectedCar
         } = this.state;
 
         const columnsPerRow = 4;
@@ -217,7 +230,7 @@ class DetailLocation extends Component {
                                                         <div className="price">Giá thuê: {item.price_of_day.toLocaleString('vi-VN')} / ngày</div>
                                                     </div>
                                                     <div className="rental-car">
-                                                        <button className="rental">Thuê xe</button>
+                                                        <button className="rental" onClick={(e) => this.handleRentalClick(item, e)}>Thuê xe</button>
                                                     </div>
                                                 </div>
                                             );
@@ -236,6 +249,14 @@ class DetailLocation extends Component {
                                 </div>
                             )}
                         </div>
+                            {selectedCar && (
+                                <div className="rental-form-overlay">
+                                    <FormRentalCar
+                                        car={selectedCar}
+                                        onClose={() => this.setState({ selectedCar: null })}
+                                    />
+                                </div>
+                            )}
                     </div>
                 </div>
                 <HomeFooter />
@@ -244,7 +265,9 @@ class DetailLocation extends Component {
     }
 }
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+    userInfo: state.user.userInfo
+});
 const mapDispatchToProps = dispatch => ({});
 
 export default connect(mapStateToProps, mapDispatchToProps)(DetailLocation);

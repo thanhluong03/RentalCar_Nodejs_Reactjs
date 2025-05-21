@@ -5,7 +5,8 @@ const {
 module.exports = (sequelize, DataTypes) => {
     class Rental extends Model {
         static associate(models) {
-
+            Rental.belongsTo(models.User, { foreignKey: 'user_id', as: 'user' });
+            Rental.belongsTo(models.Car, { foreignKey: 'car_id', as: 'car' });
         }
     }
     Rental.init ({
@@ -19,6 +20,9 @@ module.exports = (sequelize, DataTypes) => {
     }, {
         sequelize,
         modelName: 'Rental',
+        createdAt: 'created_at',
+        updatedAt: 'updated_at',
+        timestamps: true,
     });
     return Rental;
 };

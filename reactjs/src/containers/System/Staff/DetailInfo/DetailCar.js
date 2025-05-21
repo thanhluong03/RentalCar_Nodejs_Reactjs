@@ -4,13 +4,14 @@ import './DetailCar.scss';
 import { getDetailCar } from '../../../../services/userService';
 import HomeHeader from '../../../HomePage/HomeHeader';
 import HomeFooter from '../../../HomePage/HomeFooter';
-
+import FormRentalCar from '../formRentalCar'
 class DetailCar extends Component {
     constructor(props){
         super(props);
         this.state = {
             detailCar: {},
-            currentCarId: null
+            currentCarId: null,
+            selectedCar: null,
         };
     }
 
@@ -26,8 +27,20 @@ class DetailCar extends Component {
         }
     }
 
+    handleRentalClick = (car, event) => {
+        event.stopPropagation();
+        const {userInfo, history} = this.props;
+
+        if(userInfo) {
+            this.setState({ selectedCar: car });
+        } else {
+            if(history) {
+                history.push('/login')
+            }
+        }
+    };
     render() {
-        let { detailCar } = this.state;
+        let { detailCar, selectedCar } = this.state;
         console.log('check', this.state)
         return (
             <>
@@ -52,10 +65,18 @@ class DetailCar extends Component {
                                 <p><strong>Trạng thái:</strong> {detailCar?.statusData?.valueVi}</p>
                             </div>
                             <div className='btn-detail'>
-                                <button className='btn-rental-detail'>Thuê xe</button>
+                                <button className='btn-rental-detail' onClick={(e) => this.handleRentalClick(detailCar, e)}>Thuê xe</button>
                             </div>
                         </div>
                     </div>
+                    {selectedCar && (
+                        <div className="rental-form-overlay">
+                            <FormRentalCar
+                                car={selectedCar}
+                                onClose={() => this.setState({ selectedCar: null })}
+                            />
+                        </div>
+                    )}
                 </div>
 
                 <HomeFooter />
@@ -65,7 +86,9 @@ class DetailCar extends Component {
 }
 
 const mapStateToProps = state => {
-    return {};
+    return {
+        userInfo: state.user.userInfo
+    };
 };
 
 const mapDispatchToProps = dispatch => {
