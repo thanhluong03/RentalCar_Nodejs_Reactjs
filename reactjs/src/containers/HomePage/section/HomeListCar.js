@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import * as caractions from '../../../store/actions/adminActions/carActions';
 import './HomeListCar.scss';
+import { withRouter } from 'react-router-dom';
+import FormRentalCar from '../../System/Staff/formRentalCar';
 
 class HomeListCar extends Component {
     constructor(props) {
@@ -46,7 +48,7 @@ class HomeListCar extends Component {
         });
     };
 
-    renderPagination = () => {
+renderPagination = () => {
         const { currentPage, carsPerPage, dataCar } = this.state;
         const totalPages = Math.ceil(dataCar.length / carsPerPage);
         const pages = [];
@@ -102,19 +104,18 @@ class HomeListCar extends Component {
             </div>
         );
     };
-
     render() {
         const { dataCar, currentPage, carsPerPage, selectedCar } = this.state;
         const startIndex = (currentPage - 1) * carsPerPage;
         const visibleCars = dataCar.slice(startIndex, startIndex + carsPerPage);
 
         return (
-            <div className="section-listcarhome" ref={this.carListRef}>
+            <div className="section-listcarhome"  ref={this.carListRef}>
                 <div className="header-bar">
                     <div className="title-car">Danh sách ô tô</div>
                 </div>
 
-                <div className="section-container" >
+                <div className="section-container">
                     <div className="car-grid">
                         {visibleCars.map((item, index) => {
                             let imageBase64 = item.image
@@ -161,4 +162,4 @@ const mapDispatchToProps = dispatch => ({
     fetchCarRedux: () => dispatch(caractions.fetchAllCarsStart()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomeListCar);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(HomeListCar));
