@@ -25,6 +25,12 @@ class LocationList extends Component {
             });
         }
     }
+
+    handleViewDetailLocation = (location) => {
+        if (this.props.history) {
+            this.props.history.push(`/detail-location/${location.id}`);
+        }
+    };
     render() {
         let {dataLocations} = this.state;
         console.log('check location: ', this.state)

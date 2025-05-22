@@ -5,7 +5,7 @@ import * as caractionscustomer from '../../../store/actions/customerActions/carA
 import './SearchCar.scss';
 import queryString from 'query-string';
 import HomeHeader from "../../HomePage/HomeHeader";
-
+import FormRentalCar from "../Staff/formRentalCar"
 class SearchCar extends Component {
     constructor(props) {
         super(props);
@@ -17,7 +17,6 @@ class SearchCar extends Component {
             selectedBrands: [],
             keyword: '',
             showFilterForm: false,
-            visibleRows: 4,
             selectedCar: null,
             currentPage: 1,
             carsPerPage: 20,
@@ -315,7 +314,7 @@ class SearchCar extends Component {
                                         }
 
                                         return (
-                                            <div className="car-item-search" key={index}>
+                                            <div className="car-item-search" key={index} onClick={() => this.handleViewDetailCar(item)}>
                                                 <div
                                                     className="bg-image-search"
                                                     style={{ backgroundImage: `url(${imageBase64})` }}
@@ -325,7 +324,7 @@ class SearchCar extends Component {
                                                     <div className="price-search">Giá thuê: {item.price_of_day} / ngày</div>
                                                 </div>
                                                 <div className="rental-car-search">
-                                                    <button className="rental-search">Thuê xe</button>
+                                                    <button className="rental-search" onClick={(e) => this.handleRentalClick(item, e)}>Thuê xe</button>
                                                 </div>
                                             </div>
                                         );
@@ -355,6 +354,7 @@ class SearchCar extends Component {
 const mapStateToProps = state => ({
     listcars: state.admin.cars,
     searchResults: state.user.cars,
+    userInfo: state.user.userInfo,
 });
 
 const mapDispatchToProps = dispatch => ({

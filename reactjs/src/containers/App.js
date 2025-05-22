@@ -15,6 +15,8 @@ import { CustomToastCloseButton } from '../components/CustomToast';
 import HomePage from './HomePage/HomePage.js';
 import SearchCar from './System/Staff/SearchCar.js';
 import CarForm from './System/Admin/Car List/CarForm';
+import DetailCar from './System/Staff/DetailInfo/DetailCar';
+import DetailLocation from './System/Staff/DetailInfo/DetailLocation';
 
 import CustomScrollbars  from '../components/CustomScrollbars';
 // import Doctor from '../routes/Doctor';
@@ -63,6 +65,8 @@ class App extends Component {
                                 <Route path={path.HOMEPAGE} component={HomePage}/>
                                 <Route path={path.SEARCHCAR} component={SearchCar}/>
                                 <Route path={path.HOMEPAGE} component={HomePage}/>
+                                <Route path={path.DETAIL_CAR} component={DetailCar} />
+                                <Route path={path.DETAIL_LOCATION} component={DetailLocation}/>
                             </Switch>
                             </CustomScrollbars>
                         </div>

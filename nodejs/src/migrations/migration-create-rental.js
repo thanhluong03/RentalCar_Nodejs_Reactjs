@@ -12,6 +12,9 @@ module.exports = {
             user_id: {
                 type: Sequelize.INTEGER
             },
+            car_id: {
+                type: Sequelize.INTEGER
+            },
             start_date: {
                 type: Sequelize.DATE
             },
