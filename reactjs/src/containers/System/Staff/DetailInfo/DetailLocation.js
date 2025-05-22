@@ -11,7 +11,6 @@ class DetailLocation extends Component {
         this.state = {
             originalCarList: [],
             carList: [],
-            visibleRows: 4,
             currentLocationId: null,
             locationName: '',
             isLoading: true,
@@ -20,8 +19,10 @@ class DetailLocation extends Component {
             selectedBrands: [],
             brandArr: [],
             selectedCar: null,
+            currentPage: 1,
+            carsPerPage: 20,
         };
-        this.carLocationListRf = React.createRef();
+        this.carLocationListRef = React.createRef();
     }
 
     async componentDidMount() {
@@ -55,12 +56,6 @@ class DetailLocation extends Component {
 
     handleViewDetailCar = (car) => {
         this.props.history.push(`/detail-car/${car.id}`);
-    };
-
-    loadMoreCars = () => {
-        this.setState(prevState => ({
-            visibleRows: prevState.visibleRows + 4,
-        }));
     };
 
     toggleFilterForm = () => {
@@ -134,19 +129,83 @@ class DetailLocation extends Component {
             }
         }
     };
+
+    handlePageChange = (page) => {
+        this.setState({ currentPage: page }, () => {
+            if (this.carLocationListRef.current) {
+                this.carLocationListRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    };
+
+renderPagination = () => {
+        const { currentPage, carsPerPage, carList } = this.state;
+        const totalPages = Math.ceil(carList.length / carsPerPage);
+        const pages = [];
+
+        if (totalPages <= 5) {
+            for (let i = 1; i <= totalPages; i++) {
+                pages.push(i);
+            }
+        } else {
+            pages.push(1);
+
+            if (currentPage > 4) pages.push("...");
+
+            for (let i = currentPage - 1; i <= currentPage + 1; i++) {
+                if (i > 1 && i < totalPages) {
+                    pages.push(i);
+                }
+            }
+
+            if (currentPage < totalPages - 3) pages.push("...");
+
+            pages.push(totalPages);
+        }
+
+        return (
+            <div className="pagination-container">
+                <button
+                    className="pagination-arrow"
+                    disabled={currentPage === 1}
+                    onClick={() => this.handlePageChange(currentPage - 1)}
+                >
+                    ‹
+                </button>
+
+                {pages.map((page, index) => (
+                    <button
+                        key={index}
+                        className={`pagination-button ${page === currentPage ? 'active' : ''}`}
+                        onClick={() => typeof page === 'number' && this.handlePageChange(page)}
+                        disabled={page === "..."}
+                    >
+                        {page}
+                    </button>
+                ))}
+
+                <button
+                    className="pagination-arrow"
+                    disabled={currentPage === totalPages}
+                    onClick={() => this.handlePageChange(currentPage + 1)}
+                >
+                    ›
+                </button>
+            </div>
+        );
+    };
     render() {
         const {
             carList, carsPerPage, currentPage, locationName, isLoading,
             showFilterForm, selectedFilterValue, selectedBrands, brandArr, selectedCar
         } = this.state;
 
-        const columnsPerRow = 4;
-        const carsPerPage = visibleRows * columnsPerRow;
-        const visibleCars = carList.slice(0, carsPerPage);
+        const startIndex = (currentPage - 1) * carsPerPage;
+        const visibleCars = carList.slice(startIndex, startIndex + carsPerPage);
 
         return (
             <>
-                <HomeHeader />
+                <HomeHeader ref ={this.carLocationListRef}/>
                 <div className="detail-location-container">
                     <div className="section-listcarhome">
                         <div className="section-all-selectfilter-search">
@@ -242,14 +301,6 @@ class DetailLocation extends Component {
                                     <div>Không có dữ liệu</div>
                                 )}
                             </div>
-
-                            {carsPerPage < carList.length && (
-                                <div className="load-more-container">
-                                    <button className="load-more-button" onClick={this.loadMoreCars}>
-                                        Xem thêm
-                                    </button>
-                                </div>
-                            )}
                         </div>
                             {selectedCar && (
                                 <div className="rental-form-overlay">
@@ -259,6 +310,8 @@ class DetailLocation extends Component {
                                     />
                                 </div>
                             )}
+                            {carList.length > carsPerPage && this.renderPagination()}
+                    </div>
                     </div>
                 <HomeFooter />
             </>
