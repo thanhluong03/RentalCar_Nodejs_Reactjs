@@ -111,12 +111,12 @@ renderPagination = () => {
         const visibleCars = dataCar.slice(startIndex, startIndex + carsPerPage);
 
         return (
-            <div className="section-listcarhome">
+            <div className="section-listcarhome" ref={this.carListRef}>
                 <div className="header-bar">
                     <div className="title-car">Danh sách ô tô</div>
                 </div>
 
-                <div className="section-container" ref={this.carListRef}>
+                <div className="section-container" >
                     <div className="car-grid">
                         {visibleCars.map((item, index) => {
                             let imageBase64 = item.image
