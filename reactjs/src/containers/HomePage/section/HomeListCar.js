@@ -49,7 +49,7 @@ class HomeListCar extends Component {
         });
     };
 
-    renderPagination = () => {
+renderPagination = () => {
         const { currentPage, carsPerPage, dataCar } = this.state;
         const totalPages = Math.ceil(dataCar.length / carsPerPage);
         const pages = [];
@@ -105,43 +105,23 @@ class HomeListCar extends Component {
             </div>
         );
     };
-
     render() {
         const { dataCar, currentPage, carsPerPage, selectedCar } = this.state;
         const startIndex = (currentPage - 1) * carsPerPage;
         const visibleCars = dataCar.slice(startIndex, startIndex + carsPerPage);
 
         return (
-            <div className="section-listcarhome" ref={this.carListRef}>
+            <div className="section-listcarhome">
                 <div className="header-bar">
                     <div className="title-car">Danh sách ô tô</div>
                 </div>
 
-                <div className="section-container" >
+                <div className="section-container" ref={this.carListRef}>
                     <div className="car-grid">
                         {visibleCars.map((item, index) => {
                             let imageBase64 = item.image
                                 ? Buffer.from(item.image, 'base64').toString('binary')
                                 : '';
-=======
-        if (this.props.history) {
-            this.props.history.push(`/detail-car/${car.id}`);
-        }
-    };
-
-    render() {
-        const { dataCar, visibleRows, selectedCar } = this.state;
-        const columnsPerRow = 4;
-        const carsPerPage = visibleRows * columnsPerRow;
-        const visibleCars = dataCar.slice(0, carsPerPage);
-
-        return (
-            <div className="section-listcarhome">
-                <div className="title-car">Danh sách ô tô</div>
-                <div className="section-container">
-                    <div className="car-grid">
-                        {visibleCars.map((item, index) => {
-                            let imageBase64 = item.image ? new Buffer(item.image, 'base64').toString('binary') : '';
                             return (
                                 <div className="car-item" key={index} onClick={() => this.handleViewDetailCar(item)}>
                                     <div className="bg-image" style={{ backgroundImage: `url(${imageBase64})` }} />
@@ -151,10 +131,6 @@ class HomeListCar extends Component {
                                     </div>
                                     <div className="rental-car">
                                         <button className="rental" onClick={(e) => this.handleRentalClick(item, e)}>
-                                        <button
-                                            className="rental"
-                                            onClick={(e) => this.handleRentalClick(item, e)}
-                                        >
                                             Thuê xe
                                         </button>
                                     </div>
@@ -164,14 +140,6 @@ class HomeListCar extends Component {
                     </div>
                 </div>
 
-                    {carsPerPage < dataCar.length && (
-                        <div className="load-more-container">
-                            <button className="load-more-button" onClick={this.loadMoreCars}>
-                                Xem thêm
-                            </button>
-                        </div>
-                    )}
-                </div>
                 {selectedCar && (
                     <div className="rental-form-overlay">
                         <FormRentalCar
