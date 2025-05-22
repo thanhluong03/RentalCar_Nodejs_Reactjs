@@ -11,7 +11,6 @@ class DetailLocation extends Component {
         this.state = {
             originalCarList: [],
             carList: [],
-
             currentLocationId: null,
             locationName: '',
             isLoading: true,
@@ -22,8 +21,10 @@ class DetailLocation extends Component {
             currentPage: 1,
             carsPerPage: 20,
             selectedCar: null,
+            currentPage: 1,
+            carsPerPage: 20,
         };
-        this.carLocationListRf = React.createRef();
+        this.carLocationListRef = React.createRef();
     }
 
     async componentDidMount() {
@@ -57,13 +58,6 @@ class DetailLocation extends Component {
 
     handleViewDetailCar = (car) => {
         this.props.history.push(`/detail-car/${car.id}`);
-    };
-
-
-    loadMoreCars = () => {
-        this.setState(prevState => ({
-            visibleRows: prevState.visibleRows + 4,
-        }));
     };
 
     toggleFilterForm = () => {
@@ -140,13 +134,13 @@ class DetailLocation extends Component {
 
     handlePageChange = (page) => {
         this.setState({ currentPage: page }, () => {
-            if (this.carLocationListRf.current) {
-                this.carLocationListRf.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            if (this.carLocationListRef.current) {
+                this.carLocationListRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         });
     };
 
-    renderPagination = () => {
+renderPagination = () => {
         const { currentPage, carsPerPage, carList } = this.state;
         const totalPages = Math.ceil(carList.length / carsPerPage);
         const pages = [];
@@ -202,7 +196,6 @@ class DetailLocation extends Component {
             </div>
         );
     };
-
     render() {
         const {
             carList, carsPerPage, currentPage, locationName, isLoading,
@@ -214,8 +207,8 @@ class DetailLocation extends Component {
 
         return (
             <>
-                <HomeHeader ref={this.carLocationListRf}/>
-                <div className="detail-location-container" >
+                <HomeHeader ref ={this.carLocationListRef}/>
+                <div className="detail-location-container">
                     <div className="section-listcarhome">
                         <div className="section-all-selectfilter-search">
                             <div className="title-car">Danh sách ô tô tại: {locationName || 'Địa điểm không xác định'}</div>
@@ -311,8 +304,6 @@ class DetailLocation extends Component {
                                 )}
                             </div>
                         </div>
-
-                        </div>
                             {selectedCar && (
                                 <div className="rental-form-overlay">
                                     <FormRentalCar
@@ -322,6 +313,8 @@ class DetailLocation extends Component {
                                 </div>
                             )}
                             {carList.length > carsPerPage && this.renderPagination()}
+                            {carList.length > carsPerPage && this.renderPagination()}
+                    </div>
                     </div>
                 <HomeFooter />
             </>
