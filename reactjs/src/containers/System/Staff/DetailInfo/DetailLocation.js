@@ -24,7 +24,6 @@ class DetailLocation extends Component {
             selectedCar: null,
         };
         this.carLocationListRf = React.createRef();
-s
     }
 
     async componentDidMount() {
@@ -206,7 +205,7 @@ s
 
     render() {
         const {
-            carList, currentPage, carsPerPage, locationName, isLoading,
+            carList, carsPerPage, currentPage, locationName, isLoading,
             showFilterForm, selectedFilterValue, selectedBrands, brandArr, selectedCar
         } = this.state;
 
@@ -231,9 +230,7 @@ s
                                     className="price-filter-form"
                                     onSubmit={this.handleFilterSubmit}
 
-                                    onClick={e => e.stopPropagation()} // Ngăn không cho click lan ra overlay
-
-                                    onClick={e => e.stopPropagation()}
+                                    onClick={e => e.stopPropagation()} 
                                 >
                                     <h2>Tất cả bộ lọc</h2>
 
@@ -303,9 +300,6 @@ s
                                                         <div className="price">Giá thuê: {item.price_of_day.toLocaleString('vi-VN')} / ngày</div>
                                                     </div>
                                                     <div className="rental-car">
-
-                                                        <button className="rental">Thuê xe</button>
-
                                                         <button className="rental" onClick={(e) => this.handleRentalClick(item, e)}>Thuê xe</button>
                                                     </div>
                                                 </div>
@@ -316,15 +310,6 @@ s
                                     <div>Không có dữ liệu</div>
                                 )}
                             </div>
-
-
-                            {carsPerPage < carList.length && (
-                                <div className="load-more-container">
-                                    <button className="load-more-button" onClick={this.loadMoreCars}>
-                                        Xem thêm
-                                    </button>
-                                </div>
-                            )}
                         </div>
 
                         </div>
@@ -338,18 +323,15 @@ s
                             )}
                             {carList.length > carsPerPage && this.renderPagination()}
                     </div>
-                </div>
                 <HomeFooter />
             </>
         );
     }
 }
 
-
 const mapStateToProps = state => ({
     userInfo: state.user.userInfo
 });
-
 const mapDispatchToProps = dispatch => ({});
 
 export default connect(mapStateToProps, mapDispatchToProps)(DetailLocation);
