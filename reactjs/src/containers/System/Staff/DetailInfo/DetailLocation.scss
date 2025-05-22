@@ -31,17 +31,10 @@
             .buton-filter {
             padding: 8px 20px;
             font-size: 18px;
-
             background: #34eb99;
             font-weight: 600;
             border-radius: 10px;
             border: 1px solid #04bd6a;
-
-            background: #e0e0e0;
-            font-weight: 600;
-            border-radius: 10px;
-            border: 1px solid #797979;
-
             color: rgb(92, 92, 92);
             cursor: pointer;
             transition: background-color 0.3s ease, color 0.3s ease;
@@ -74,11 +67,7 @@
 
         .car-grid {
             display: grid;
-<<<<<<< Updated upstream
             grid-template-columns: repeat(4, 1fr);
-=======
-            grid-template-columns: repeat(5, 1fr);
->>>>>>> Stashed changes
             gap: 30px;
             width: 100%;
         }
@@ -353,45 +342,6 @@
             }
         }
         }
-
-
-        .pagination-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-        }
-
-        .pagination-button,
-        .pagination-arrow {
-            background-color: #f0f0f0;
-            border: 1px solid #ccc;
-            padding: 6px 12px;
-            font-size: 16px;
-            cursor: pointer;
-            border-radius: 6px;
-            user-select: none;
-            transition: background-color 0.3s, border-color 0.3s, color 0.3s;
-
-            &:hover:not(:disabled) {
-                background-color: #bdbdbd;
-                border-color: #ababab;
-                color: #ffffff;
-            }
-        }
-
-        .pagination-button.active {
-            background-color: #bdbdbd;
-            border-color: #cecece;
-            color: white;
-            cursor: default;
-        }
-
-        .pagination-arrow:disabled {
-            cursor: not-allowed;
-            opacity: 0.4;
-        }
-
     }
 }
 
