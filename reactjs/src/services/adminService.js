@@ -7,7 +7,7 @@ const adminService = {
     },
 
 };
-
+//user 
 const getAllUsers = (inputId) => {
     return axios.get(`/api/get-all-users?id=${inputId}`);
  }
@@ -24,12 +24,12 @@ const getAllUsers = (inputId) => {
     });
  }
  
- const editUserService = (inputData) => {
+const editUserService = (inputData) => {
     return axios.put('/api/edit-user', inputData);
- }
- const getAllCodeService = (inputType) => {
+}
+const getAllCodeService = (inputType) => {
     return axios.get(`/api/allcode?type=${inputType}`);
- }
+}
  
  //car
  const createNewCarService = (data) => {
@@ -51,6 +51,13 @@ const getAllUsers = (inputId) => {
     });
  }
 
+const getAllCarByPrices = (inputPrice) => {
+    return axios.get(`/api/get-all-car-by-prices?price=${inputPrice}`);
+}
+
+const getAllPrices = () => {
+    return axios.get('/api/get-all-prices')
+}
 // location
 
 const createNewLocationService = (data) => {
@@ -86,5 +93,8 @@ export {
     createNewLocationService,
     getAllLocations,
     editLocationService,
-    deleteLocationService
+    deleteLocationService,
+    getAllCarByPrices,
+    getAllPrices
+
 };

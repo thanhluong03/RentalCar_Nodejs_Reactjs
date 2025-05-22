@@ -2,20 +2,75 @@ import { promises } from "nodemailer/lib/xoauth2";
 import db from "../models/index";
 import { where } from "sequelize";
 import { raw } from "body-parser";
+const { Op } = require('sequelize');
 
 
 
-
-let checkCarLicensePlate = (CarLicensePlate) => {
+let checkValidate = (data) => {
   return new Promise(async (resolve, reject) => {
     try {
+      let condition = {
+        [Op.or]: [
+          { name_car: data.name_car },
+          { license_plate: data.license_plate }
+        ]
+      }
+      if(data.id){
+        condition.id = {[Op.ne] : data.id};
+      }
       let car = await db.Car.findOne({
-        where: { license_plate: CarLicensePlate },
+        where:
+          condition
       });
+
       if (car) {
-        resolve(true);
+        if (car.name_car === data.name_car ) {
+          resolve({ isValid: false, message: 'Car name is already in use!' });
+        }
+        if (car.license_plate === data.license_plate) {
+          resolve({ isValid: false, message: 'License plate is already in use!' });
+        }
       } else {
-        resolve(false);
+        resolve({ isValid: true });
+      }
+
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
+
+
+let createNewCar = (data) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let check = await checkValidate({
+        license_plate: data.license_plate,
+        name_car: data.name_car
+      });
+
+      if (!check.isValid) {
+        resolve({
+          errCode: 1,
+          errMessage: check.message 
+        });
+      } else {
+        await db.Car.create({
+          name_car: data.name_car,
+          image: data.image,
+          license_plate: data.license_plate,
+          type_id: data.type_id,
+          brand: data.brand,
+          model_year: data.model_year,
+          location_id: data.location_id,
+          price_of_day: data.price_of_day,
+          status_id: data.status_id,
+        });
+        resolve({
+          errCode: 0,
+          message: 'OK'
+        });
       }
     } catch (e) {
       reject(e);
@@ -23,38 +78,6 @@ let checkCarLicensePlate = (CarLicensePlate) => {
   });
 };
 
-let createNewCar = (data) => {
-    return new Promise(async(resolve, reject) => {
-        try{
-            let check = await checkCarLicensePlate(data.license_plate);
-            if(check === true){
-                resolve({
-                    errCode: 1,
-                    errMessage: 'Your license plate is already in used, Please try another license palte!!'
-                })
-            }
-            else {
-                await db.Car.create({
-                    name_car: data.name_car,
-                    image: data.image,
-                    license_plate: data.license_plate,
-                    type_id: data.type_id,
-                    brand: data.brand,
-                    model_year: data.model_year,
-                    price_of_day: data.price_of_day,
-                    status_id: data.status_id,
-                    location_id: data.locationId
-                })
-                resolve ({
-                    errCode: 0,
-                    message: 'OK'
-                })
-            }
-        } catch (e) {
-            reject(e);
-        }
-    })
-}
 
 let getAllCars = (carId) => {
   return new Promise(async (resolve, reject) => {
@@ -72,7 +95,7 @@ let getAllCars = (carId) => {
         cars = await db.Car.findOne({
           where: { id: carId },
           attributes: {
-            exclude: [] // Đảm bảo đúng tên trường
+            exclude: [] 
           }
         });
 
@@ -91,13 +114,25 @@ let getAllCars = (carId) => {
 let updateCar = (data) =>{
   return new Promise(async(resolve, reject) =>{
     try {
-      if(!data.id || !data.type_id || !data.status_id) {
+      if(!data.id || !data.type_id || !data.status_id || !data.location_id ) {
         resolve({
-          errCode: 2,
+          errCode: 4,
           errMessage: 'Mising required parameter'
         })
       }
-
+      let check = await checkValidate ({
+        id: data.id,
+        name_car: data.name_car,
+        license_plate: data.license_plate
+      })
+      if(!check.isValid)
+      {
+        resolve({
+          errCode: 3,
+          errMessage: check.message
+        });
+        return;
+      }
       let car = await db.Car.findOne({
         where: {id: data.id},
         raw: false
@@ -109,6 +144,7 @@ let updateCar = (data) =>{
         car.type_id = data.type_id;
         car.brand = data.brand;
         car.model_year = data.model_year;
+        car.location_id = data.location_id,
         car.price_of_day = data.price_of_day;
         car.status_id = data.status_id;
         if(data.avatar) {
@@ -121,7 +157,7 @@ let updateCar = (data) =>{
         })
       } else {
         resolve({
-          errCode: 1,
+          errCode: 6,
           errMessage: 'Car not found!!'
         })
       }
@@ -140,8 +176,8 @@ let deleteCar = (carId) => {
     if(!car)
     {
       resolve ({
-        errCode: 2,
-        errMessage: 'The car is not find'
+        errCode: 4,
+        errMessage: 'The car not find'
       })
     } else {
       await db.Car.destroy({
@@ -151,13 +187,113 @@ let deleteCar = (carId) => {
 
     resolve ({
       errCode: 0,
-       errMessage: 'The car is delete'
+      errMessage: 'The car is delete'
     })
   })
 }
+
+let getAllPrices = () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let prices = await db.Car.findAll({
+        attributes: ['price_of_day'],
+        group: ['price_of_day'],
+        order: [['price_of_day', 'DESC']]
+      });
+      resolve(prices);
+      console.log(prices)
+    } catch (e) {
+      reject(e);
+    }
+  })
+}
+
+let getCarsByPrice = (price) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let cars = await db.Car.findAll({
+        where: { price_of_day: price }
+      });
+      resolve(cars);
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
+let searchCars = (keyword) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let cars = await db.Car.findAll({
+        where: {
+          name_car: {
+            [Op.like]: `%${keyword}%`
+          }
+        }
+      });
+      resolve(cars);
+    } catch (e) {
+      reject(e);
+    }
+  })
+}
+
+let getCarById = async (inputId) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!inputId) {
+                resolve({
+                    errCode: 1,
+                    errMessage: 'Missing parameter',
+                });
+            } else {
+                let data = await db.Car.findOne({
+                    where: { id: inputId },
+                    include: [
+                        {
+                            model: db.Allcode,
+                            as: 'typeData',
+                            attributes: ['valueVi', 'valueEn'],
+                        },
+                        {
+                            model: db.Allcode,
+                            as: 'statusData',
+                            attributes: ['valueVi', 'valueEn'],
+                        },
+                        {
+                            model: db.Location,
+                            attributes: ['name_location'],
+                        },
+                    ],
+                    raw: false,
+                    nest: true,
+                });
+
+                if (data && data.image) {
+                    data.image = new Buffer(data.image, 'base64').toString('binary');
+                }
+
+                if (!data) data = {};
+
+                resolve({
+                    errCode: 0,
+                    data: data,
+                });
+            }
+        } catch (e) {
+            reject(e);
+        }
+    })
+}
+
 module.exports = {
     createNewCar: createNewCar,
     getAllCars: getAllCars,
     updateCar: updateCar,
     deleteCar: deleteCar,
+    getAllPrices,
+    getCarsByPrice,
+    searchCars,
+    getCarById
+
 }
