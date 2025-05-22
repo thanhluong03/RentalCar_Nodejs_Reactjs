@@ -12,6 +12,7 @@ class HomeListCar extends Component {
             dataCar: [],
             currentPage: 1,
             carsPerPage: 20,
+            selectedCar: null,
         };
         this.carListRef = React.createRef();
     }
@@ -48,7 +49,7 @@ class HomeListCar extends Component {
         });
     };
 
-renderPagination = () => {
+    renderPagination = () => {
         const { currentPage, carsPerPage, dataCar } = this.state;
         const totalPages = Math.ceil(dataCar.length / carsPerPage);
         const pages = [];
@@ -104,18 +105,19 @@ renderPagination = () => {
             </div>
         );
     };
+
     render() {
         const { dataCar, currentPage, carsPerPage, selectedCar } = this.state;
         const startIndex = (currentPage - 1) * carsPerPage;
         const visibleCars = dataCar.slice(startIndex, startIndex + carsPerPage);
 
         return (
-            <div className="section-listcarhome"  ref={this.carListRef}>
+            <div className="section-listcarhome" ref={this.carListRef}>
                 <div className="header-bar">
                     <div className="title-car">Danh sách ô tô</div>
                 </div>
 
-                <div className="section-container">
+                <div className="section-container" >
                     <div className="car-grid">
                         {visibleCars.map((item, index) => {
                             let imageBase64 = item.image
@@ -156,6 +158,7 @@ renderPagination = () => {
 
 const mapStateToProps = state => ({
     listcars: state.admin.cars,
+    userInfo: state.user.userInfo,
 });
 
 const mapDispatchToProps = dispatch => ({
