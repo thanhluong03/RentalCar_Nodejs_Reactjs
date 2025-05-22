@@ -21,6 +21,7 @@ class DetailLocation extends Component {
             brandArr: [],
             selectedCar: null,
         };
+        this.carLocationListRf = React.createRef();
     }
 
     async componentDidMount() {
@@ -135,7 +136,7 @@ class DetailLocation extends Component {
     };
     render() {
         const {
-            carList, visibleRows, locationName, isLoading,
+            carList, carsPerPage, currentPage, locationName, isLoading,
             showFilterForm, selectedFilterValue, selectedBrands, brandArr, selectedCar
         } = this.state;
 
@@ -160,7 +161,8 @@ class DetailLocation extends Component {
                                 <form
                                     className="price-filter-form"
                                     onSubmit={this.handleFilterSubmit}
-                                    onClick={e => e.stopPropagation()} // Ngăn không cho click lan ra overlay
+
+                                    onClick={e => e.stopPropagation()} 
                                 >
                                     <h2>Tất cả bộ lọc</h2>
 
@@ -258,7 +260,6 @@ class DetailLocation extends Component {
                                 </div>
                             )}
                     </div>
-                </div>
                 <HomeFooter />
             </>
         );
