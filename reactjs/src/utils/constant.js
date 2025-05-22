@@ -2,9 +2,11 @@ export const path = {
     HOME: '/',
     HOMEPAGE: '/home',
     LOGIN: '/login',
+    REGISTER: '/register',
     LOG_OUT: '/logout',
     SYSTEM: '/system',
-
+    SEARCHCAR: '/search-car',
+    DETAIL_CAR: '/detail-car/:id',
 };
 
 export const LANGUAGES = {

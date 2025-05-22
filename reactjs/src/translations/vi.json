@@ -11,8 +11,8 @@
         "support": "Hỗ trợ"
     },
     "banner": {
-        "title1": "Nền tảng y tế",
-        "title2": "Chăm sóc sức khỏe toàn diện cho mọi ngời"
+        "title1": "Đồng hành cùng bạn trên ",
+        "title2": "mọi chặng đường"
     },
     "menu": {
         "system": {
@@ -30,8 +30,10 @@
         "admin": {
             "manage-customer": "Quản lý khách hàng",
             "manage-car": "Quản lý ô tô",
+            "manage-location": "Quản lý địa điểm",
             "car": "Thông tin ô tô",
             "customer": "Thông tin khách hàng",
+            "location": "Thông tin địa điểm",
             "manage-doctor": "Quản lý bác sĩ",
             "manage-admin": "Quản lý admin",
             "manage-user-doctor": "Quản lý",
