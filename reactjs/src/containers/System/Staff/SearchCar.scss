@@ -28,18 +28,57 @@
     }
 
     .filter-button {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
       .buton-filter {
         padding: 8px 20px;
         font-size: 18px;
-        background: #34eb99;
+        background: #e0e0e0;
         font-weight: 600;
         border-radius: 10px;
-        border: 1px solid #04bd6a;
+        border: 1px solid #797979;
         color: rgb(92, 92, 92);
         &:hover {
           background: #08b466;
           color: #ffffff;
         }
+      }
+      .pagination-container {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+      }
+
+      .pagination-button,
+      .pagination-arrow {
+          background-color: #f0f0f0;
+          border: 1px solid #ccc;
+          padding: 6px 12px;
+          font-size: 16px;
+          cursor: pointer;
+          border-radius: 6px;
+          user-select: none;
+          transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+
+          &:hover:not(:disabled) {
+              background-color: #bdbdbd;
+              border-color: #ababab;
+              color: #ffffff;
+          }
+      }
+
+      .pagination-button.active {
+          background-color: #bdbdbd;
+          border-color: #ababab;
+          color: #ffffff;
+          cursor: default;
+      }
+
+      .pagination-arrow:disabled {
+          cursor: not-allowed;
+          opacity: 0.4;
       }
     }
     .selectfilter-search {
