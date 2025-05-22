@@ -49,7 +49,7 @@ class HomeListCar extends Component {
         });
     };
 
-    renderPagination = () => {
+renderPagination = () => {
         const { currentPage, carsPerPage, dataCar } = this.state;
         const totalPages = Math.ceil(dataCar.length / carsPerPage);
         const pages = [];
@@ -105,19 +105,18 @@ class HomeListCar extends Component {
             </div>
         );
     };
-
     render() {
         const { dataCar, currentPage, carsPerPage, selectedCar } = this.state;
         const startIndex = (currentPage - 1) * carsPerPage;
         const visibleCars = dataCar.slice(startIndex, startIndex + carsPerPage);
 
         return (
-            <div className="section-listcarhome" ref={this.carListRef}>
+            <div className="section-listcarhome">
                 <div className="header-bar">
                     <div className="title-car">Danh sách ô tô</div>
                 </div>
 
-                <div className="section-container" >
+                <div className="section-container" ref={this.carListRef}>
                     <div className="car-grid">
                         {visibleCars.map((item, index) => {
                             let imageBase64 = item.image
