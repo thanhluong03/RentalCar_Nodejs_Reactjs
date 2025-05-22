@@ -18,8 +18,6 @@ class DetailLocation extends Component {
             selectedFilterValue: '',
             selectedBrands: [],
             brandArr: [],
-            currentPage: 1,
-            carsPerPage: 20,
             selectedCar: null,
             currentPage: 1,
             carsPerPage: 20,
@@ -312,7 +310,6 @@ renderPagination = () => {
                                     />
                                 </div>
                             )}
-                            {carList.length > carsPerPage && this.renderPagination()}
                             {carList.length > carsPerPage && this.renderPagination()}
                     </div>
                     </div>
