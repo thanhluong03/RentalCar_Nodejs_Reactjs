@@ -17,8 +17,12 @@ const getAllCarByLocations = (locationId) => {
    return axios.get(`/cars-by-location?locationId=${locationId}`);
 };
 
+const createNewRentalCarService = (data) => {
+   return axios.post('/api/create-new-rental-car', data);
+}
 export { handleLoginApi,
          searchCars,
          getDetailCar,
-         getAllCarByLocations
+         getAllCarByLocations,
+         createNewRentalCarService
       }

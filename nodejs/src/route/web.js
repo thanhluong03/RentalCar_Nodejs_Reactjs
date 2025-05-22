@@ -3,6 +3,7 @@ import express from "express";
 import userController from "../controllers/userController";
 import carControler from "../controllers/carController";
 import locationController from "../controllers/locationController";
+import rentalCarController from "../controllers/rentalCarController";
 let router = express.Router();
 let initWebRoutes = (app) => {
 
@@ -32,7 +33,7 @@ let initWebRoutes = (app) => {
 
     router.get("/api/get-car-by-id", carControler.handlCarById);
     router.get('/cars-by-location', locationController.handleGetCarsByLocation);
-
+    router.post("/api/create-new-rental-car", rentalCarController.handleCreateNewRentalCar);
     return app.use("/", router);
 }
 

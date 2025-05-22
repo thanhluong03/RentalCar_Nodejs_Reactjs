@@ -206,7 +206,7 @@ s
 
     render() {
         const {
-            carList, currentPage, carsPerPage, locationName, isLoading,
+            carList, visibleRows, locationName, isLoading,
             showFilterForm, selectedFilterValue, selectedBrands, brandArr, selectedCar
         } = this.state;
 
@@ -303,9 +303,6 @@ s
                                                         <div className="price">Giá thuê: {item.price_of_day.toLocaleString('vi-VN')} / ngày</div>
                                                     </div>
                                                     <div className="rental-car">
-
-                                                        <button className="rental">Thuê xe</button>
-
                                                         <button className="rental" onClick={(e) => this.handleRentalClick(item, e)}>Thuê xe</button>
                                                     </div>
                                                 </div>
@@ -345,11 +342,9 @@ s
     }
 }
 
-
 const mapStateToProps = state => ({
     userInfo: state.user.userInfo
 });
-
 const mapDispatchToProps = dispatch => ({});
 
 export default connect(mapStateToProps, mapDispatchToProps)(DetailLocation);

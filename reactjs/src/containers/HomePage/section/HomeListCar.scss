@@ -41,113 +41,150 @@
             min-height: 500px;
         }
 
-    .loading-container,
-    .no-data {
-        text-align: center;
-        font-size: 20px;
-        font-weight: 500;
-        color: #777;
-        margin-top: 60px;
-    }
-
-    .car-grid {
-        display: grid;
-        grid-template-columns: repeat(5, 1fr);
-        gap: 30px;
-        width: 100%;
-    }
-
-    .car-item {
-        background: #fdfdfd;
-        border-radius: 16px;
-        overflow: hidden;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        transition: all 0.3s ease-in-out;
-        display: flex;
-        flex-direction: column;
-        padding: 15px;
-
-        &:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        .loading-container,
+        .no-data {
+            text-align: center;
+            font-size: 20px;
+            font-weight: 500;
+            color: #777;
+            margin-top: 60px;
         }
 
-    .bg-image {
-        width: 100%;
-        height: 200px;
-        background-size: cover;
-        background-position: center;
-        border-radius: 12px;
-        margin-bottom: 12px;
-        transition: transform 0.3s;
+        .car-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 30px;
+            width: 100%;
+        }
+
+        .car-item {
+            background: #fdfdfd;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            padding: 15px;
 
             &:hover {
-                transform: scale(1.03);
+                transform: translateY(-6px);
+                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
             }
-    }
 
-    .infomation-car {
-        padding: 8px 0;
-
-        .car-name {
-            font-family: 'Times New Roman', Times, serif;
-            text-transform: uppercase;
-            color: #222;
-            font-size: 18px;
-            font-weight: 600;
-        }
-
-        .price {
-            font-family: 'Times New Roman', Times, serif;
-            color: #e63946;
-            font-size: 17px;
-            margin-top: 4px;
-        }
-    }
-
-    .rental-car {
-        margin-top: auto;
-        display: flex;
-        justify-content: flex-end;
-
-        .rental {
-            font-family: 'Times New Roman', Times, serif;
-            font-size: 16px;
-            font-weight: bold;
-            color: #0c6b0c;
-            background-color: #e3ffe3;
-            padding: 6px 18px;
-            border-radius: 20px;
-            border: 1px solid #168f16;
-            cursor: pointer;
-            transition: all 0.3s;
+            .bg-image {
+                width: 100%;
+                height: 200px;
+                background-size: cover;
+                background-position: center;
+                border-radius: 12px;
+                margin-bottom: 12px;
+                transition: transform 0.3s;
 
                 &:hover {
-                    background-color: #c6f7c6;
-                    transform: translateY(-2px);
+                    transform: scale(1.03);
+                }
+            }
+
+            .infomation-car {
+                padding: 8px 0;
+
+                .car-name {
+                    font-family: 'Times New Roman', Times, serif;
+                    text-transform: uppercase;
+                    color: #222;
+                    font-size: 18px;
+                    font-weight: 600;
+                }
+
+                .price {
+                    font-family: 'Times New Roman', Times, serif;
+                    color: #e63946;
+                    font-size: 17px;
+                    margin-top: 4px;
+                }
+            }
+
+            .rental-car {
+                margin-top: auto;
+                display: flex;
+                justify-content: flex-end;
+
+                .rental {
+                    font-family: 'Times New Roman', Times, serif;
+                    font-size: 16px;
+                    font-weight: bold;
+                    color: #0c6b0c;
+                    background-color: #e3ffe3;
+                    padding: 6px 18px;
+                    border-radius: 20px;
+                    border: 1px solid #168f16;
+                    cursor: pointer;
+                    transition: all 0.3s;
+
+                    &:hover {
+                        background-color: #c6f7c6;
+                        transform: translateY(-2px);
+                    }
+                }
+            }
+        }
+
+        .load-more-container {
+            text-align: center;
+            margin-top: 20px;
+
+            .load-more-button {
+                background: #bde6e8;
+                border: none;
+                color: #018dce;
+                padding: 10px 60px;
+                font-size: 18px;
+
+                &:hover {
+                    background: #3ed8e0;
+                    color: rgb(7, 111, 158);
                 }
             }
         }
     }
+}
 
-    .load-more-container {
-        text-align: center;
-        margin-top: 20px;
+.pagination-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
 
-    .load-more-button {
-        background: #bde6e8;
-        border: none;
-        color: #018dce;
-        padding: 10px 60px;
-        font-size: 18px;
+.pagination-button,
+.pagination-arrow {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    padding: 6px 12px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 6px;
+    user-select: none;
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s;
 
-                &:hover {
-                background: #3ed8e0;
-                color: rgb(7, 111, 158);
-                }
-            }
-        }
+    &:hover:not(:disabled) {
+        background-color: #bdbdbd;
+        border-color: #ababab;
+        color: #ffffff;
     }
+}
+
+.pagination-button.active {
+    background-color: #bdbdbd;
+    border-color: #cecece;
+    color: white;
+    cursor: default;
+}
+
+.pagination-arrow:disabled {
+    cursor: not-allowed;
+    opacity: 0.4;
 }
 
 @media (max-width: 1200px) {
@@ -173,3 +210,4 @@
         grid-template-columns: repeat(1, 1fr);
     }
 }
+

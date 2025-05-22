@@ -64,17 +64,6 @@ class Header extends Component {
                 <div className="header-tabs-container">
                     <Navigator menus={this.state.menuApp} />
                 </div>
-                <div className="welcome">
-                    <div className='image'>
-                        <img className="logo" src= {logo} onClick={() => this.returnToHome()}/>
-                    </div>
-                    <span className="welcome-span">
-                        Welcome, {userInfo && userInfo.first_name ? userInfo.first_name : ''}
-                    </span>
-                    </div>
-                <div className="header-tabs-container">
-                    <Navigator menus={this.state.menuApp} />
-                </div>
                 <div className="logout" onClick={this.handleLogout}>
                     <span className="name-logout">Đăng xuất</span>
                     <div className="btn btn-logout" >
