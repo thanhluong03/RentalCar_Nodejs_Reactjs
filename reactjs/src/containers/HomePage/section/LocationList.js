@@ -45,7 +45,7 @@ class LocationList extends Component {
                                     }
                                 return (
                                     <div className="section-customize location-child"
-                                    key={index}
+                                    key={index} onClick={() => this.handleViewDetailLocation(item)}
                                     >
                                         <div className="bg-image section-location"
                                         style={{backgroundImage: `url(${imageBase64})`}}></div>

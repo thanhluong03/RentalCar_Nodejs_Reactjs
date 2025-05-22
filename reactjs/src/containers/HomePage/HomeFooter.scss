@@ -1,7 +1,6 @@
 .home-footer {
-    background-color: #d9f9ff;
+    background-color: #e0e0e0;
     padding: 20px 40px;
-    margin-top: 90px;
     height: 130px;
 
     .footer-content {
@@ -58,27 +57,12 @@
                     color: #1075ce;
                 }
             }
-
-            strong {
-                animation: flashRed1 1s infinite alternate;
-            }
             p {
                 margin: 2px 0;
                 font-size: 14px;
                 font-weight: bold;
             }
         }
-
-        @keyframes flashRed1 {
-        0% {
-            color: #3849aa;
-            text-shadow: 0 0 5px #4c5fcd;
-        }
-        100% {
-            color: #3849aa;
-            text-shadow: 0 0 15px #4c5fcd;
-        }
-    }
     }
 
     @media screen and (max-width: 768px) {

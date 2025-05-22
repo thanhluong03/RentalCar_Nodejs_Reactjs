@@ -18,7 +18,11 @@ class SearchCar extends Component {
             keyword: '',
             showFilterForm: false,
             visibleRows: 4,
+            selectedCar: null,
+            currentPage: 1,
+            carsPerPage: 20,
         };
+        this.carSearchListLef = React.createRef();
     }
 
     componentDidMount() {
@@ -140,15 +144,97 @@ class SearchCar extends Component {
             visibleRows: prevSate.visibleRows + 4,
         }))
     }
+
+    handleViewDetailCar = (car) => {
+        if (this.props.history) {
+            this.props.history.push(`/detail-car/${car.id}`);
+        }
+    };
+
+    handlePageChange = (page) => {
+        this.setState({ currentPage: page }, () => {
+            if (this.carSearchListLef.current) {
+                this.carSearchListLef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    };
+
+    handleRentalClick = (car, event) => {
+        event.stopPropagation();
+        const {userInfo, history} = this.props;
+
+        if(userInfo) {
+            this.setState({ selectedCar: car });
+        } else {
+            if(history) {
+                history.push('/login')
+            }
+        }
+    };
+    renderPagination = () => {
+        const { currentPage, carsPerPage, dataCar } = this.state;
+        const totalPages = Math.ceil(dataCar.length / carsPerPage);
+        const pages = [];
+
+        if (totalPages <= 5) {
+            for (let i = 1; i <= totalPages; i++) {
+                pages.push(i);
+            }
+        } else {
+            pages.push(1);
+
+            if (currentPage > 4) pages.push("...");
+
+            for (let i = currentPage - 1; i <= currentPage + 1; i++) {
+                if (i > 1 && i < totalPages) {
+                    pages.push(i);
+                }
+            }
+
+            if (currentPage < totalPages - 3) pages.push("...");
+
+            pages.push(totalPages);
+        }
+
+        return (
+            <div className="pagination-container">
+                <button
+                    className="pagination-arrow"
+                    disabled={currentPage === 1}
+                    onClick={() => this.handlePageChange(currentPage - 1)}
+                >
+                    ‹
+                </button>
+
+                {pages.map((page, index) => (
+                    <button
+                        key={index}
+                        className={`pagination-button ${page === currentPage ? 'active' : ''}`}
+                        onClick={() => typeof page === 'number' && this.handlePageChange(page)}
+                        disabled={page === "..."}
+                    >
+                        {page}
+                    </button>
+                ))}
+
+                <button
+                    className="pagination-arrow"
+                    disabled={currentPage === totalPages}
+                    onClick={() => this.handlePageChange(currentPage + 1)}
+                >
+                    ›
+                </button>
+            </div>
+        );
+    };
     render() {
-        const { dataCar, selectedFilterValue, selectedBrands, isLoading, keyword, showFilterForm, brandArr, visibleRows } = this.state;
-        const columnsPerRow = 4;
-        const carsPerPage = visibleRows * columnsPerRow;
-        const visibleCars  = dataCar.slice(0, carsPerPage);
+        const { dataCar, selectedFilterValue, selectedBrands, isLoading, keyword, showFilterForm, brandArr, currentPage, selectedCar, carsPerPage} = this.state;
+        const startIndex = (currentPage - 1) * carsPerPage;
+        const visibleCars = dataCar.slice(startIndex, startIndex + carsPerPage);
         return (
             <>
-                <HomeHeader />
-                <div className="section-listcar-search">
+                <HomeHeader ref={this.carSearchListLef}/>
+                <div className="section-listcar-search" >
                     <div className="section-all-selectfilter-search">
                         <div className="title-car-search">
                             {keyword
@@ -235,7 +321,7 @@ class SearchCar extends Component {
                                                     style={{ backgroundImage: `url(${imageBase64})` }}
                                                 />
                                                 <div className="infomation-car-search">
-                                                    <div className="car-name-search">Tên xe: {item.name_car}</div>
+                                                    <div className="car-name-search">{item.name_car}</div>
                                                     <div className="price-search">Giá thuê: {item.price_of_day} / ngày</div>
                                                 </div>
                                                 <div className="rental-car-search">
@@ -249,14 +335,17 @@ class SearchCar extends Component {
                                 <div className="no-result-search">Không tìm thấy ô tô phù hợp.</div>
                             )}
                         </div>
-                            {carsPerPage < dataCar.length && (
-                                <div className="load-more-container-search">
-                                    <button className="load-more-button-search" onClick={this.loadMoreCars}>
-                                        Xem thêm
-                                    </button>
-                                </div>
-                            )}
                     </div>
+
+                    {selectedCar && (
+                        <div className="rental-form-overlay">
+                            <FormRentalCar
+                                car={selectedCar}
+                                onClose={() => this.setState({ selectedCar: null })}
+                            />
+                        </div>
+                    )}
+                    {dataCar.length > carsPerPage && this.renderPagination()}
                 </div>
             </>
         );
