@@ -2,69 +2,67 @@
 
 .navigator-menu {
     display: flex;
-    align-items: center;
-    margin-top: 12px;
-    border-radius: 12px;
-    //box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
-    transition: all 0.3s ease-in-out;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    gap: 12px;
 
     .menu-group {
-        position: relative;
-        padding: 14px 22px;
-        color: #000000;
+        color: #ffffff;
+        padding: 0px 20px;
+        padding-top: 16px;
+        padding-bottom: 8px;
         font-weight: 600;
         cursor: pointer;
         transition: all 0.3s ease-in-out;
         border-radius: 8px;
+        border: 1px solid rgb(1, 205, 205);
+        border-left: 5px solid rgb(209, 203, 23);
         font-size: 17px;
-        background: #D9D9D9;
-        margin-right: 10px;
+        background: rgb(6, 188, 188);
+        width: 100%;
+
         &:hover {
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(0, 0, 0, 0.15);
             box-shadow: 0px 3px 8px rgba(255, 255, 255, 0.2);
-            color: #FF0000;
+            color: #ffffff;
         }
-    
+
         .menu-list {
-            position: absolute;
-            top: 100%; // Để menu-list bắt đầu ngay dưới menu-group
-            left: 0;
-            background: #D9D9D9;
-            min-width: 260px;
+            background: rgba(255, 255, 255, 0.15);
             border-radius: 10px;
             box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3);
             overflow: hidden;
-            transform-origin: top center;
-            z-index: 1001;
             opacity: 0;
             max-height: 0;
             transition: max-height 0.4s ease-in-out, opacity 0.3s ease-in-out;
-    
+            margin-top: 10px;
+            width: 100%;
             .menu {
                 padding: 14px;
                 color: #000000;
                 font-weight: 600;
                 font-size: 17px;
                 transition: all 0.3s ease-in-out;
-    
+                color: #ffffff;
                 &.active a {
-                    color: #FF0000;
+                    color: #ffee00;
                     font-weight: 700;
                 }
-    
+
                 &:hover {
                     background: rgba(255, 255, 255, 0.15);
                     box-shadow: 0px 3px 8px rgba(255, 255, 255, 0.2);
-                    color: #FF0000;
+                    color: #ffee00;
                 }
-    
+
                 .menu-link {
                     text-decoration: none;
                     color: inherit;
                     display: block;
                     font-weight: 500;
                 }
-    
+
                 .sub-menu-list {
                     display: none;
                     position: absolute;
@@ -75,22 +73,22 @@
                     border-radius: 10px;
                     box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3);
                     animation: fadeIn 0.3s ease-in-out;
-    
+
                     .sub-menu {
                         padding: 12px;
                         color: #ffffff;
                         transition: all 0.3s ease-in-out;
-    
+
                         &:hover {
                             background: rgba(255, 255, 255, 0.15);
                             transform: scale(1.05);
                         }
-    
+
                         &.active a {
                             font-weight: 700;
                             color: #feca57;
                         }
-    
+
                         .sub-menu-link {
                             text-decoration: none;
                             color: inherit;
@@ -100,14 +98,14 @@
                 }
             }
         }
-    
-        &:hover {
-            .menu-list {
-                opacity: 1;
-                max-height: 500px; // Độ cao tối đa khi mở rộng
-            }
+
+        // Hover để mở rộng menu con
+        &:hover .menu-list {
+            opacity: 1;
+            max-height: 800px;
         }
-    }}
+    }
+}
 
 // Hiệu ứng xuất hiện mượt
 @keyframes fadeIn {

@@ -1,0 +1,33 @@
+.system-container {
+    .system-list { 
+        margin-left: auto; 
+        width: calc(100% - 350px);
+        overflow-y: auto;
+        background: #f8f9fc;
+
+        .page-content {
+            background: #fff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .system-container {
+        flex-direction: column;
+
+        .Header {
+            position: relative;
+            width: 100%;
+            height: auto;
+        }
+
+        .system-list {
+            margin-left: 0;
+            width: 100%;
+            padding: 20px;
+        }
+    }
+}

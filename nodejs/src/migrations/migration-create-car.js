@@ -1,7 +1,4 @@
 'use strict';
-
-const { up } = require('./migration-create-user');
-
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
     async up(queryInterface, Sequelize) {
